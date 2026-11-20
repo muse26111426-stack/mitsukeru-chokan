@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>20テーマの板一覧</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2rem; }
+
+      :root {
+        --bg: #eceeeb;
+        --surface: #ffffff;
+        --surface-2: #f4f6f4;
+        --ink: #1b1e1c;
+        --ink-2: #4c534e;
+        --ink-3: #7c857f;
+        --line: #d5dad5;
+        --accent: #0d6e5f;
+        --accent-ink: #ffffff;
+        --hot: #c2410c;
+        --ad-bg: #fdf3e3;
+        --ad-line: #e5cf9e;
+        --ad-ink: #7a5b12;
+        --chip-bg: #ffffff;
+        --shadow: 0 10px 30px rgba(20, 30, 25, .10);
+        --cat-sns: #c21847;
+        --cat-music: #0d6e5f;
+        --cat-shop: #b45309;
+        --cat-work: #1d4ed8;
+        --cat-biz: #5a6238;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #101312;
+          --surface: #1a1e1b;
+          --surface-2: #222723;
+          --ink: #edf1ee;
+          --ink-2: #b9c2bb;
+          --ink-3: #8b968e;
+          --line: #333a35;
+          --accent: #2fbf9f;
+          --accent-ink: #0b1512;
+          --hot: #fb923c;
+          --ad-bg: #2c2413;
+          --ad-line: #57471f;
+          --ad-ink: #e8c96a;
+          --chip-bg: #1a1e1b;
+          --shadow: 0 10px 30px rgba(0, 0, 0, .45);
+          --cat-sns: #fb6f92;
+          --cat-music: #2fbf9f;
+          --cat-shop: #f0a13c;
+          --cat-work: #7aa5ff;
+          --cat-biz: #b7c27a;
+        }
+      }
+
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+        line-height: 1.6;
+      }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px 72px; }
+
+      /* ---------- Masthead ---------- */
+      .masthead { padding: 40px 0 8px; }
+      .masthead .kicker {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 12px; font-weight: 700; letter-spacing: .14em;
+        color: var(--accent); text-transform: uppercase;
+      }
+      .masthead .kicker::before { content: ""; width: 22px; height: 2px; background: var(--accent); }
+      .masthead h1 {
+        margin: 10px 0 10px; font-size: clamp(30px, 5.4vw, 46px);
+        font-weight: 900; line-height: 1.2; letter-spacing: .01em;
+      }
+      .masthead .lead { margin: 0; max-width: 720px; color: var(--ink-2); font-size: 15px; }
+      .masthead .lead strong { color: var(--ink); }
+      .stats {
+        display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 22px;
+        padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      }
+      .stat { display: flex; align-items: baseline; gap: 8px; }
+      .stat .num { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; }
+      .stat .lbl { font-size: 12px; color: var(--ink-2); font-weight: 500; }
+
+      /* ---------- Plan strip ---------- */
+      .plan-strip {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px;
+      }
+      .plan {
+        background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+        padding: 16px 18px; position: relative;
+      }
+      .plan.paid { border-color: var(--accent); border-width: 2px; padding: 15px 17px; }
+      .plan .p-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+      .plan .p-name { font-weight: 900; font-size: 16px; }
+      .plan .p-price { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px; }
+      .plan .p-price small { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--ink-2); font-weight: 500; }
+      .plan ul { margin: 10px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--ink-2); }
+      .plan li { padding: 3px 0 3px 18px; position: relative; }
+      .plan li::before { content: ""; position: absolute; left: 2px; top: 12px; width: 7px; height: 7px; border-radius: 2px; background: var(--line); }
+      .plan.paid li::before { background: var(--accent); }
+      .plan .p-tag {
+        position: absolute; top: -11px; right: 14px; background: var(--accent); color: var(--accent-ink);
+        font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 999px;
+      }
+
+      /* ---------- Preview toggle ---------- */
+      .preview-bar {
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px;
+        font-size: 13px; color: var(--ink-2);
+      }
+      .seg {
+        display: inline-flex; background: var(--surface); border: 1px solid var(--line);
+        border-radius: 999px; padding: 3px; gap: 2px;
+      }
+      .seg button {
+        border: 0; background: transparent; color: var(--ink-2); cursor: pointer;
+        font: inherit; font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 999px;
+        min-height: 36px;
+      }
+      .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+      .preview-note { font-size: 12px; }
+
+      /* ---------- Controls ---------- */
+      .controls {
+        position: sticky; top: 0; z-index: 20;
+        background: var(--bg); padding: 16px 0 12px; margin-top: 10px;
+      }
+      .controls .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+      .search {
+        flex: 1 1 240px; display: flex; align-items: center; gap: 8px;
+        background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0 12px;
+      }
+      .search svg { flex: none; color: var(--ink-3); }
+      .search input {
+        border: 0; outline: 0; background: transparent; color: var(--ink);
+        font: inherit; font-size: 14px; width: 100%; min-height: 42px;
+      }
+      .sortbox select {
+        font: inherit; font-size: 13px; font-weight: 500; color: var(--ink);
+        background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+        padding: 0 10px; min-height: 44px; cursor: pointer;
+      }
+      .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+      .chip {
+        border: 1px solid var(--line); background: var(--chip-bg); color: var(--ink-2);
+        font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+        padding: 6px 14px; border-radius: 999px; min-height: 38px;
+        display: inline-flex; align-items: center; gap: 7px;
+      }
+      .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); }
+      .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+      .chip[aria-pressed="true"] .dot { background: var(--bg); }
+      .result-line { margin-top: 12px; font-size: 12px; color: var(--ink-3); }
+
+      /* ---------- Board grid ---------- */
+      .grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 6px;
+      }
+      .card {
+        background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--ink-3);
+        border-radius: 10px; padding: 22px; display: flex; flex-direction: column; gap: 12px;
+        cursor: pointer; text-align: left; font: inherit; color: inherit; width: 100%;
+        transition: transform .15s ease, box-shadow .15s ease;
+      }
+      .card .c-headline { font-size: 15px; font-weight: 700; line-height: 1.5; }
+      .card .c-big { display: flex; flex-direction: column; gap: 3px; margin: 2px 0; }
+      .card .c-big .num {
+        font-family: "IBM Plex Mono", monospace; font-size: 42px; font-weight: 600;
+        line-height: 1.05; letter-spacing: -.01em;
+      }
+      .card .c-big .lbl { font-size: 11px; color: var(--ink-3); font-weight: 500; }
+      .card[data-cat="sns"] .c-big .num { color: var(--cat-sns); }
+      .card[data-cat="music"] .c-big .num { color: var(--cat-music); }
+      .card[data-cat="shop"] .c-big .num { color: var(--cat-shop); }
+      .card[data-cat="work"] .c-big .num { color: var(--cat-work); }
+      .card[data-cat="biz"] .c-big .num { color: var(--cat-biz); }
+      .card .c-foot {
+        margin-top: auto; border-top: 1px dashed var(--line); padding-top: 12px;
+        display: flex; justify-content: flex-end;
+      }
+      .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+      .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+      .card[data-cat="sns"] { border-top-color: var(--cat-sns); }
+      .card[data-cat="music"] { border-top-color: var(--cat-music); }
+      .card[data-cat="shop"] { border-top-color: var(--cat-shop); }
+      .card[data-cat="work"] { border-top-color: var(--cat-work); }
+      .card[data-cat="biz"] { border-top-color: var(--cat-biz); }
+
+      /* ---------- Category sections ---------- */
+      .cat-section { margin-top: 30px; }
+      .cat-section:first-child { margin-top: 10px; }
+      .cat-head {
+        display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+        margin: 0 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--ink);
+      }
+      .cat-head .cat-dot { width: 11px; height: 11px; border-radius: 50%; align-self: center; flex: none; }
+      .cat-head h2 { margin: 0; font-size: 20px; font-weight: 900; line-height: 1.3; }
+      .cat-head .cat-desc { font-size: 12px; color: var(--ink-2); }
+      .cat-head .cat-count { margin-left: auto; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-3); }
+
+      .card .c-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+      .card .c-num {
+        font-family: "IBM Plex Mono", monospace; font-size: 26px; font-weight: 600; line-height: 1;
+        color: var(--ink-3);
+      }
+      .card .c-badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+      .badge {
+        font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+        background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line);
+      }
+      .badge.real { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .snapshot-bar {
+        margin-top: 14px; border: 1px solid var(--accent); border-radius: 10px;
+        background: var(--surface); padding: 12px 16px; font-size: 13px; color: var(--ink-2);
+        display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+      }
+      .snapshot-bar strong { color: var(--ink); }
+      .snapshot-bar .snap-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+      .chart-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      .chart-table th, .chart-table td { padding: 8px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .chart-table th { font-size: 11px; letter-spacing: .06em; color: var(--ink-3); }
+      .chart-table .rank { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 16px; white-space: nowrap; }
+      .chart-table .song { font-weight: 700; }
+      .chart-table .move { font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+      .job-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+      .job-list li { border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; background: var(--surface-2); }
+      .job-list .j-title { font-weight: 700; font-size: 14px; }
+      .job-list .j-meta { font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+      .job-list .j-link { font-size: 12px; color: var(--accent); font-weight: 700; text-decoration: none; display: inline-block; margin-top: 6px; padding: 4px 0; }
+      .source-line { font-size: 11px; color: var(--ink-3); margin-top: 10px; line-height: 1.7; }
+      .source-line a { color: var(--accent); }
+      .badge.cat-sns { color: var(--cat-sns); } .badge.cat-music { color: var(--cat-music); }
+      .badge.cat-shop { color: var(--cat-shop); } .badge.cat-work { color: var(--cat-work); }
+      .badge.cat-biz { color: var(--cat-biz); }
+
+      .card h2 { margin: 0; font-size: 18px; font-weight: 900; line-height: 1.45; }
+      .card .c-desc { margin: 0; font-size: 13px; color: var(--ink-2); }
+      .card .c-watch { display: flex; flex-wrap: wrap; gap: 6px; }
+      .wtag {
+        font-size: 11px; font-weight: 500; color: var(--ink-2);
+        background: var(--surface-2); border-radius: 6px; padding: 3px 8px;
+      }
+      .card .c-meta {
+        display: flex; justify-content: space-between; align-items: center; gap: 8px;
+        border-top: 1px dashed var(--line); padding-top: 10px; font-size: 12px; color: var(--ink-3);
+      }
+      .card .c-open { font-weight: 700; color: var(--accent); font-size: 12px; white-space: nowrap; }
+      .card .timing { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
+      .empty {
+        grid-column: 1 / -1; text-align: center; padding: 48px 16px; color: var(--ink-2);
+        background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; font-size: 14px;
+      }
+
+      /* ---------- Ad slot ---------- */
+      .adslot {
+        border: 1px dashed var(--ad-line); background: var(--ad-bg); color: var(--ad-ink);
+        border-radius: 10px; padding: 14px 16px; font-size: 12px;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      }
+      .adslot .a-lbl { font-weight: 900; letter-spacing: .1em; font-size: 10px; }
+      .adslot .a-body { font-weight: 500; }
+      body[data-plan="paid"] .adslot { display: none; }
+
+      .grid-ad { grid-column: 1 / -1; }
+
+      /* ---------- Detail overlay ---------- */
+      .overlay {
+        position: fixed; inset: 0; z-index: 50; display: none;
+        background: rgba(10, 14, 12, .55); backdrop-filter: blur(3px);
+      }
+      .overlay.open { display: block; }
+      .sheet {
+        position: absolute; inset: auto 0 0 0; max-height: 92vh; overflow-y: auto;
+        background: var(--surface); border-radius: 18px 18px 0 0; padding: 22px 22px 40px;
+        box-shadow: var(--shadow);
+      }
+      @media (min-width: 760px) {
+        .sheet { inset: 4vh auto 4vh 50%; transform: translateX(-50%); width: min(760px, 94vw); border-radius: 16px; }
+      }
+      .sheet .s-close {
+        position: sticky; top: 0; float: right; z-index: 2;
+        width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
+        background: var(--surface); color: var(--ink); font-size: 18px; cursor: pointer; line-height: 1;
+      }
+      .sheet .s-num { font-family: "IBM Plex Mono", monospace; color: var(--ink-3); font-size: 14px; font-weight: 600; }
+      .sheet h2 { margin: 4px 48px 6px 0; font-size: 24px; font-weight: 900; line-height: 1.35; }
+      .sheet .s-desc { color: var(--ink-2); font-size: 14px; margin: 0 0 4px; }
+      .sheet h3 {
+        font-size: 13px; font-weight: 900; letter-spacing: .08em; margin: 26px 0 10px;
+        display: flex; align-items: center; gap: 8px;
+      }
+      .sheet h3::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+      .feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+      .feed li {
+        border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; background: var(--surface-2);
+      }
+      .feed .f-top { display: flex; gap: 8px; align-items: center; font-size: 11px; color: var(--ink-3); margin-bottom: 4px; flex-wrap: wrap; }
+      .feed .f-kind { font-weight: 900; color: var(--accent); letter-spacing: .05em; }
+      .feed .f-title { font-weight: 700; font-size: 14px; }
+      .feed .f-body { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+      .feed .f-link { font-size: 12px; color: var(--accent); font-weight: 700; text-decoration: none; display: inline-block; margin-top: 6px; padding: 4px 0; }
+      .sample-note { font-size: 11px; color: var(--ink-3); margin-top: 8px; }
+      .watchlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+      .watchlist li {
+        display: flex; justify-content: space-between; gap: 12px; font-size: 13px;
+        border-bottom: 1px dashed var(--line); padding: 7px 0;
+      }
+      .watchlist .w-name { font-weight: 700; }
+      .watchlist .w-cond { color: var(--ink-2); text-align: right; }
+      .plan-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .plan-compare .pc {
+        border: 1px solid var(--line); border-radius: 10px; padding: 13px 15px; font-size: 13px;
+      }
+      .plan-compare .pc.paid { border-color: var(--accent); border-width: 2px; padding: 12px 14px; }
+      .plan-compare .pc .pc-name { font-weight: 900; margin-bottom: 6px; }
+      .plan-compare .pc ul { margin: 0; padding-left: 16px; color: var(--ink-2); }
+      .plan-compare .pc li { padding: 2px 0; }
+      .sheet .s-actions { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+      .btn {
+        font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 10px;
+        padding: 10px 20px; min-height: 44px; border: 1px solid var(--line);
+        background: var(--surface); color: var(--ink);
+      }
+      .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+      .btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+      footer { margin-top: 44px; border-top: 1px solid var(--line); padding-top: 16px; font-size: 12px; color: var(--ink-3); }
+      .footer-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; }
+      .footer-link {
+        font: inherit; font-size: 13px; font-weight: 700; color: var(--accent);
+        background: none; border: 0; padding: 6px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+      }
+      .footer-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+      /* ---------- Legal sheet ---------- */
+      .legal-meta { font-size: 12px; color: var(--ink-3); margin: 0 0 4px; }
+      .legal-sec { margin-top: 8px; }
+      .legal-sec p { font-size: 14px; color: var(--ink-2); margin: 0 0 8px; }
+      .legal-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+      .legal-list li { font-size: 14px; color: var(--ink-2); line-height: 1.75; }
+      .legal-list .art { display: block; font-weight: 900; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
+      .legal-note {
+        margin-top: 26px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2);
+        padding: 13px 15px; font-size: 13px; color: var(--ink-2);
+      }
+      .legal-note strong { color: var(--ink); }
+
+      @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 600px) {
+        .grid { grid-template-columns: 1fr; }
+        .plan-strip, .plan-compare { grid-template-columns: 1fr; }
+        .wrap { padding: 0 14px 56px; }
+        .masthead { padding-top: 28px; }
+        .chart-table { font-size: 12px; }
+        .chart-table th, .chart-table td { padding: 6px 5px; }
+        .chart-table .move { white-space: normal; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .card { transition: none; }
+        .card:hover { transform: none; }
+      }
+    </style>
+  </head>
+  <body data-plan="free">
+    <div class="wrap">
+
+      <header class="masthead">
+        <span class="kicker">Monitoring Boards — SNS中心・実データ版</span>
+        <h1>変わったことだけ届く、<br />20テーマの監視板</h1>
+        <p class="lead">公開ページの<strong>変化だけ</strong>を抜き出す、テーマ別の監視板です。<br />気になる板を開くと、ランキングと出典が見られます。</p>
+        <div class="snapshot-bar" role="note">
+          <span class="snap-dot" aria-hidden="true"></span>
+          <span><strong>Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日時点、速報系の他2板は2026年11月19日時点、チャート系13板は2026年11月17日時点の実データ</strong> — 全20板にスナップショットを表示中。チャート系は週次更新で、次回更新は11月23日です。出典は各板の中にあり、一次情報か集計サイトかを明記しています。</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="num">20</span><span class="lbl">テーマの板</span></div>
+          <div class="stat"><span class="num">5</span><span class="lbl">カテゴリ</span></div>
+          <div class="stat"><span class="num">20板</span><span class="lbl">実データを表示中（全板）</span></div>
+          <div class="stat"><span class="num">3行</span><span class="lbl">要約＋元リンクで配信</span></div>
+        </div>
+      </header>
+
+      <section class="plan-strip" aria-label="プラン">
+        <div class="plan">
+          <div class="p-head">
+            <span class="p-name">無料プラン</span>
+            <span class="p-price">¥0 <small>／ 広告あり</small></span>
+          </div>
+          <ul>
+            <li>全20板が見放題</li>
+            <li>毎朝のまとめ便</li>
+            <li>キーワード3件まで</li>
+            <li>広告あり</li>
+          </ul>
+        </div>
+        <div class="plan paid">
+          <span class="p-tag">自分の条件で知らせる</span>
+          <div class="p-head">
+            <span class="p-name">有料プラン</span>
+            <span class="p-price">¥480〜980 <small>／ 月・広告なし</small></span>
+          </div>
+          <ul>
+            <li>広告なし</li>
+            <li>条件アラート付き</li>
+            <li>1時間ごとに確認</li>
+            <li>個別監視も可能</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="preview-bar">
+        <span>表示プレビュー：</span>
+        <div class="seg" role="group" aria-label="プランプレビュー切替">
+          <button type="button" id="segFree" aria-pressed="true">無料で見る</button>
+          <button type="button" id="segPaid" aria-pressed="false">有料で見る</button>
+        </div>
+        <span class="preview-note" id="previewNote">無料プレビュー中 — 広告あり・朝のまとめ便のみ</span>
+      </div>
+
+      <div class="controls">
+        <div class="row">
+          <label class="search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+            <input type="search" id="searchInput" placeholder="板を検索（例：TikTok、セール）" aria-label="板を検索" />
+          </label>
+          <label class="sortbox">
+            <select id="sortSelect" aria-label="並び替え">
+              <option value="cat">カテゴリ順（まとめて表示）</option>
+              <option value="num">番号順</option>
+              <option value="name">名前順</option>
+            </select>
+          </label>
+        </div>
+        <div class="chips" id="chipRow" role="group" aria-label="カテゴリで絞り込み"></div>
+        <p class="result-line" id="resultLine" aria-live="polite"></p>
+      </div>
+
+      <main id="boardGrid"></main>
+
+      <footer>
+        <p style="margin:0;">実データ・スナップショット取得日：Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日、速報系の他2板は2026年11月19日、チャート系13板は2026年11月17日（週次更新・次回11月23日）。出典の扱い：一次情報（公式チャート・公式発表・調査の発行元）を優先し、一次情報が公開されていないテーマでは集計サイトである旨を明記しています。順位・価格・締切などの事実のみを自前の短い言葉で要約して載せており、出典記事の文章や画像の転載はしていません。数値はすべて取得時点のものです。</p>
+        <nav class="footer-links" aria-label="規約・お問い合わせ">
+          <button type="button" class="footer-link" id="termsLink">利用規約・免責事項</button>
+          <button type="button" class="footer-link" id="privacyLink">プライバシーについて</button>
+          <button type="button" class="footer-link" id="contactLink">お問い合わせ</button>
+        </nav>
+      </footer>
+    </div>
+
+    <!-- Detail sheet -->
+    <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="sheet" id="sheet"></div>
+    </div>
+
+    <script>
+      var CATEGORY_ORDER = ["sns", "music", "shop", "work", "biz"];
+      var CATEGORIES = {
+        sns:   { name: "SNSトレンド",           color: "var(--cat-sns)",   desc: "TikTok・X・インスタ・YouTube" },
+        music: { name: "音楽・バズ曲",           color: "var(--cat-music)", desc: "急上昇曲と週間チャート" },
+        shop:  { name: "ネットショッピング",      color: "var(--cat-shop)",  desc: "セール・再販・相場" },
+        work:  { name: "副業・案件・クリエイター", color: "var(--cat-work)",  desc: "案件と急伸チャンネル" },
+        biz:   { name: "店・ビジネス",           color: "var(--cat-biz)",   desc: "競合・仕入れ・補助金" }
+      };
+
+      var BOARDS = [
+        { id: 1, cat: "sns", real: true, detail: "trend", title: "TikTokトレンド監視板",
+          desc: "TikTok日本のトレンドハッシュタグ（2026年11月9日〜15日週）、話題のミーム音源、10代女子トレンドのコトバを実データで監視。伸び切る前に気づいて自分の投稿に乗せるための板。実データ表示中：2026年11月18日時点スナップショット。",
+          who: "TikTok発信者・SNS運用者", cadence: "週1更新（ハッシュタグ週次）", feedDate: "2026年11月18日",
+          watch: [["TikTok公式トレンドハッシュタグ（日本）", "投稿数・再生数の急増"], ["ミーム音源・流行フォーマット", "元ネタと拡散の型"], ["10代女子トレンド（コトバ）", "新語・ミーム化の動き"]],
+          hchart: [["1", "#エンタメダブルcrpキャンペーン", "6,667投稿 ・ 210.3M再生", "再生数1位。25タグ中で突出。キャンペーン系で大量視聴、11月13日ピーク"],
+                   ["2", "#クリスマス", "14,191投稿 ・ 111.5M再生", "投稿数も最多。11月15日がピークでまだ上昇中"],
+                   ["3", "#紅白歌合戦", "3,065投稿 ・ 41.9M再生", "TikTok公式順位2位。日本のみトレンド入り、11月13日ピーク"],
+                   ["4", "#ブラックフライデー", "5,199投稿 ・ 36.1M再生", "TikTok公式順位5位。セール連動、11月14日ピーク"],
+                   ["5", "#ballibotmogis", "1,403投稿 ・ 34.7M再生", "日本のみトレンド入り。11月9日ピーク"],
+                   ["6", "#ベストヒット歌謡祭", "993投稿 ・ 32.3M再生", "テレビ連動。11月11日ピーク"],
+                   ["7", "#イルミネーション", "3,691投稿 ・ 28.5M再生", "季節スポット系。11月15日がピークでまだ上昇中"],
+                   ["8", "#ポッキーの日", "10,213投稿 ・ 27.7M再生", "TikTok公式順位でローカル1位。日本のみトレンド入り、11月11日ピーク"],
+                   ["9", "#侍ジャパン", "1,886投稿 ・ 23.1M再生", "TikTok公式順位4位。野球日本代表関連、11月15日がピークでまだ上昇中"],
+                   ["10", "#prank", "1,106投稿 ・ 21.4M再生", "ドッキリ系フォーマット。日本のみトレンド入り、11月10日ピーク"]],
+          feed: [["ローカル1位", "#ポッキーの日がTikTok公式順位で日本1位 — 10,213投稿・27.7M再生", "TokConnect／TikTok公式トレンドハッシュタグリスト（日本、2026年11月9日〜15日週）で、#ポッキーの日がローカル（日本のみ）トレンドのトップを維持。TikTok公式順位のTop5は1位 #ポッキーの日、2位 #紅白歌合戦、3位 #ポッキー、4位 #侍ジャパン、5位 #ブラックフライデーです。関連の #ポッキー（1,904投稿・7.2M再生）と #11月11日（958投稿・4.3M再生）も11月11日にピークを迎え、11月11日に集中した季節イベント型のバズです。25タグ合計で660.9M再生・73,672投稿、うち21タグは日本のみでトレンド入りしています。", "https://tokconnect.com/trends/japan/"],
+                 ["再生数最大", "#エンタメダブルcrpキャンペーン 210.3M再生、#クリスマス 111.5M再生", "再生数で見ると順位は逆転します。#エンタメダブルcrpキャンペーン（6,667投稿）が210.3M再生で断トツ、次いで #クリスマス（14,191投稿・111.5M再生）。#クリスマスは11月15日がピークでまだ上昇中（Still climbing）で、#クリスマスディズニー（1,029投稿・13.3M再生）、#イルミネーション（3,691投稿・28.5M再生、11月15日ピークで上昇中）と合わせて季節系が先行して伸びています。投稿に乗せるならクリスマス系が今週の本命です。", "https://tokconnect.com/trends/japan/"],
+                 ["ミーム音源", "「あのね・うんうん」ミーム — 元はボカロ曲「トイレイキタイ」の切り抜き音源", "話す役の「あのね」「それでね」に、聞く役が「うんうん」と相づちを打つだけの掛け合い動画がTikTokで急増。元ネタはボカロP・るのさんが2026年3月28日に公開した「トイレイキタイ」（歌唱：重音テト・音街ウナ）の会話パートで、9月中ごろから切り抜き音源として拡散しました。マイナビティーンズラボ「2026年10代女子が選ぶトレンドランキング」ではコトバ部門5位に入っています。", "https://www.haradaeigo.com/slang/column/2026-11-12"],
+                 ["コトバ・10代女子", "コトバ部門Top3：1位ドパガキ、2位ばりきまずい、3位ワホー", "マイナビティーンズラボ「2026年10代女子が選ぶトレンドランキング」（15〜19歳女性586名、調査2026年9月24日〜30日、11月11日発表）のコトバ部門。1位「ドパガキ」（45.6％）は「ドーパミン中毒のガキ」の略で、ショート動画やSNSの強い刺激に慣れた若年層を指す自虐・共感ワード。2位「ばりきまずい」（16.7％）はTikTok発で、失敗や気まずい沈黙を笑いに変える言葉としてミーム化。3位「ワホー」（16.2％）はYouTuberセイキンが約12年前のミンティア企画動画で発したフレーズがTikTokで再発掘されてブレイクしたもの。キャプションやセリフに混ぜると同世代への刺さりが変わります。", "https://gakumado.mynavi.jp/teens/articles/92936"]] },
+        { id: 2, cat: "sns", real: true, detail: "xtrend", title: "Xトレンド・バズワード板",
+          desc: "X（旧Twitter）日本の現在のトレンドを実データで監視。2026年11月20日未明（05:58 JST時点）は #魔法使いの夜感想 が掲載順の先頭で、前日1位の #旅の合間のてりやきマック から交代。Xは数時間で顔ぶれが入れ替わるため、取得日時つきのスナップショットで届ける。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "X運用者・発信者", cadence: "毎日チェック（変動が速いため日時つき）", feedDate: "2026年11月20日",
+          watch: [["Rattibha 日本トレンド", "新規入りと継続"], ["前日の上位（AgentFlare日次Top25）", "顔ぶれの入れ替わり"], ["Trending Soup（X Explore）", "別時刻スナップショットとの照合"]],
+          xchart: [["1", "#魔法使いの夜感想", "トレンド（掲載順）", "掲載順の先頭。前日1位の #旅の合間のてりやきマック から交代"],
+                   ["2", "平和宣言", "トレンド（掲載順） ・ 19.1K tweets", "出典ページで投稿数 19.1K tweets を確認"],
+                   ["3", "アンソロピック", "トレンド（掲載順） ・ 22.5K tweets", "出典ページで投稿数 22.5K tweets を確認"],
+                   ["4", "#songofjapan", "トレンド（掲載順）", "掲載順4番目。投稿数は出典で未確認"],
+                   ["5", "#正源司陽子ANNX", "トレンド（掲載順）", "掲載順5番目。投稿数は出典で未確認"],
+                   ["6", "#ファミ通GTA6プレゼント", "トレンド（掲載順）", "GTA VI 発売日当日。ファミ通のPS5＋GTA VIプレゼント企画が話題"]],
+          feed: [["本日のトレンド・11/20", "先頭は #魔法使いの夜感想 — 前日1位 #旅の合間のてりやきマック から交代", "Rattibha「Twitter Trends in Japan」（2026年11月20日 05:58 JST時点のクロールで確認）では、掲載順の先頭が #魔法使いの夜感想 で、前日11月19日の1位 #旅の合間のてりやきマック から交代しました。ただし順位番号・投稿数（ポスト数）は出典ページで一部しか取得できないため、この並びはページの掲載順であり、厳密な順位ではありません。投稿数が確認できたのは 平和宣言（19.1K tweets）と アンソロピック（22.5K tweets）のみです。", "https://en.rattibha.com/trends/japan"],
+                 ["上位の顔ぶれ・11/20", "掲載順に 平和宣言、アンソロピック、#songofjapan、#正源司陽子ANNX、#ファミ通GTA6プレゼント", "2026年11月20日 05:58 JST時点の上位は掲載順で、#魔法使いの夜感想、平和宣言（19.1K tweets）、アンソロピック（22.5K tweets）、#songofjapan、#正源司陽子ANNX、#ファミ通GTA6プレゼント です。前日先頭だった #旅の合間のてりやきマック は本日の上位から外れました。", "https://en.rattibha.com/trends/japan"],
+                 ["話題・11/20", "GTA VI 発売日当日 — ファミ通のPS5＋GTA VIプレゼント企画が話題", "GTA VI の発売日当日にあたり、ファミ通のPS5＋GTA VIプレゼント企画が話題となり、#ファミ通GTA6プレゼント が上位に入っています。ゲーム発売と雑誌のプレゼント企画が重なったタイミングのトレンドです。", "https://en.rattibha.com/trends/japan"],
+                 ["前日の上位・11/19", "前日11/19朝の先頭は #旅の合間のてりやきマック、次いで #ブラッサム、#めざましディズニー", "前日2026年11月19日 08:34 JST時点のRattibhaでは、先頭が #旅の合間のてりやきマック で、#ブラッサム、#めざましディズニー、#Jリーグサポーター選出の80選手登場、#HAPPYRUKIDAY、#Jクラ、#佐久間宣行ANN0 などが並んでいました。11/20未明の上位とは顔ぶれが入れ替わっています。", "https://en.rattibha.com/trends/japan"]] },
+        { id: 3, cat: "sns", real: true, detail: "insta", title: "Instagramリール流行板",
+          desc: "CreatorDB Trending Instagram Audio（2026年11月11日週）のHeatランキングを実データで監視。Instagram公式チャートではなく、複数レポートとチャート勢いを合成したHeatスコア（0〜100）で順位付け。1位はMariah Carey「All I Want for Christmas Is You」（Heat 98・5.8M+ reels）、2位はTate McRae「Housewife」（Heat 97）。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "インスタ発信者・店舗SNS担当", cadence: "週1更新（CreatorDB週次）",
+          watch: [["CreatorDB Trending Instagram Audio", "Heatスコアと順位"], ["Buffer / Later の週次トレンド", "型・フォーマットの照合"], ["Instagram音源ページ", "Reels数の目安"]],
+          ichart: [["1", "All I Want for Christmas Is You", "Mariah Carey", "Heat 98 ・ 5.8M+ reels ・ Peaking — It's Time／クリスマス解禁の合図。Spotify US 13位"],
+                   ["2", "Housewife", "Tate McRae", "Heat 97 ・ 273K+ reels ・ Rising — Spotify US 1位。Be Your Own Housewife／Morning Mantra型"],
+                   ["3", "Nicole Kidman", "ADÉLA", "Heat 63 ・ Rising — 自信系リップシンク。Spotify US 3位、Reels数は非表示"],
+                   ["4", "Underneath the Tree", "Kelly Clarkson", "Heat 62 ・ 451K+ reels ・ Peaking — ホリデー発表・装飾ビフォアフター"],
+                   ["5", "Linger", "The Cranberries", "Heat 60 ・ 117K+ reels ・ Rising — 秋のデジカメ日記／My Life Is a Movie型"],
+                   ["6", "Everlong", "Foo Fighters", "Heat 59 ・ 123K+ reels ・ Rising — How It Started vs. How It's Going"],
+                   ["7", "Upside Down", "Diana Ross", "Heat 55 ・ 127K+ reels ・ Peaking — 反転ビフォアフター遷移。Bufferの11月リストにも掲載"],
+                   ["8", "Santa Tell Me", "Ariana Grande", "Heat 54 ・ 571K+ reels ・ Peaking — It's Timeeee／クリスマス・カウントダウン"],
+                   ["9", "November Rain", "Guns N' Roses", "Heat 47 ・ 322K+ reels ・ Peaking — シネマティック旅行・懐かし編集。Bufferの11月リストにも掲載"],
+                   ["10", "Blue Moon", "Zara Larsson", "Heat 47 ・ 63K+ reels ・ Rising — セルフケア・美容チュートリアル"],
+                   ["14", "Patient Zero", "Taylor Swift", "Heat 36 ・ Steady — 歌詞共感型。CreatorDBでは14位、Bufferの11月リストにも掲載"]],
+          feed: [["今週の1位・Heat 98", "Mariah Carey「All I Want for Christmas Is You」が首位 — 5.8M+ reels", "CreatorDB Trending Instagram Audio 2026年11月11日週でHeat 98の首位。毎年11月1日の「It's Time」解禁とともに戻る定番で、店舗のクリスマス装飾ビフォアフターや季節メニューの発表に使われています。Reels数5.8M+は発行時点の概数で、ライブ数ではありません。", "https://creatordb.app/free-tools/trending-instagram-audio/"],
+                 ["2位・Heat 97", "Tate McRae「Housewife」がHeat 97 — Spotify US 1位とクロスオーバー", "273K+ reels。Laterの11月6日付トレンド「I just wanna」でも同曲が使われ、「Be Your Own Housewife」型として、憧れの暮らしの裏側にある仕事を見せる構成が広がっています。CreatorDBではChart Crossoverとして紹介されています。", "https://later.com/blog/instagram-reels-trends/?utm_source=Beauty%20by%20Earth%20Team&utm_medium=email&utm_campaign=Affiliate%20Newsletter%20-%20Send%201%20-%20August%205%20%2801H72Z5K7DSZF0BXWX60TPDH0T%29&_kx="],
+                 ["読み方の注意", "この順位はInstagram公式チャートではありません — Heatは合成スコアです", "Instagramは公式のトレンドチャートを公開していません。CreatorDBのHeat（0〜100）は、7本の独立した週次トレンドレポートと公表Reels数に、Spotify US・Apple Music・YouTube Trendingの勢いと前週比を合成した指標です。Bufferの11月リスト（13音源）でも All I Want for Christmas Is You、Upside Down、November Rain、Underneath the Tree、Patient Zero が重なっており、複数レポートで一致する音源ほど確度が高いと読めます。", "https://buffer.com/resources/trending-audio-instagram/?ref=buffer.com"],
+                 ["季節の並び", "クリスマス系が上位に3曲 — Underneath the Tree（4位）とSanta Tell Me（8位）", "4位 Kelly Clarkson「Underneath the Tree」（Heat 62・451K+ reels）、8位 Ariana Grande「Santa Tell Me」（Heat 54・571K+ reels）とホリデー系が上位を占めます。一方で7位 Diana Ross「Upside Down」（127K+）の反転遷移、9位 Guns N' Roses「November Rain」（322K+）のシネマティック編集、14位 Taylor Swift「Patient Zero」（Heat 36）の歌詞共感型など、季節外の型も残っています。ビジネスアカウントは使える音源が限られるため、投稿前に音源ピッカーで利用可否を確認してください。", "https://creatordb.app/free-tools/trending-instagram-audio/"]] },
+        { id: 4, cat: "sns", real: true, detail: "youtube", title: "YouTube急伸・Shortsトレンド板",
+          desc: "AI BunChoのYouTube Shortsランキング（YouTube Data API集計、2026年11月17日06:25 JST更新・国内急上昇プール372本）と、オリコンYouTubeチャート週間TOP（集計2026年10月30日〜11月5日）の2系統を実データで監視。Shortsの初速トップは「テストの緊張感で正解がわからなくなってしまう」約169,044回/時・累計約510万回、週間音楽動画はM!LK「ザッツ！超常」が745.4万回で首位。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "YouTube発信者・Shortsクリエイター", cadence: "毎日チェック（Shorts）／週1更新（オリコン）",
+          watch: [["AI BunCho Shorts急上昇ランキング", "再生速度・登録者数比"], ["AI BunCho Shorts週間ランキング", "ジャンル構成・冒頭の型"], ["オリコンYouTubeチャート週間TOP", "週間視聴回数と順位変動"]],
+          yshorts: [["1", "テストの緊張感で正解がわからなくなってしまう", "千年ぶりのYouTube", "公開後平均 約169,044回/時 ・ 累計約510万回（5,103,994回）・ 10秒 ・ 登録者数比2,017% — 24時間初速トップ"],
+                   ["2", "銀行強盗が成功する唯一の方法", "千年ぶりのYouTube", "累計約501万回（5,008,333回）・ お笑い・コント ・ 2026年11月14日公開 — 同チャンネルが上位に2本ランクイン"]],
+          ychart: [["1", "ザッツ！超常", "M!LK", "745.4万回 ・ 前週2位から首位 ・ 前週比+33%（前週559.5万回）・ 登場2週目で初の首位"],
+                   ["2", "Yes! 東京", "EBiDAN", "677.8万回 ・ 前週まで5週連続首位から2位へ ・ 前週比-23%でも登場18週目で600万回超"],
+                   ["3", "NOW U KNOW", "BE:FIRST", "482.4万回 ・ 初登場 ・ アルバム『BE:4U』リード曲、11月2日に先行配信・MV公開"],
+                   ["4", "Slidin", "HANA", "476.3万回 ・ 前週68位から64ランクアップ ・ 前週比+563%（約6.6倍）・ 登場2週目でTOP5入り"],
+                   ["5", "You're Under Arrest", "ILLIT", "424.2万回 ・ 前週7位から上昇 ・ 前週比+30%"],
+                   ["6", "It's Me", "ILLIT", "370.8万回 ・ ILLITは今週2曲がTOP10入り"],
+                   ["7", "好きすぎて滅！", "M!LK", "360.0万回 ・ 前週5位から7位 ・ M!LKはTOP30に4曲"],
+                   ["8", "接吻", "Original Love", "324.5万回 ・ 1993年の代表曲が『THE FIRST TAKE』出演でランクイン"],
+                   ["9", "しわあわせ", "Vaundy", "317.3万回 ・ 前週8位から9位 ・ 前週比+2%、映画主題歌のロングヒット"],
+                   ["10", "爆裂愛してる", "M!LK", "308.5万回 ・ 前週12位からTOP10入り"]],
+          feed: [["Shorts初速1位・11/17", "「テストの緊張感で正解がわからなくなってしまう」が約169,044回/時 — 累計約510万回", "AI BunCho「今伸びているYouTubeショート急上昇トレンド」（YouTube Data API v3集計、2026年11月17日06:25 JST更新、分析対象プール：国内急上昇・ショート動画372本）で、公開後1時間あたりの平均再生速度が最も高い動画です。10秒の短尺で累計5,103,994回、登録者数比は2,017%。累計だけでは見えない「いまの勢い」を速度で拾うのがこの板の狙いです。数値は06:25 JST時点のスナップショットで、その後も更新され続けます。", "https://bun-cho.work/shorts-ranking/trending"],
+                 ["Shorts 2位・同チャンネル", "「銀行強盗が成功する唯一の方法」千年ぶりのYouTube — 累計約501万回", "同じく千年ぶりのYouTubeの「銀行強盗が成功する唯一の方法」（2026年11月14日公開）が累計5,008,333回で続きます。AI BunChoの集計では同チャンネルが対象50本中2本ランクインして最多登場。タイトルで「唯一の方法」と答えを伏せる型が、最後まで見させる作りになっています。", "https://bun-cho.work/shorts-ranking/trending"],
+                 ["週間ジャンル・Shorts", "週間では「お笑い・コント」が最多ジャンル — 冒頭はセリフ先出し型が最多", "AI BunChoの週間総合（直近7日間、2026年11月17日06:25 JST更新）では、対象50本のうちお笑い・コントが最多ジャンルでした。急上昇プール全体でもお笑い・コントが上位を占め、冒頭の型は「セリフ先出し型」が最多級。企画を立てるなら、強いセリフをタイトルと1カット目に置くコント型が今週の本命です。上位50本の再生数中央値は約389万〜405万回で、全50本が登録者数を上回る再生を記録しています。", "https://bun-cho.work/shorts-ranking"],
+                 ["週間音楽動画1位", "オリコンYouTubeチャート1位はM!LK「ザッツ！超常」745.4万回 — 前週比+33%", "オリコンYouTubeチャート週間TOP（集計2026年10月30日〜11月5日、11月11日発表）で、M!LK「ザッツ！超常」が前週2位から初の首位。前週559.5万回から745.4万回へ33%増えました。2位はEBiDAN「Yes! 東京」677.8万回（前週まで5週連続首位）、3位はBE:FIRST「NOW U KNOW」482.4万回が初登場です。Billboard JAPAN Hot 100の順位とも連動しており、音楽板と合わせて読めます。", "https://www.oricon.co.jp/news/2491972/full/"],
+                 ["急上昇・64ランクアップ", "HANA「Slidin」が前週68位→4位 — 視聴回数は約6.6倍", "同じオリコン週間TOPで、HANA「Slidin」が476.3万回を記録し、前週68位から64ランクアップ。前週比+563%（約6.6倍）の拡大で、登場2週目にしてTOP5入りしました。10月29日配信、31日にMV公開というタイミングが伸びと重なっています。「急に伸びた理由」を週次で追うサンプルとしてこの板に残しています。", "https://www.oricon.co.jp/news/2491972/full/"]] },
+        { id: 5, cat: "music", real: true, detail: "tiktok", title: "TikTok急上昇曲・使用音源板",
+          desc: "オリコン週間TikTok音楽チャートのTop10と急上昇だけを通知。TikTok日本国内の動画作成数・再生数・エンゲージメントから作られる公式チャートで、「今伸びている音」を選曲に使える。実データ表示中：最新は2026年11月13日付（2026年11月18日時点スナップショット）。",
+          who: "動画発信者・選曲担当", cadence: "週1更新", feedDate: "2026年11月18日",
+          watch: [["オリコン週間TikTok音楽チャート", "Top10の順位変動"], ["TikTokの楽曲ページ", "使用動画数の急増"], ["使われている区間", "サビなど切り出し位置"]],
+          tchart: [["1", "琥珀色の街、上海蟹の朝", "くるり", "2016年7月リリースのEP曲。10年越しの再浮上で2週連続首位"],
+                   ["2", "Crazy Party Night～ぱんぷきんの逆襲～", "きゃりーぱみゅぱみゅ", "ハロウィン曲が2位に浮上。前週時点のTikTok Popularチャートでも2位だった曲"],
+                   ["3", "結び", "Ayumu Imazu", "前週4位から3位へ上昇。Billboard JAPAN Hot 100でも5位"],
+                   ["4", "しわあわせ", "Vaundy", "前週3位から4位。2021年曲が映画主題歌起用で再ブレイク継続。Billboardストリーミングでも首位継続"],
+                   ["5", "多摩川で、恋...したい■", "一条ゆう", "前週2位から5位"],
+                   ["6", "にゃんにゃんにゃん", "コレサワ", "前週5位から6位。2023年2月リリース。猫目線の歌詞とダンスで再燃継続"],
+                   ["7", "Yes! 東京", "EBiDAN", "前週7位をキープ。Billboard JAPAN Hot 100でも3位のロングヒット"],
+                   ["8", "Growing for a dream", "わか", "今週Top10入りした新顔"],
+                   ["9", "Happy Halloween", "Junky", "ハロウィン曲が9位にTop10入り。2位のきゃりーと合わせて季節曲が2曲"],
+                   ["10", "ワッサー (feat. PAIN)", "ARI", "前週6位から10位"]],
+          feed: [["今週の1位・2週連続", "くるり「琥珀色の街、上海蟹の朝」がTikTok音楽チャート2週連続1位", "オリコン週間TikTok音楽チャート2026年11月13日付（集計11/5〜11/11）で首位をキープ。2016年リリースの曲が10年を経て再浮上し、2週続けてトップに立っています。", "https://www.oricon.co.jp/rank/tt/w/2026-11-13/"],
+                 ["2位・ハロウィン曲", "きゃりーぱみゅぱみゅ「Crazy Party Night～ぱんぷきんの逆襲～」が2位 — 9位にもJunky「Happy Halloween」", "前週時点のTikTok Popularチャートで2位だったハロウィン曲が、オリコン週間チャートでも2位に入りました。9位にはJunky「Happy Halloween」もTop10入りし、ハロウィン関連が2曲並ぶ週になりました。", "https://www.oricon.co.jp/rank/tt/w/2026-11-13/"],
+                 ["入れ替わり", "「結び」3位へ上昇、「you&i」「日曜日」「マル・マル・モリ・モリ！」はTop10圏外へ", "Ayumu Imazu「結び」が前週4位から3位へ、Vaundy「しわあわせ」は3位から4位、一条ゆう「多摩川で、恋...したい■」は2位から5位へ。一方、10月・11月と9位をキープしていたアカシック「you&i」、back number「日曜日」、「マル・マル・モリ・モリ！ - フルサイズ」がTop10から外れ、わか「Growing for a dream」が8位に新しく入りました。", "https://www.oricon.co.jp/rank/tt/w/2026-11-13/"]] },
+        { id: 6, cat: "music", real: true, detail: "spotify", title: "Spotifyバイラル・急上昇板",
+          desc: "Spotify公式のViral 50は2026年に終了したため、この板はSpotify日本チャートの実データ（週間Top Songs＋急上昇ムーバー）で構成しています。週間Top200（集計2026年10月30日〜11月5日）はVaundy「しわあわせ」が294.5万再生で2週連続首位、急上昇はILLIT「You're Under Arrest」が112位→12位の100ランクアップ。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "音楽ファン・選曲担当", cadence: "週1更新（週間）／毎日チェック（日次）",
+          watch: [["Spotify日本週間Top200", "順位と週間再生数"], ["急上昇ムーバー", "大幅ランクアップと初登場"], ["Spotify Daily Japan", "日次の首位と再生数"]],
+          schart: [["1", "しわあわせ", "Vaundy", "294.5万再生 ・ 2週連続首位 — 日次（11/15）でも466,332再生で1位"],
+                   ["2", "結び", "Ayumu Imazu", "223.5万再生 — Billboard Hot 100でも5位と連動"],
+                   ["3", "Yes! 東京", "EBiDAN", "218.9万再生 — ロングヒット継続"],
+                   ["4", "ブルーアンバー", "back number", "192.3万再生"],
+                   ["7", "ザッツ！超常", "M!LK", "152.7万再生 ・ 前週から+17ランク — YouTube週間でも首位の曲"],
+                   ["8", "Brand New", "Mrs. GREEN APPLE", "144.8万再生"],
+                   ["10", "水平線", "back number", "142.1万再生 — back numberはTop10に2曲"],
+                   ["12", "You're Under Arrest", "ILLIT", "135.4万再生 ・ 112位→12位（100ランクアップ）— 今週最大の急上昇"],
+                   ["33", "Slidin", "HANA", "102.4万再生 ・ 初登場33位 — YouTubeでも68位→4位の急伸と一致"],
+                   ["69", "NOW U KNOW", "BE:FIRST", "57.5万再生 ・ 69位 — アルバム『BE:4U』リード曲、Billboardでは初登場2位"]],
+          feed: [["週間1位・2週連続", "Vaundy「しわあわせ」がSpotify日本週間1位 — 294.5万再生", "Spotify日本週間Top200（集計2026年10月30日〜11月5日、Spotify公式チャート）で、Vaundy「しわあわせ」が294.5万再生を記録し2週連続首位。2位はAyumu Imazu「結び」223.5万再生、3位はEBiDAN「Yes! 東京」218.9万再生、4位はback number「ブルーアンバー」192.3万再生でした。日次でも11月15日デイリーで466,332再生の1位と、週間・日次ともに首位が一致しています。", "https://charts.spotify.com"],
+                 ["急上昇・100ランクアップ", "ILLIT「You're Under Arrest」が112位→12位 — 135.4万再生", "同じ週間Top200で最大のジャンプアップです。前週112位から12位へ100ランク上昇し、135.4万再生を記録しました。オリコンYouTube週間でも前週7位→5位（424.2万回）と、複数プラットフォームで同時に伸びている曲としてこの板に残しています。", "https://charts.spotify.com"],
+                 ["初登場・急伸", "HANA「Slidin」が33位初登場（102.4万）／ M!LK「ザッツ！超常」は7位へ+17", "HANA「Slidin」は週間33位に初登場し102.4万再生。YouTube週間では68位→4位（+563%）と、SpotifyとYouTubeで急伸が一致しています。M!LK「ザッツ！超常」は152.7万再生で7位（前週から+17ランク）、Mrs. GREEN APPLE「Brand New」は8位144.8万再生、back number「水平線」は10位142.1万再生で、back numberはTop10に2曲入りました。BE:FIRST「NOW U KNOW」は69位・57.5万再生です。", "https://charts.spotify.com"],
+                 ["読み方の注意", "Spotify公式Viral 50は2026年に終了 — この板は週間Top Songsで代替しています", "かつてSNS発の拡散を測る指標だったSpotify公式「Viral 50」は2026年に終了しています。そのためこの板はバイラルチャートを名乗らず、Spotify日本週間Top200（Top Songs）の順位・再生数と、順位が大きく動いた曲（急上昇ムーバー）を組み合わせて「いまストリーミングで跳ねている曲」を追う構成にしています。数値は2026年11月17日時点のスナップショットです。", "https://charts.spotify.com"]] },
+        { id: 7, cat: "music", real: true, title: "流行りの曲 Top10 監視板",
+          desc: "Billboard JAPAN Hot 100とSpotify Japanの順位変動を毎週監視。Top10の入れ替わりと急上昇だけを届ける。実データ表示中：最新は2026年11月11日公開分。",
+          who: "音楽ファン・発信者・選曲担当", cadence: "週1更新（水曜）",
+          watch: [["Billboard JAPAN Hot 100", "Top10の順位変動"], ["Spotify Japan Daily", "再生数の急増"], ["新曲・再浮上", "初登場と季節曲の復活"]],
+          chart: [["1", "Emotion", "Aぇ! group", "初登場", "CD 496,736枚でセールス1位、DL2位"],
+                  ["2", "NOW U KNOW", "BE:FIRST", "初登場", "DL 13,621件で1位、動画1位。アルバム『BE:4U』リード曲"],
+                  ["3", "Yes! 東京", "EBiDAN", "前週2位 ↓", "ストリーミング 8,083,459回で2位"],
+                  ["4", "しわあわせ", "Vaundy", "前週3位 ↓", "ストリーミング 8,551,445回で1位。Spotify Japanでも1位継続"],
+                  ["5", "結び", "Ayumu Imazu", "前週6位 ↑", "ストリーミング 7,678,055回で3位"],
+                  ["6", "ザッツ!超常", "M!LK", "前週1位 ↓", "動画2位。前週首位から後退"],
+                  ["7", "シンデレラ", "Mrs. GREEN APPLE", "前週4位 ↓", "ラジオ1位"],
+                  ["8", "だって大凶じゃん☆", "ロージークロニクル", "初登場", "CD 68,524枚でセールス2位"],
+                  ["9", "New Look", "IS:SUE", "初登場", "シングル『COMING SOON』66,993枚でセールス3位"],
+                  ["10", "Call My Name", "TWS", "初登場", "シングル『TO US』リード曲、41,891枚"]],
+          feed: [["今週のTop10", "Billboard JAPAN Hot 100（11/11公開・集計11/2〜11/8）", "Billboard JAPAN公式チャートで確認。1位はAぇ! group「Emotion」が初登場首位（総合ポイント8,216）。Top10のうち5曲が初登場と入れ替わりが大きい週。11位のHANA「Slidin」は前週22位から浮上し、来週のTop10入り候補です。", "https://www.billboard-japan.com/charts/detail?a=hot100&year=2026&month=11&day=16"],
+                 ["ストリーミング首位", "Spotify Japan（11/15）でも「しわあわせ」が1位", "Spotify Daily Japan 11月15日分ではVaundy「しわあわせ」466,332再生で1位、2位Ayumu Imazu「結び」442,171再生、3位EBiDAN「Yes! 東京」359,404再生。Billboardのストリーミング順位と一致しています。", "https://charts.spotify.com"],
+                 ["季節の再浮上", "back number「クリスマスソング」が76位に再登場、米津玄師「Lemon」は59位", "Billboard JAPAN公式チャート（2026年11月11日公開分）で、back number「クリスマスソング」が前週圏外から76位に再チャートイン（通算157週目のチャートイン）。米津玄師「Lemon」も前週圏外から59位に再登場しました（通算350週目）。季節曲とロングヒット曲が年末に向けて戻ってくる動きです。", "https://www.billboard-japan.com/charts/detail?a=hot100&year=2026&month=11&day=16"]] },
+        { id: 8, cat: "shop", real: true, detail: "ecmall", title: "EC競合／モール売れ筋板",
+          desc: "個別店舗の監視データではなく、大手モールの公開ランキングによる市場動向として構成する板。楽天市場デイリーランキング（2026年11月8日集計・11月9日更新）は「訳あり食品」と「備蓄」が中心で、2位 おせち福袋2027 12,345円、3位 〈無塩〉骨取りさば訳あり 3,490円〜、6位 骨取り銀さけ訳あり 3,990円〜、9位・12位に簡易トイレ、15位 天然水500ml×48本ラベルレス 2,260円〜、20位 炭酸水48本 2,370円〜。Amazon週間売れ筋（2026年11月14日時点）はファッションは大きめ折りたたみ傘とVARZARロゴキャップ、ビューティーはReKERAエマルジョンとカネボウ「スクラビング マッド ウォッシュ」、ゲームはSwitch版「It Takes Two」とMeta Quest 3S、食品は水・お茶のケース買いが中心。価格はすべて集計時点のものです。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "EC店主・バイヤー・買い物好き", cadence: "デイリー／週次で更新（楽天デイリー・Amazon週間）",
+          watch: [["楽天市場 公式ランキング（デイリー）", "総合上位の顔ぶれと価格"], ["Amazon公式ベストセラー", "ジャンル別の上位商品"], ["価格・順位の時点", "集計時点の価格であることの確認"]],
+          rchart: [["2", "おせち福袋 2027（3〜4人前以上保証・56種から1種）", "12,345円", "季節もの。冷蔵・送料無料。口コミは5万件超（月間ランキング調べ）"],
+                   ["3", "〈無塩〉骨取りさば 訳あり（1kg・2kg）", "3,490円〜", "訳あり魚の中心。骨取り・冷凍で日持ち。集計時点では半額クーポン対象"],
+                   ["6", "〈無塩〉骨取り銀さけ 訳あり（1kg・2kg）", "3,990円〜", "3位と同じ店の訳あり魚。骨取り・無塩が共通点"],
+                   ["9", "簡易トイレ（日本防災安全協会認証・防臭袋付き）", "1,180円〜", "備蓄枠の1品目。防災用として2品が上位入り"],
+                   ["12", "簡易トイレ（「週間ランキング総合1位獲得」表記）", "3,980円〜", "備蓄枠の2品目。水のまとめ買いとセットで備える動き"],
+                   ["14", "骨取りサバ切身 1kg（無塩／有塩が選べる）", "2,490円〜", "訳あり魚の3品目。公式ランキングで確認できる追加の上位"],
+                   ["15", "天然水 500ml×48本 ラベルレス", "2,260円〜", "1本あたり47.1円〜。48本・ラベルレスが備蓄買いの定番"],
+                   ["20", "炭酸水 500ml×48本（強炭酸）", "2,370円〜", "備蓄ドリンクの2品目。48本ケース買い"]],
+          achart: [["ファッション", "大きめ折りたたみ傘（超大サイズ・12本骨・自動開閉）", "今週も上位。先週と同じ顔ぶれが中心で順位が入れ替わった週"],
+                   ["ファッション", "VARZAR Stud logo over fit ball cap（ロゴキャップ）", "バザール（VARZAR）のロゴキャップが先週に続いて上位"],
+                   ["ビューティー", "ReKERA（リケラ）エマルジョン 200mL", "先週に続いて売れ筋。リトル・サイエンティスト"],
+                   ["ビューティー", "KANEBO スクラビング マッド ウォッシュ 130g", "カネボウの洗顔料。先週に続いて上位"],
+                   ["ゲーム", "It Takes Two — Nintendo Switch版", "先週と同じく上位。PC版マインクラフトと並ぶゲームの顔ぶれ"],
+                   ["ゲーム", "Meta Quest 3S 128GB", "VRゴーグル。Nintendo Switch（有機ELモデル）も売れ筋"],
+                   ["食品・飲料", "水・お茶のケース買い（い・ろ・は・す 2L、by Amazon天然水・炭酸水、伊藤園の水など）", "食品はケース買いが中心。綾鷹・爽健美茶・コカ・コーラ24本入りも人気"]],
+          feed: [["楽天・中心テーマ", "楽天デイリー上位の中心は「訳あり食品」と「備蓄」 — 2026年11月8日集計・11月9日更新", "2026年11月9日更新の楽天市場デイリーランキング（集計は11月8日）では、食品は訳ありの骨取り魚が3品、備蓄は簡易トイレ2品と飲料2品が上位に入り、季節もののおせち福袋が2位でした。値段が上がり続ける中で、訳あり品で食費を抑え、水と防災はまとめ買いする買い方がそのまま表れた形です。この板は個別店舗の価格・在庫の監視ではなく、モール全体の公開ランキングで市場の向きを読むためのものです。価格は集計時点のものです。", "https://ranking.rakuten.co.jp/"],
+                 ["楽天・訳あり魚", "訳あり魚が3品上位 — 3位 骨取りさば 3,490円〜、6位 骨取り銀さけ 3,990円〜、14位 骨取りサバ切身 2,490円〜", "3位は〈無塩〉骨取りさば 訳あり（1kg・2kg）3,490円〜、6位は同じ店の〈無塩〉骨取り銀さけ 訳あり（1kg・2kg）3,990円〜、14位は骨取りサバ切身 1kg（無塩／有塩が選べる）2,490円〜です。共通点は「骨取り」で、冷凍で日持ちすること。2位のおせち福袋2027（12,345円、3〜4人前以上保証・56種から1種）は季節ものの代表です。価格はすべて2026年11月8日集計時点のものです。", "https://ranking.rakuten.co.jp/"],
+                 ["楽天・備蓄", "備蓄は「48本の水」と「簡易トイレ」 — 15位 天然水48本 2,260円〜、20位 炭酸水48本 2,370円〜、簡易トイレは9位・12位", "15位の天然水 500ml×48本 ラベルレスは2,260円〜（1本あたり47.1円〜）、20位の炭酸水 500ml×48本（強炭酸）は2,370円〜でした。簡易トイレは9位（日本防災安全協会認証・防臭袋付き、1,180円〜）と12位（3,980円〜）の2品が入っています。断水時に困るのは水よりトイレだと言われる中で、水は48本でまとめ買い、トイレも一緒に備える動きが読み取れます。価格は集計時点のものです。", "https://ranking.rakuten.co.jp/"],
+                 ["Amazon・週間売れ筋", "Amazon週間（11月14日時点）は「先週と同じ顔ぶれ＋順位の入れ替わり」 — ファッション・ビューティー・ゲーム・食品で確認", "2026年11月14日時点で、Amazonで過去1週間によく売れた商品のジャンル別の顔ぶれです。ファッションは大きめの折りたたみ傘とVARZARのロゴキャップ、ビューティーはReKERAのエマルジョンとカネボウ「スクラビング マッド ウォッシュ」、ゲームはSwitch版「It Takes Two」とMeta Quest 3S（PC版マインクラフトも上位）、食品は水・お茶のケース買いが中心でした。今週はU-Makesの10Lランニングリュックがファッションで上位に上がってきたのが新しい動きです。現在の順位はリンク先のAmazon公式ベストセラーで確認できます。", "https://www.amazon.co.jp/gp/bestsellers"],
+                 ["読み方の注意", "この板は個別店舗の監視ではありません — 公開ランキングのスナップショットで、価格は集計時点のものです", "楽天の順位・価格は2026年11月8日集計（11月9日更新）時点、Amazonの顔ぶれは2026年11月14日時点のものです。どちらも日々入れ替わるため、現在の価格・在庫は各販売ページで確認してください。特定の競合店の値下げや売り切れを追う板ではなく、「いまモール全体で何が買われているか」を仕入れ・品揃え・買い物の判断材料にするための板です。数値は2026年11月17日時点のスナップショットです。", "https://ranking.rakuten.co.jp/"]] },
+        { id: 9, cat: "shop", real: true, detail: "pokemarket", title: "中古相場・コレクター相場監視板",
+          desc: "ポケモンカードのコレクター相場を買取価格のスナップショットで監視。2000年代☆カード初版の買取価格が2026年9月23日→10月19日で急騰し（レックウザ☆初版 700万円→1,500万円・約2.1倍、リザードン☆δ初版 800万円→1,500万円、ミュウ☆δ初版 600万円→1,200万円、ピカチュウ☆ 320万円→450万円）、11月4日時点のPRICE BASE買取目安では6枚すべて横ばい。数値はすべて買取価格・買取目安で、販売価格や成約価格ではありません。投資助言ではありません。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "コレクター・トレカ保有者", cadence: "時点比較で更新（9/23・10/19・11/4）",
+          watch: [["☆カード初版の買取価格（eternisまとめ）", "3時点の推移と倍率"], ["PRICE BASE買取目安", "高額カード上位の顔ぶれ"], ["価格の種類の確認", "買取か販売か成約かの区別"]],
+          kchart: [["レックウザ☆（初版）", "067/082", "7,000,000円", "15,000,000円（約2.1倍）", "15,000,000円（横ばい）"],
+                   ["リザードン☆ δ-デルタ種（初版）", "052/068", "8,000,000円", "15,000,000円（約1.9倍）", "15,000,000円（横ばい）"],
+                   ["ミュウ☆ δ-デルタ種（初版）", "015/068", "6,000,000円", "12,000,000円（約2.0倍）", "12,000,000円（横ばい）"],
+                   ["アチャモ☆（初版）", "020/084", "4,500,000円", "6,200,000円（約1.4倍）", "6,200,000円（横ばい）"],
+                   ["ミズゴロウ☆（初版）", "033/084", "3,500,000円", "5,200,000円（約1.5倍）", "5,200,000円（横ばい）"],
+                   ["ピカチュウ☆", "001/002", "3,200,000円", "4,500,000円（約1.4倍）", "4,500,000円（横ばい）"]],
+          feed: [["急騰・9/23→10/19", "☆初版が約1か月で1.4〜2.1倍 — レックウザ☆初版は700万円→1,500万円", "eternis「ポケカの高騰カードと今後の予想【2026年11月】」が、大手買取店の買取価格を集計した専門メディアの2時点（2026年9月23日と10月19日）を比べた表です。レックウザ☆（初版）が約2.1倍で最大、ミュウ☆δ（初版）が600万円→1,200万円（約2.0倍）、リザードン☆δ（初版）が800万円→1,500万円（約1.9倍）と続きます。集計したメディア自身が「約1か月で2倍になるのは珍しい」「急に上がった価格は早く下がることもある」と注意を促しています。上昇の理由は出典では明示されていません。", "https://eternis.jp/blogs/news/pokeca-koutou-card"],
+                 ["横ばい・11/4時点", "11月4日時点のPRICE BASE買取目安は6枚すべて10月19日と同額 — 上昇は止まって水準維持", "時点Cとして加えたPRICE BASEの買取目安（2026年11月4日時点）では、表の6枚すべてが10月19日の数字と同額でした。PRICE BASEの高額カード一覧でもリザードン☆δ（初版）とレックウザ☆（初版）が1,500万円で並んで首位、アンリミテッド版などが1,200万円で続き、上位の顔ぶれは同じです。「まだ上がっている」のではなく「高い水準で止まっている」と読むのが正確です。", "https://eternis.jp/blogs/news/pokeca-koutou-card"],
+                 ["読み方の注意", "この板の数字は買取価格・買取目安です — 販売価格や成約価格ではありません", "時点A・Bは情報メディア経由の買取価格（参考）、時点CはPRICE BASEの買取目安で、出どころが異なるため時点Cとの差は参考程度に読んでください。買取価格は店が買い取る額で、販売価格（店の売値）や成約価格（実際に売れた額）とは別物です。またこの板は相場の記録であり、売買の推奨や投資助言ではありません。急騰したカードほど状態（傷の有無）と初版かどうかで実際の査定額が大きく変わります。", "https://eternis.jp/blogs/news/pokeca-koutou-card"]] },
+        { id: 10, cat: "shop", real: true, detail: "pokelimited", title: "限定品の入荷・再販監視板",
+          desc: "ポケモンカードの新弾・限定弾の発売と初動相場を実データで監視。新弾「30th CELEBRATION」（2026年9月16日発売）のミュウex FURは買取価格（参考）が発売日22,000円→10月22日4,000円と発売直後ピーク型で、同じ弾でも動きは逆になる。次弾MEGA拡張パック「ハドウシーカー」は2026年11月27日（金）発売予定。数値は買取価格・買取目安で、販売価格や成約価格ではありません。投資助言ではありません。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "コレクター・ファン・カードショップ利用者", cadence: "新弾発売前後に更新",
+          watch: [["新弾の発売日・公式発表", "発売日と収録内容の公開"], ["新弾当たりカードの買取価格（参考）", "発売日とその後の推移"], ["次弾・追加抽選の予定", "発売日と抽選案内"]],
+          lchart: [["ミュウex FUR", "M6a-135/103", "22,000円", "4,000円", "新レアリティFUR。発売直後ピーク型の代表例"],
+                   ["ミュウ R／RGB", "M6a-R/RGB", "1,000,000円", "550,000円", "同弾で最も高額。9/22に500,000円→550,000円へ小幅に戻した動きもあり"],
+                   ["ピカチュウex SAR", "M6a-126/103", "17,000円", "3,000円", "発売日から大きく下落"],
+                   ["ピカチュウex SAR", "M6a-127/103", "17,000円", "4,000円", "型番違いの同名カード"],
+                   ["ミュウex SAR", "M6a-129/103", "10,000円", "3,500円", "FUR版よりは緩やかな下落"],
+                   ["ミュウツーex SAR", "M6a-128/103", "6,000円", "2,000円", "表の7枚すべてが発売日より下落"],
+                   ["ルギア（復刻版）", "M6a-142/103", "18,000円", "14,000円", "9/22に24,000円まで上がった後に下落。下げ幅は最小"]],
+          feed: [["発売直後ピーク・30th", "ミュウex FURは発売日22,000円→10月22日4,000円 — 新弾は発売日が天井の例", "eternis「ポケカの高騰カードと今後の予想【2026年11月】」が相場情報サイトの価格表をもとに並べた買取価格（参考）です。2026年9月16日発売の「30th CELEBRATION」では、表の7枚すべてが発売日より10月22日の方が安く、ミュウex FUR（M6a-135/103）は22,000円から4,000円へ下がりました。コレクター相場板の☆初版の急騰とは正反対の動きで、新弾の発売日価格がそのまま続くとは限らないことを示すサンプルです。", "https://eternis.jp/blogs/news/pokeca-koutou-card"],
+                 ["次弾・11/27発売予定", "MEGA拡張パック「ハドウシーカー」は2026年11月27日（金）発売予定 — 1パック200円・5枚入り", "ポケモンカードゲーム公式発表ベースの予定です。メガルカリオZex・メガガブリアスZex・メガアブソルZexなど「Z」が付くメガシンカexが登場し、公開済みのカードは20種で、SARなどの上位レアリティは11月17日時点で未発表です。発売前は抽選・予約の案内が先行するため、この板では発売日と公式の追加発表を監視対象にしています。発売後の買取価格は日付つきで追うのが基本です。", "https://www.pokemon-card.com/ex/m7/"],
+                 ["追加抽選・12月頃", "30th CELEBRATION関連3商品の追加抽選が12月頃に予定 — 供給が増える可能性", "ポケモンセンターオンラインの2026年9月29日のお知らせで、30th CELEBRATION拡張パックBOX、プレミアムデッキセット エーフィ・ブラッキー、FUTURISTIC BOXの追加抽選が12月頃に予定されています。日程・数量は未発表で、供給がどの程度増えるかは現時点では分かりません。再販・追加生産は相場を落ち着かせる要因になり得るため、発売直後ピーク型のカードを持っている場合は抽選結果も合わせて見る価値があります。", "https://eternis.jp/blogs/news/pokeca-koutou-card"],
+                 ["読み方の注意", "買取価格（参考）であり販売価格・成約価格ではありません — 投資助言でもありません", "上の表は買取価格（参考）の比較です。発売日の高値は供給が少ない初日の数字で、成約がその価格で続いたことを意味しません。この板は発売日と価格推移の記録であり、購入・転売の推奨や投資助言ではありません。新弾は発売直後の価格変動が大きいため、買う場合も売る場合も日付つきの複数店舗の数字で確認してください。", "https://price-base.com/useful/30thcelebration-hit"]] },
+        { id: 11, cat: "shop", real: true, detail: "buzzshop", title: "トレンド商品／バズ商品 先行検知板",
+          desc: "Nolyn月次レポート2026年11月版（2026年11月9日収集、TikTok日本・過去30日＝10月10日〜11月8日の商品紹介動画91本をいいね順集計）と、TokConnect TikTok Shop Japan急上昇商品（11月4日までの7日間推定）の2系統を実データで監視。TikTokで反応が大きい商品は魚のウロコ取りが139,157いいね・11,699,683再生で1位、上位10本中6本がセリア・ダイソー商品。TikTok Shopの急上昇1位はシルバーベール ティッシュオフリップタトゥー（推定¥769K・前週比10倍以上）。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "EC・発信者・小売バイヤー", cadence: "月1更新（Nolyn）／週1更新（TokConnect）",
+          watch: [["Nolyn月次レポート（TikTok商品紹介動画）", "いいね順Topと100均比率"], ["TokConnect TikTok Shop急上昇商品", "推定売上と前週比"], ["TikTok商品紹介の型", "実演・まとめ・新色紹介の伸び方"]],
+          nchart: [["1", "魚のウロコ取り", "139,157いいね ・ 11,699,683再生", "キッチン用品の実演型。2位の約2倍のいいねで圧倒的1位"],
+                   ["2", "セリアの人気商品8選", "72,078いいね", "100均まとめ型。セリア商品を複数まとめて紹介する動画"],
+                   ["3", "ダイソーのネイル新色（グリッター）", "39,499いいね", "ダイソーの新作コスメ。グリッター系ネイルの紹介"],
+                   ["4", "セリアの眉用カミソリ", "27,282いいね", "セリアの美容小物。単品紹介で上位入り"]],
+          pchart: [["1", "シルバーベール ティッシュオフリップタトゥー", "推定¥769K", "前週比10倍以上 — Beauty and Personal Care。再入荷を打ち出した商品"],
+                   ["2", "スクイーズおもちゃ5個セット", "推定¥736K", "前週比+468% — Toys and Hobbies。ライブ限定のセット商品"],
+                   ["3", "生姜高麗人参シャンプーバー", "推定¥503K", "前週比+188% — Beauty and Personal Care。固形シャンプー／頭皮ケア"]],
+          feed: [["TikTok反応1位・Nolyn", "魚のウロコ取りが139,157いいね・11,699,683再生で1位", "Nolyn月次レポート2026年11月版（2026年11月9日収集、対象は2026年10月10日〜11月8日にTikTok日本で投稿された商品紹介動画91本、いいね順）で首位。キッチン用品の実演型が2位以下を大きく引き離しました。ただし、いいね・再生は投稿への反応であり、販売数ではありません。", "https://www.nolyn.ai/ja/case-studies/tiktok-hayari-shouhin"],
+                 ["100均が上位を占有・Nolyn", "上位10本中6本がセリア・ダイソー — 2位セリア8選、3位ダイソーネイル、4位セリア眉カミソリ", "2位はセリアの人気商品8選（72,078いいね）、3位はダイソーのネイル新色（グリッター）（39,499いいね）、4位はセリアの眉用カミソリ（27,282いいね）です。低価格で試せる商品がTikTokの商品紹介では伸びやすいことが数字で分かります。こちらも販売数ではなく、いいね数ベースの順位です。", "https://www.nolyn.ai/ja/case-studies/tiktok-hayari-shouhin"],
+                 ["Shop急上昇1位・推定", "シルバーベール ティッシュオフリップタトゥーが推定¥769K・前週比10倍以上", "TokConnect TikTok Shop Japan急上昇商品（11月4日までの7日間、TokConnect Shop Analyticsの推定）で1位。2位はスクイーズおもちゃ5個セット（推定¥736K・前週比+468%）、3位は生姜高麗人参シャンプーバー（推定¥503K・前週比+188%）です。売上・個数はTikTok Shopの販売カウンターと表示価格から推定した値で、公式の確定売上ではありません。", "https://tokconnect.com/trends/tiktok-shop/rising-products-japan/"],
+                 ["読み方の注意", "「バズ（いいね）」と「売れ行き（推定売上）」は別物 — 2系統を並べて読む板です", "NolynはTikTok動画への反応（いいね・再生）で、TokConnectはTikTok Shopの推定売上です。反応が大きくてもShopリンクがない動画も多く、逆にShopで急上昇しても動画のいいねが目立たない商品もあります。仕入れ・企画では両方を見て、反応と売れ行きが重なる商品を優先するのがこの板の使い方です。数値は2026年11月17日時点のスナップショットです。", "https://tokconnect.com/trends/tiktok-shop/rising-products-japan/"]] },
+        { id: 12, cat: "shop", real: true, detail: "sale", title: "セール・値下げ・クーポン板",
+          desc: "2026年ブラックフライデーのセールカレンダーを実データで監視。Amazon ブラックフライデー2026の詳細日程が11月19日に公式発表され、先行セール11月27日（金）0:00〜11月29日（日）23:59、本セール11月30日（月）0:00〜12月7日（月）23:59（8日間）、対象商品は過去最大の400万点以上と確定。本日11月20日（金）からユニクロ感謝祭2026冬がスタート（11月26日（木）までの7日間、初日は「UNIQLOあんぱん」の先着プレゼントあり）。Gap ブラックフライデー2026は11月19日（木）開始で11月30日（月）まで、全国のGapストアと公式オンラインストアで対象商品40%OFF、Gap Outletストアでは50%OFF。楽天市場は2026年11月19日（木）20:00〜11月25日（水）1:59、ショップ買いまわりでポイント最大47.5倍。高島屋オンラインストア（11月28日（土）10:00まで）とイトーヨーカドー（11月29日（日）まで全12日間「赤と黒の祭典」）は11月18日から開催中。イオンは11月20日（金）〜11月30日（月）、ブラックフライデー本番は11月27日（金）。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "買い物好き・EC利用者", cadence: "毎日チェック（11/20にAmazon日程確定・ユニクロ感謝祭追加で更新）", feedDate: "2026年11月20日",
+          watch: [["Gap ブラックフライデー公式発表", "期間・割引率・Black Friday Card"], ["高島屋オンラインストア ブラックフライデー公式ページ", "期間・送料無料クーポン"], ["イトーヨーカドー ブラックフライデー公式発表", "店頭期間と企画テーマ"], ["楽天市場 ブラックフライデー公式ページ", "日程・エントリー・クーポン"], ["イオン ブラックフライデー公式発表", "店頭期間と企画"], ["Amazon ブラックフライデー公式発表", "先行・本セールの確定日程と対象商品数"], ["ユニクロ感謝祭2026冬 公式発表", "期間・感謝価格の対象・来店特典"]],
+          scal: [["11/18（水）10:00 〜 11/28（土）10:00", "高島屋オンラインストア ブラックフライデー", "確定・公式発表済み", "本日11/18開始。期間中1回使える送料無料クーポンをプレゼント（第1弾のご利用期間は11/18 10:00〜11/23 9:59）。タカシマヤアプリ会員様限定の先行販売は11/16 10:00〜11/18 10:00で実施済み"],
+                   ["11/18（水）〜 11/29（日）", "イトーヨーカドー ブラックフライデー2026「赤と黒の祭典」（店舗）", "確定・公式発表済み（10/30発表）", "全12日間。前半11/18〜20は「レッドプライスデー」、後半11/25〜27は「96（クロ）プライス」。ネット通販は別企画で10/30 12:00〜11/30 23:59に開催中"],
+                   ["11/19（木）〜 11/30（月）", "Gap ブラックフライデー2026", "確定・公式発表済み（11/16発表）", "本日11/19開始。全国のGapストアと公式オンラインストアで対象商品40%OFF、Gap Outletストアでは50%OFF（一部対象外あり）。期間中に購入した全員に、12/1（火）〜12/25（金）のお買い物が50%OFFになる「Black Friday Card」をプレゼント"],
+                   ["11/19（木）20:00 〜 11/25（水）1:59", "楽天市場 ブラックフライデー", "確定・公式発表済み", "ショップ買いまわりでポイント最大47.5倍。エントリーは11/12（木）10:00開始済み（期間中にエントリーすればエントリー前の買い物も対象）。1ショップ1,000円（税込）以上が買いまわり対象、上限7,000ポイント。開始直後2時間限定の最大50%OFFクーポンあり"],
+                   ["11/20（金）〜 11/30（月）", "イオン 超！ブラックフライデーフェス（店頭）", "確定・公式発表済み", "全国の「イオン」「イオンスタイル」等 約600店舗で11日間。2026年は「超！ブラックフライデーセール」から「フェス」へ進化。地域（運営企業）によって期間・内容が異なる場合あり。ネット限定先行セールは10/31から開始済み"],
+                   ["11/20（金）〜 11/26（木）", "ユニクロ感謝祭2026冬", "確定・公式発表済み", "本日11/20開始の7日間。ヒートテック、フリース、ニット、パフテックなどが感謝価格の対象。初日11/20のみ、木村屋總本店「UNIQLOあんぱん」を来店者へ先着で1人1個プレゼント（実施店舗のみ、通販は対象外）。11/20〜23は税込1万円以上の購入でパッカブルビッグトートバッグ（店舗は毎日先着、通販は毎日抽選）"],
+                   ["11/27（金）", "ブラックフライデー本番", "確定（暦の基準日）", "米国の感謝祭（11/26・木）の翌日。各社のセールがピークを合わせる基準日で、楽天は本番前に終了し、イオンは期間の後半にあたる"],
+                   ["先行 11/27（金）0:00 〜 11/29（日）23:59 ／ 本セール 11/30（月）0:00 〜 12/7（月）23:59", "Amazon ブラックフライデー2026", "確定・公式発表済み（11/19発表）", "先行セール3日間＋本セール8日間。対象商品は過去最大の400万点以上。ポイントアップキャンペーンはエントリー期間 11/19（木）10:00〜12/7（月）23:59、お買い物対象期間 11/27（金）0:00〜12/7（月）23:59"]],
+          feed: [["本日開始・ユニクロ", "ユニクロ感謝祭2026冬は本日11/20（金）開始 — 11/26（木）までの7日間、初日は「UNIQLOあんぱん」を先着プレゼント", "ユニクロ公式の発表（ORICON NEWS 2026年11月19日報道で確認）による確定情報です。感謝祭は2026年11月20日（金）〜11月26日（木）の7日間で、ヒートテック、フリース、ニット、パフテックなどが感謝価格の対象になります。初日11月20日のみ、木村屋總本店の「UNIQLOあんぱん」を来店者へ先着で1人1個プレゼントします（実施店舗のみ、通販は対象外）。また11月20日〜23日は、税込1万円以上の購入でパッカブルビッグトートバッグがもらえます（店舗は毎日先着、通販は毎日抽選）。", "https://www.oricon.co.jp/news/2493929/full/"],
+                 ["本日開始・Gap", "Gap ブラックフライデー2026は本日11/19（木）開始 — 11/30（月）まで対象商品40%OFF、購入者全員に「Black Friday Card」", "ギャップジャパン株式会社の公式プレスリリース（PR TIMES配信、2026年11月16日付）による確定情報です。Gapのブラックフライデー2026は2026年11月19日（木）〜11月30日（月）に開催し、全国のGapストアと公式オンラインストアで対象商品が40%OFF、Gap Outletストアでは50%OFFになります（一部対象外あり）。さらに、期間中に購入した全員に、2026年12月1日（火）〜12月25日（金）のお買い物が50%OFFになる「Black Friday Card」をプレゼントします。", "https://prtimes.jp/main/html/rd/p/000000861.000011503.html"],
+                 ["本日開始・高島屋", "高島屋オンラインストアは本日11/18（水）10:00開始 — 11/28（土）10:00まで、送料無料クーポンあり", "株式会社高島屋の公式発表（PR TIMES配信）による確定情報です。高島屋オンラインストアのブラックフライデーは2026年11月18日（水）10:00〜11月28日（土）10:00に開催し、期間中1回使える送料無料クーポンをプレゼントします（第1弾のご利用期間は11月18日10:00〜11月23日9:59）。一般販売に先がけたタカシマヤアプリ会員様限定の先行販売は、11月16日10:00〜11月18日10:00で実施済みです。", "https://news.livedoor.com/pr_article/detail/32774617/"],
+                 ["本日開始・イトーヨーカドー", "イトーヨーカドーは本日11/18（水）開始 — 11/29（日）まで全12日間「赤と黒の祭典」", "2026年10月30日に公式発表済みの確定情報です。イトーヨーカドーおよびヨーク各店舗で11月18日（水）〜11月29日（日）の全12日間を開催し、前半11月18日〜20日は「レッドプライスデー」、後半11月25日〜27日は「96（クロ）プライス」を展開します。ネット通販は別企画で10月30日12:00〜11月30日23:59に開催中です。なお、この項目の出典は各社公式ページで日程を確認したまとめ記事で、公式ページそのものではありません。", "https://mottoku.app/koramu/black-friday-2026-matome"],
+                 ["確定・楽天市場", "楽天市場は11/19（木）20:00〜11/25（水）1:59 — ポイント最大47.5倍、エントリー受付中", "楽天市場公式ページで確認した確定情報です。期間中にエントリーして買い物をすると、お買い物店舗数に応じて楽天ポイントが最大47.5倍（買いまわり分は最大10倍で、SPU等の合算）。対象は1ショップ合計1,000円（税込）以上、買いまわりの獲得上限は7,000ポイントです。エントリーは11月12日10:00から受付中で、期間中にエントリーすればエントリー前の買い物も対象になります。開始直後2時間限定の最大50%OFFクーポンと、最大9,600円オフのブラッククーポンも配布中です。", "https://event.rakuten.co.jp/campaign/point-up/blackfriday/"],
+                 ["確定・イオン", "イオンは11/20（金）〜11/30（月）の11日間 — 約600店舗で「超！ブラックフライデーフェス」", "イオン公式発表（2026年10月27日付）による確定情報です。全国の「イオン」「イオンスタイル」等 約600店舗で店頭セールを開催し、2026年は名称が「超！ブラックフライデーセール」から「超！ブラックフライデーフェス」に変わり、参加型企画が強化されます。ただし地域（運営企業）によって開催期間や実施内容が異なる場合があるため、行く店舗の案内も確認してください。ネット限定先行セールは10月31日から始まっています。", "https://prtimes.jp/main/html/rd/p/000006158.000007505.html"],
+                 ["基準日", "ブラックフライデー本番は11/27（金） — 感謝祭（11/26）の翌日", "ブラックフライデーはもともと米国の感謝祭（11月第4木曜日）の翌日金曜日を指し、2026年は11月27日（金）にあたります。各社の日程はこの基準日を軸に前後します。楽天市場は本番の2日前に終了（11/25まで）、イオンは本番を含む11/30までと、同じブラックフライデーでも設計が違うため、カレンダーで並べて見るのがこの板の使い方です。", "https://ojamarumaru.com/amazon-black-friday-2026"],
+                 ["確定・Amazon", "Amazon ブラックフライデー2026の日程が確定 — 先行セール11/27〜11/29、本セール11/30〜12/7、対象は過去最大の400万点以上", "アマゾンジャパンが2026年11月19日に公式発表しました（About Amazon Press Center）。先行セールは11月27日（金）0:00〜11月29日（日）23:59の3日間、本セールは11月30日（月）0:00〜12月7日（月）23:59の8日間です。対象商品は過去最大の400万点以上。ポイントアップキャンペーンは、エントリー期間が11月19日（木）10:00〜12月7日（月）23:59、お買い物対象期間が11月27日（金）0:00〜12月7日（月）23:59です。これまで「11/19午前発表予定」として載せていた未発表の記載と予想日程は、この公式発表をもって確定情報に差し替えました。", "https://press.aboutamazon.com/jp/2026/11/black-friday-2026"]] },
+        { id: 13, cat: "work", real: true, detail: "jobs", title: "副業案件 新着・締切監視板",
+          desc: "クラウドワークスなど副業プラットフォームの新着案件と締切だけを監視。高単価・締切間近・応募が集中している案件を先に拾う。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "副業を探す人", cadence: "毎日チェック", feedDate: "2026年11月20日",
+          watch: [["クラウドワークス新着", "高単価・新着案件"], ["応募期限", "締切7日以内の案件"], ["応募人数", "集中している案件"]],
+          feed: [["締切間近・11/22", "スキマ時間でできる記事ライティング：固定報酬3,300円（あと2日）", "正式名称「【初心者歓迎】スキマ時間でできる記事ライティングのお仕事！未経験OK」。2026年11月8日掲載、応募期限11月22日（あと2日）。固定報酬3,300円（1記事3,000円程度。記事の内容や文字数で調整あり）。Webメディア掲載記事の執筆で、専門知識不要・ネットで調べながら執筆可。未経験OK、継続歓迎。応募86人・募集5人。", "https://crowdworks.jp/public/jobs/13589747"],
+                 ["新着・締切間近・11/21", "インタビュー動画の文字起こし：1本8,000円（税込・あと1日）", "正式名称「【在宅ワーク】60分程度のインタビュー動画の文字起こし｜1本8,000円」。2026年11月20日掲載、応募期限11月21日（あと1日）。固定報酬1本8,000円（税込）、約60分／1本、ExcelまたはGoogleスプレッドシートへ入力、納期は依頼日から5日以内、継続依頼あり。応募42人・募集3人。", "https://crowdworks.jp/public/jobs/13613461"],
+                 ["高単価・新着", "AI導入支援員募集：1案件10〜15万円（約30時間）", "2026年11月12日掲載、応募期限11月25日。すでに応募127人と集中しています。中小企業への生成AI導入支援、業務委託。", "https://crowdworks.jp/public/jobs/13597260"],
+                 ["本日締切・11/20", "Threads運用サポート：月1〜3万円（本日締切）", "2026年11月6日掲載、応募期限11月20日で本日締切。応募21人・募集8人。マニュアル完備で在宅可。", "https://crowdworks.jp/public/jobs/13586579"],
+                 ["新着", "英語ライター・翻訳募集：1本3,000円〜", "2026年11月9日掲載、応募期限11月23日。応募51人・募集5人。日本のグルメ・ご当地スポットを英語で紹介する継続案件。", "https://crowdworks.jp/public/jobs/13591321"]] },
+        { id: 14, cat: "work", real: true, detail: "snsjobs", title: "SNS案件・インフルエンサー案件板",
+          desc: "クラウドワークスで実際に募集中のSNS案件だけを拾う板。SNSディレクター（複数案件担当で月合計30万〜50万円が目安）、固定報酬30,000円〜50,000円の投稿画像作成スタッフ募集、月額15,000円〜500,000円の継続運用代行など、案件ページに載っている報酬と締切をそのまま並べる。出典はすべて案件ページ自体（一次情報）。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "インフルエンサー・SNS運用者", cadence: "毎日チェック（締切が近い案件から）",
+          watch: [["クラウドワークス SNS運用カテゴリの新着", "SNSディレクター・運用代行の募集"], ["応募期限", "11月20日本日締切・25日締切の案件"], ["報酬の形", "月額固定・成果報酬・単発の単価"]],
+          feed: [["本日締切・11/20", "SNSディレクター募集（人材紹介専任）— 複数案件担当で月合計30万〜50万円が目安", "株式会社ビーヘルシーの募集（案件ID 13586637、2026年11月6日掲載、応募期限11月20日で本日締切）。固定報酬はワーカーと相談で、月額目安は75,000円〜。Instagram／TikTokは週2投稿で月75,000円・週3投稿で月95,000円、YouTubeは週1投稿で約85,000円・週2で約160,000円・週3で約210,000円。複数案件を担当した場合の月合計は30万〜50万円が目安と案件ページに明記されています。応募1人・契約0人・募集1人。", "https://crowdworks.jp/public/jobs/13586637"],
+                 ["本日締切・11/20", "【初心者歓迎】SNS運用サポート・画像編集・リール動画制作補助スタッフ募集 — 固定報酬5,000円〜10,000円（本日締切）", "案件ID 13595250、2026年11月16日掲載、応募期限11月20日で本日締切。InstagramのSNS運用サポート、画像へのテキスト入力・簡単な画像編集、リール動画の制作補助、投稿素材の整理・確認が仕事です。固定報酬5,000円〜10,000円、初心者歓迎、継続の可能性あり。応募5人・契約0人・募集15人。", "https://crowdworks.jp/public/jobs/13595250"],
+                 ["新着・締切11/25", "おうちカフェ＆簡単おしゃレシピSNSの投稿画像作成スタッフ募集 — 固定報酬30,000円〜50,000円（あと5日）", "案件ID 13613844、2026年11月20日掲載、応募期限11月25日（あと5日）。Instagramの投稿用画像（おうちカフェ・簡単おしゃレシピ）の作成で、週2〜3本程度。固定報酬30,000円〜50,000円（初回テスト作成300円、継続時は月額3,000円〜）。未経験歓迎、Canva使用。応募0人・募集3人。", "https://crowdworks.jp/public/jobs/13613844"],
+                 ["継続案件", "SNS運用代行者募集・継続案件 — 月額15,000円〜500,000円、週3〜5投稿", "案件ID 13402137。月額はアカウント数・投稿数によって15,000円〜500,000円まで幅があり、投稿頻度は週3〜5回。同じ「SNS運用代行」でも担当範囲で金額が大きく変わることが、実際の募集条件からそのまま読み取れます。", "https://crowdworks.jp/public/jobs/13402137"]] },
+        { id: 15, cat: "work", real: true, detail: "growth", title: "競合チャンネル／急伸チャンネル板",
+          desc: "TrendReport「Fastest Growing YouTube Channels in Japan（Last 30 Days）」（2026年11月16日更新、登録者10万人以上の312チャンネルを毎日計測）の実データで、日本のYouTubeチャンネルの登録者増加を監視。30日間で最速はPokémon Kids TVの+170万人（+3.7%）、増加率では御子神琴音【にじさんじ】が+3.8万人・+17.2%（登録者25.9万人）と突出。YouTubeの登録者数は概数のため増加は段階的に現れ、凍結・再集計されたチャンネルはランキングから除外されています。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "動画クリエイター・SNS運用者", cadence: "毎日計測（TrendReport）／週1チェック",
+          watch: [["TrendReport 日本・急伸チャンネル（30日間）", "登録者の増加数と増加率"], ["大規模チャンネルの増加", "絶対数の動き"], ["中規模チャンネルの増加率", "2桁%の急伸"]],
+          gchart: [["1", "Pokémon Kids TV", "+170万人", "+3.7%", "30日間で最大の増加。312チャンネル中で最速の伸び"],
+                   ["2", "Fischer's-フィッシャーズ-", "+4万人", "登録者920万人", "登録者920万人規模の大手が継続して増加"],
+                   ["3", "御子神琴音【にじさんじ】", "+3.8万人", "+17.2% ・ 登録者25.9万人", "増加率が突出。中規模チャンネルの急伸の代表例"],
+                   ["4", "mania japansong", "+3万人", "—", "音楽系チャンネルが上位に入る"],
+                   ["5", "ポケモン公式YouTubeチャンネル", "+2万人", "—", "ポケモン関連が上位に2チャンネル"]],
+          feed: [["最速・30日間", "Pokémon Kids TVが30日間で+170万人（+3.7%）— 日本で最速の伸び", "TrendReport「Fastest Growing YouTube Channels in Japan（Last 30 Days）」（2026年11月16日更新）より。登録者10万人以上の312チャンネルを毎日計測した結果、Pokémon Kids TVが直近30日間で170万人の登録者を増やし、日本の対象チャンネルで最も速い成長でした。2位以下の増加数（+4万人台）を大きく引き離す別格の伸びです。", "https://trendreport.com/channels/fastest-growing/in-japan/"],
+                 ["大手の増加", "Fischer's-フィッシャーズ-は+4万人（登録者920万人）— 規模が大きくても増え続ける", "同じ30日間の集計で、Fischer's-フィッシャーズ-は登録者920万人規模ながら+4万人を記録しました。大規模チャンネルは率では小さく見えても、絶対数では中規模チャンネルの総登録者に匹敵する人数が毎月動いています。競合の規模感を掴む基準としてこの板に残しています。", "https://trendreport.com/channels/fastest-growing/in-japan/"],
+                 ["増加率・突出", "御子神琴音【にじさんじ】は+3.8万人・+17.2%（登録者25.9万人）— 率で見ると今月の主役", "増加数ではFischer'sに次ぐ+3.8万人ですが、増加率+17.2%は上位勢の中で突出しています。登録者25.9万人規模のチャンネルが1か月で約6分の1増えた計算で、「絶対数」だけでなく「増加率」で見ることの意味が分かるサンプルです。自ジャンルの中規模チャンネルで2桁%の伸びが出たら、企画・コラボ・外部露出のどれが効いたかを掘る合図になります。", "https://trendreport.com/channels/fastest-growing/in-japan/"],
+                 ["読み方の注意", "登録者数はYouTubeの概数表示 — 増加は段階的に現れ、凍結・再集計チャンネルは除外されています", "YouTubeは大きな登録者数を概数で表示するため、TrendReportが毎日読み取る増加数も段階的（ステップ状）に動きます。また、登録者数が凍結されたりYouTube側で再集計されたチャンネルは、このランキングから除外されています。mania japansong（+3万人）、ポケモン公式YouTubeチャンネル（+2万人）を含め、数値は2026年11月16日更新時点のスナップショットとして、1日単位ではなく30日単位で読んでください。", "https://trendreport.com/channels/fastest-growing/in-japan/"]] },
+        { id: 16, cat: "work", real: true, detail: "contest", title: "コンテスト・公募 募集開始板",
+          desc: "公募情報サイトKouboとコボナビの新着・締切間近リストから、SNS発信と相性のいい動画・イラスト・写真・小説・漫画・音楽の公募だけを実データで監視する板。2026年11月20日時点で募集中の締切は、最速が集英社の漫画公募「りぼんまんがスクール＋」11月20日（本日締切）、新たに追加したオリジナル楽曲コンテスト「Mコン Vol.2 - Christmas Original Song Contest 2026」11月21日（締切間近・あと1日）、八王子学生CMコンテスト11月23日、エディコイラストコンテスト／CamsComsフォトコンテスト「私が見つけた、小さな秋」が11月30日、AIショート動画「AGRI VISION 2036」が12月13日、CamsComsフォトコンテストの新テーマ「食欲の秋！おいしい一枚」が12月15日、Lumion学生コンペティション2026が12月21日。GA文庫大賞（第19回 後期）は締切が2026年11月30日から2027年2月28日に延長された。賞金・副賞はGA文庫大賞の300万円から、AGRI VISIONのお米10kgまで幅広い。締切・資格は主催者の公式要項で最終確認が必要なスナップショットです。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "クリエイター・投稿者", cadence: "公募情報サイトの新着・締切リストで更新（2026年11月20日確認）", feedDate: "2026年11月20日",
+          watch: [["Koubo（公募/コンテスト情報）", "動画・CG系の新規募集と締切"], ["コボナビ 新着公募まとめ", "イラスト・写真・小説の締切間近"], ["主催者の公式募集要項", "締切・資格・賞の最終確認"]],
+          ochart: [["2026年11月20日（金）23:59（本日締切）", "りぼんまんがスクール＋（集英社）", "漫画", "賞金50万円、10万円相当の画材＋Wacom One 液晶ペンタブレット13＋CLIP STUDIO PAINT PRO。応募期間は2026年10月21日〜11月20日"],
+                   ["2026年11月21日（土）23:59（締切間近・あと1日）", "Mコン Vol.2 - Christmas Original Song Contest 2026（Mレコ／Music Hearts）", "音楽（オリジナル楽曲）／国内在住", "特賞（1名）iZotope Ozone 12 Elements、副賞（5名）次回Mコン リミックス審査権・題材曲制作コンペ参加権。テーマは「クリスマス／冬」、ジャンル・歌唱の有無・曲の長さは不問。審査通過曲は公式コンピレーションEPとして2026年12月9日配信予定。募集は2026年10月15日開始、結果発表は11月29日"],
+                   ["2026年11月23日（月・祝）23:59", "令和8年度 八王子学生CMコンテスト", "動画（30秒CM）／学生限定", "最優秀賞 現金5万円（予定）。テーマは「八王子で学ぶ」。スマホ撮影・編集も可、応募無料。資格は八王子関連の学生のみ"],
+                   ["2026年11月30日（月）23:59", "エディコイラストコンテスト（A&D 国際アート＆デザイン大学校）", "イラスト・漫画／国内在住22歳以下", "イラスト部門賞 賞金1万円＋審査員くるみつ先生の特別コメント。イラスト・漫画部門はデジタルのみ"],
+                   ["2026年11月30日（月）23:59（締切延長）", "CamsComsフォトコンテスト「私が見つけた、小さな秋」", "写真／誰でも応募可能", "受賞6作品にAmazonギフトカード総額20,000円分。締切が延長された再掲案件"],
+                   ["2026年12月13日（日）23:59", "AGRI VISION 2036（Metagri研究所）", "AIショート動画（30〜60秒）／資格不問", "グランプリは2026年産のお米10kg（予定）。生成AIで描く「農家とAIがともに働く2036年の農業」。募集は11月10日開始"],
+                   ["2026年12月15日（火）23:59", "CamsComsフォトコンテスト「食欲の秋！おいしい一枚」", "写真／誰でも応募可能", "最優秀賞 Amazonギフトカード10,000円分（受賞6作品・総額20,000円分）。新テーマ、募集は11月1日開始、結果発表は12月21日。タグ「おいしい秋2026」を付けて応募"],
+                   ["2026年12月21日（月）17:00", "Lumion学生コンペティション2026（リビングCG）", "静止画・動画（30秒前後）／学生限定", "各部門の最優秀賞 Amazonギフト券7万円分、参加者全員に1,000円分。Xに作品を投稿しての応募も可"],
+                   ["2027年2月28日（日）（締切延長）", "第19回 GA文庫大賞 後期（SBクリエイティブ）", "小説（ライトノベル）", "大賞 賞金300万円＋3巻刊行確約／金賞100万円／銀賞20万円（賞金に変更なし）。42字×34行で80〜130枚（約11.4万〜18.6万字）。2026年10月30日の公式お知らせで、締切が2026年11月30日から延長"]],
+          feed: [["本日締切・11/20", "りぼんまんがスクール＋は11月20日（金）23:59締切 — 賞金50万円＋画材・液タブ・CLIP STUDIO PAINT PRO", "株式会社集英社が主催する漫画の公募「りぼんまんがスクール＋」です。応募期間は2026年10月21日〜11月20日で、締切は11月20日（金）23:59です（2026年11月20日時点で本日締切）。賞は賞金50万円に、10万円相当の画材、Wacom One 液晶ペンタブレット13、CLIP STUDIO PAINT PROが贈られます。応募条件の詳細はKouboの掲載ページで確認してください。", "https://koubo.jp/contest/397816"],
+                 ["締切間近・11/21・新規", "Mコン Vol.2は11月21日（土）23:59締切 — テーマ「クリスマス／冬」のオリジナル楽曲、特賞はiZotope Ozone 12 Elements", "Mレコ（Music Hearts／株式会社ライアートプロモーション）が主催する、冬のオリジナル楽曲コンテスト「Mコン Vol.2 - Christmas Original Song Contest 2026」です。募集期間は2026年10月15日〜11月21日で、締切は11月21日（土）23:59です（2026年11月20日時点であと1日・締切間近）。テーマは「クリスマス／冬」で、未発表のオリジナル楽曲が対象、ジャンル・歌唱の有無・曲の長さは不問です。特賞（1名）にはiZotope Ozone 12 Elements、副賞（5名）には次回Mコンのリミックス審査権と題材曲制作コンペ参加権が贈られます。審査を通過した楽曲は公式コンピレーションEPとして2026年12月9日に配信予定で、結果発表は2026年11月29日です。", "https://koubo.jp/contest/396467"],
+                 ["締切間近・11/23", "八王子学生CMコンテストは11月23日23:59締切 — 30秒CM、最優秀賞は現金5万円（予定）", "大学コンソーシアム八王子と八王子市が主催する、学生向けの30秒動画CMコンテストです。テーマは「八王子で学ぶ」で、実写・イラスト・CG・アニメーションと表現は自由、スマートフォンで撮影・編集した作品も応募できます。最優秀賞は現金5万円（予定）で、応募作品数により賞数・賞金が変わる場合があります。応募資格は大学コンソーシアム八王子の会員校の学生、八王子市内の専門学校の学生、八王子市内在住の学生に限られ、応募は1人1点まで・無料です。受賞作は市内の大型ビジョンなどで放映される予定で、2026年11月20日時点であと3日です。", "https://euphoric-arts.com/opencall/hachioji-student-cm-contest/"],
+                 ["動画・AI・12/13", "「AGRI VISION 2036」は生成AIのショート動画コンテスト — 11月10日募集開始、締切12月13日", "Metagri研究所（運営：株式会社農情人）が主催する、生成AIを使った30〜60秒のショート動画コンテストです。テーマは「農家とAIがともに働く2036年の農業」で、商用利用できる動画生成AI（Veo・Kling・Seedance・Runway・Viduなど）を映像の主な部分に使うことが条件です。グランプリ1作品には2026年産のお米10kg（予定）と公式受賞インタビュー掲載、準グランプリにはお米5kg（予定）が贈られます。応募資格は年齢・国籍・プロアマ不問（18歳未満は保護者の同意が必要）で、1人・1チーム3作品まで、YouTube限定公開のURL送信でも応募できます。結果発表は2027年1月頃の予定です。", "https://koubo.jp/contest/399109"],
+                 ["イラスト・写真・11/30", "11月30日締切が2件 — エディコイラストコンテストと、CamsComsフォト「小さな秋」（締切延長）", "コボナビの新着公募まとめ（2026年11月2日〜6日分）の「締め切り間近」再掲より。A&D 国際アート＆デザイン大学校のエディコイラストコンテストは2026年11月30日（月）23:59締切で、イラスト部門賞は賞金1万円＋審査員くるみつ先生からの特別コメント。イラスト部門・漫画部門（いずれもデジタルのみ）は国内在住・22歳以下が対象です。CamsComs（カムズコムズ）フォトコンテスト「私が見つけた、小さな秋」は締切が11月30日（月）日本時間23:59まで延長され、受賞6作品にAmazonギフトカード総額20,000円分が贈られます。こちらは誰でも応募可能です。", "https://kobonabi.com/matome-20261108/"],
+                 ["写真・新テーマ・12/15", "CamsComsフォトコンテストに新テーマ「食欲の秋！おいしい一枚」 — 12月15日締切、最優秀賞はAmazonギフトカード10,000円分", "CamsComs（カムズコムズ）フォトコンテストの新しいテーマです。募集期間は2026年11月1日〜12月15日（火）23:59で、料理や食材はもちろん、栗や柿などの秋の実り、道端の銀杏、屋外で焼き芋を味わうひとときなど、応募者が「おいしい秋」を感じた写真を募集します。CamsComsで写真を公開し、タグ「おいしい秋2026」を付けると応募できます。賞は最優秀賞 Amazonギフトカード10,000円分×1作品、優秀賞5,000円分×1作品、3位2,000円分×1作品、入賞1,000円分×3作品の計6作品・総額20,000円分で、結果発表は2026年12月21日です。旧テーマ「私が見つけた、小さな秋」も締切延長で11月30日まで引き続き募集中です。", "https://koubo.jp/contest/397026"],
+                 ["小説・締切延長", "GA文庫大賞（第19回 後期）の締切が2027年2月28日に延長 — 当初の11月30日から約3か月先へ", "SBクリエイティブのライトノベル新人賞「第19回 GA文庫大賞 後期」の応募締切が、2026年11月30日から2027年2月28日に延長されました。2026年10月30日の公式のお知らせによる変更で、後期の結果発表も2027年6月末に移っています。賞金に変更はなく、大賞300万円＋3巻刊行確約、金賞100万円、銀賞20万円です。応募作は42字×34行で80〜130枚（約11.4万〜18.6万字）が目安です。なお公式サイトはメンテナンスのため停止中で、この延長情報は停止前の公式ページと10月30日の公式お知らせをもとにまとめた片沼ほとりの解説ページで確認したもので、2026年11月19日にSBクリエイティブ公式note（2026年10月30日のお知らせ）でも再確認済みです。TypeTakの解説ページでも同じ延長が記載されています。応募前に最新の公式告知を再確認してください。", "https://katanumahotori.com/blog/ga-bunko-taisho"],
+                 ["学生・CG・12/21", "Lumion学生コンペティション2026 — X投稿でも応募可、最優秀賞はAmazonギフト券7万円分、参加賞1,000円分", "有限会社リビングCGが主催する、建築ビジュアライゼーションソフト「Lumion」の学生コンペです。募集期間は2026年8月17日〜12月21日（月）17:00で、静止画部門（最大2枚）と動画部門（30秒前後の動画1点）があり、各部門の最優秀賞はAmazonギフト券70,000円分、優秀賞は30,000円分、応募者全員に参加賞としてAmazonギフト券1,000円分が進呈されます。応募はフォームのほか、Lumion Japan公式X（@Lumion_Japan）をフォローして「#Lumion学生コンペ2026」を付けて作品を投稿する方法でも可能です。資格は2026年8月現在、日本国内の学校に在籍する学生（または海外在住の日本人学生）で、Lumion Student版（学生は無料）の使用が条件です。", "https://koubo.jp/contest/402040"],
+                 ["読み方の注意", "この板は公募情報サイトの掲載情報のスナップショットです — 応募前に公式要項で締切・資格を最終確認してください", "掲載した締切・賞・資格は、Koubo（主催者情報の転載ページ）、コボナビの新着公募まとめ、小説公募の締切カレンダー（TypeTak、2026年10月24日時点の内容を毎月更新）とGA文庫大賞の解説ページ（片沼ほとり、公式サイト停止前の公式ページと2026年10月30日の公式お知らせをもとにした情報）で2026年11月20日に確認したものです。新たに追加したMコン Vol.2はKouboと主催者公式ページで確認しています。公募は締切の延長や要項の変更が起きることがあり（CamsComsフォトコンテスト「小さな秋」とGA文庫大賞は実際に延長済み）、賞金が「予定」とされているものもあります。応募の可否や条件は、必ず各主催者の公式募集要項で最終確認してください。数値は2026年11月20日時点のスナップショットです。", "https://koubo.jp/contest/399109"]] },
+        { id: 17, cat: "biz", real: true, detail: "starbucks", title: "飲食店の競合メニュー・SNS告知板",
+          desc: "個別の近隣店の監視データではなく、大手チェーンの公開新メニュー情報として構成する板。題材はスターバックス コーヒー ジャパンの2026年ホリデーシーズン（テーマ「Let's par-TEA!」、2026年11月2日開始）。ビバレッジは新作3種（ジョイフルメドレー ストロベリー クリーミー ティー ラテ、アールグレイ チョコレート フラペチーノ、ロイヤル ミルク ティー）に、定番のジンジャーブレッド ラテとジョイフルメドレー ティー ラテが復活。フードはアールグレイストロベリーシフォンケーキ（テイクアウト510円／イートイン520円）、アールグレイストロベリースコーン、ロイヤルミルクティードーナツの3品で、11月13日からはポテト スープチーノも発売。大手チェーンが「シーズンのテーマ×ティー統一」で打ち出す型を、自店の季節メニューやSNS告知の参考にするための板。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "飲食店オーナー・カフェ運営者", cadence: "シーズン開始・追加発売のタイミングで更新（ホリデーは11/2開始・11/13追加）",
+          watch: [["スターバックス ジャパン ホリデー新作（公開情報）", "テーマと新作ビバレッジ・フード"], ["追加発売の公式プレスリリース", "発売日と価格"], ["価格・販売期間の時点", "スナップショット時点の価格であることの確認"]],
+          stchart: [["ビバレッジ・新作", "ジョイフルメドレー ストロベリー クリーミー ティー ラテ", "Tall 持ち帰り638円／店内650円", "2026年11月2日発売。冬の定番ティー「ジョイフルメドレー」にフレッシュクリーム、ストロベリー風味ムース、フリーズドライストロベリーを合わせた今季の主役。Tallのみ・なくなり次第終了"],
+                   ["ビバレッジ・新作", "アールグレイ チョコレート フラペチーノ®", "Tall 持ち帰り678円／店内690円", "2026年11月2日発売。アールグレイにチョコレートソースとチョコチップ、ホイップクリーム。Tallのみ・なくなり次第終了"],
+                   ["ビバレッジ・新作", "ロイヤル ミルク ティー", "Tall 持ち帰り609円／店内620円", "2026年11月2日発売。ダージリン・アッサム・セイロンの3種ブレンドにショートブレッドクラム。Tallのみ・なくなり次第終了"],
+                   ["ビバレッジ・復活", "ジンジャーブレッド ラテ", "Tall 600円（税込）", "ホリデーの定番が2026年11月2日から復活。ジンジャーブレッドクッキーの風味をイメージした、ほんのり甘くスパイシーなラテ"],
+                   ["ビバレッジ・復活", "ジョイフルメドレー ティー ラテ", "Tall 580円（税込）", "定番のティー ラテも2026年11月2日から同時発売。新作ストロベリー版のベースになる一杯"],
+                   ["フード・新作", "アールグレイストロベリーシフォンケーキ", "テイクアウト510円／イートイン520円", "2026年11月2日発売。アールグレイ風味のシフォン生地にストロベリーホイップクリーム"],
+                   ["フード・新作", "アールグレイストロベリースコーン", "テイクアウト285円／イートイン290円", "2026年11月2日発売。アールグレイ茶葉を練り込んだ生地に、フリーズドライストロベリー入りのストロベリーコーティング"],
+                   ["フード・新作", "ロイヤルミルクティードーナツ", "テイクアウト304円／イートイン310円", "2026年11月2日発売。ミルクティーコーティングと茶葉入りミルクティークリーム入り"],
+                   ["追加発売", "ポテト スープチーノ®", "Short 持ち帰り491円／店内500円、Tall 持ち帰り530円／店内540円", "2026年11月13日発売。スープチーノシリーズの新作。焼いたポテトを思わせる香ばしさと野菜の甘み、ローストアーモンドのトッピング。ソイミルク変更は無料"]],
+          feed: [["ホリデー開始・11/2", "スターバックス2026年ホリデーはテーマ「Let's par-TEA!」で11月2日開始 — ティーが主役のシーズン設計", "スターバックス コーヒー ジャパンは2026年11月2日（月）から、ホリデーシーズンのテーマ「Let's par-TEA!」で新商品を全国の店舗（一部店舗を除く）で順次発売しました。今年はコーヒーではなくティー（紅茶）を主役に据えたのが特徴で、新作ビバレッジ3種はいずれもティーベースです。大手チェーンのシーズン設計として、「テーマを1語で言える」「主役の素材を統一する」という型がそのまま読み取れます。この板は個別の近隣店の監視ではなく、こうした大手チェーンの公開新メニュー情報を追う板です。", "https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/"],
+                 ["ビバレッジ・新作3種", "新作はティー3種 — ストロベリーのティー ラテ、アールグレイ×チョコのフラペチーノ、ロイヤル ミルク ティー", "スターバックス公式プレスリリース（2026年10月26日）によると、2026年11月2日発売の新作ビバレッジは3種ともTallサイズのみ・税込価格です。ジョイフルメドレー ストロベリー クリーミー ティー ラテ（持ち帰り638円／店内650円）は、ブレンドティー「ジョイフルメドレー」にフレッシュクリームとストロベリー風味ムースを合わせたもの。アールグレイ チョコレート フラペチーノ®（持ち帰り678円／店内690円）はアールグレイにチョコレートソースとチョコチップを合わせたもの。ロイヤル ミルク ティー（持ち帰り609円／店内620円）はダージリン・アッサム・セイロンの3種ブレンドです。販売はなくなり次第終了です。", "https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/"],
+                 ["フード・新作3品", "フードもティーで統一 — シフォンケーキ510円／520円、スコーン、ミルクティードーナツ", "同じ公式プレスリリースで、2026年11月2日発売のホリデーフード3品もティーが主役と発表されています。アールグレイストロベリーシフォンケーキ（持ち帰り510円／店内520円）はアールグレイ風味のシフォンにストロベリーホイップを合わせたもの。アールグレイストロベリースコーン（持ち帰り285円／店内290円）はストロベリーコーティング、ロイヤルミルクティードーナツ（持ち帰り304円／店内310円）はミルクティー風味です。価格はいずれも税込で、ドリンクと同じ素材軸で揃えられています。", "https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/"],
+                 ["追加発売・11/13", "11月13日から「ポテト スープチーノ®」が追加 — ホリデー開始後も第2弾で話題をつなぐ", "スターバックス公式プレスリリース（2026年11月9日）によると、2026年11月13日（金）から「ポテト スープチーノ®」が全国の店舗（一部店舗を除く）で発売されました。価格は税込で持ち帰り Short 491円／Tall 530円、店内 Short 500円／Tall 540円。焼いたポテトのような香ばしさと野菜の風味に、ローストアーモンドをトッピングしたカプチーノ仕立てのスープで、ソイミルクへの変更は無料です。一時的な欠品や早期終了の場合があると案内されています。", "https://stories.starbucks.co.jp/press/2026/pr-2026-1109/"],
+                 ["読み方の注意", "この板は個別の近隣店の監視ではありません — 大手チェーンの公開新メニューのスナップショットです", "掲載しているのはスターバックス ジャパンの全国向け公開情報（2026年11月17日時点スナップショット）で、特定の近隣競合店の価格変更や売り切れを追ったデータではありません。価格は発売時点の税込価格で、店舗によって取り扱いがない場合や、一時的な欠品・早期終了の場合があります。自店への使い方は「大手が今季どの素材・テーマで打ち出しているか」を掴み、自店の季節メニューや告知の切り口を考える材料にすることです。", "https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/"]] },
+        { id: 18, cat: "biz", real: true, detail: "foodprice", title: "仕入先の価格・在庫監視板",
+          desc: "個別仕入先の在庫監視ではなく、主要食品メーカーの価格改定動向として構成する板。題材は帝国データバンク「食品主要195社」価格改定動向調査（2026年10月30日公表）。2026年11月の飲食料品値上げは1,477品目で前年同月150品目の約10倍、値上げ1回あたり平均17%。2026年通年は12月までの判明分で20,327品目と2年連続で2万品目超え。分野別では加工食品6,968品目、調味料6,258品目、酒類・飲料3,381品目、菓子1,415品目。値上げ要因は原材料高91.7%、人件費51.5%。自店の仕入分野と照らして、値上げ前に発注・価格転嫁を判断するための板。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "小売・飲食・製造", cadence: "月次調査の公表タイミングで更新（2026年11月分は10月30日公表）",
+          watch: [["帝国データバンク 価格改定動向調査（食品主要195社）", "月次の値上げ品目数と平均値上げ率"], ["分野別の値上げ品目数", "自店の仕入分野との照合"], ["翌月以降の個別改定発表", "味の素・明治など具体例と改定幅"]],
+          fchart: [["加工食品", "6,968品目", "1位", "通年で最多。冷凍食品やパック米飯などが中心で、前年実績4,791品目を4割超上回った"],
+                   ["調味料", "6,258品目", "2位", "ソース類・マヨネーズ類が中心。11月単月では644品目で全分野最多"],
+                   ["酒類・飲料", "3,381品目", "3位", "11月単月は417品目。コーヒー飲料をはじめとするPET飲料・清涼飲料水が対象"],
+                   ["菓子", "1,415品目", "4位", "加工食品・調味料・菓子・原材料の4分野が前年実績を上回った"],
+                   ["合計（全分野）", "20,327品目", "—", "2026年1〜12月までの判明分。2年連続で年間2万品目超えが確定。前年2万609品目とほぼ同水準の見込み"]],
+          feed: [["11月・1,477品目", "2026年11月の値上げは1,477品目 — 前年同月150品目の約10倍、1回あたり平均17%", "帝国データバンク「食品主要195社」価格改定動向調査 ― 2026年11月（2026年10月30日公表）より。主要食品メーカー195社における家庭用を中心とした11月の値上げは合計1,477品目で、単月では3カ月ぶりに3,000品目を下回り大規模な値上げラッシュは一服したものの、11月としては2022年以降で2番目に多く、前年11月（150品目）の約10倍規模です。値上げ1回あたりの平均値上げ率は月平均17%でした。分野別では調味料644品目が最多で、酒類・飲料417品目、加工食品275品目と続きます。", "https://www.tdb.co.jp/report/economic/20261030-neage26y11/"],
+                 ["通年・20,327品目", "2026年通年は判明分で20,327品目 — 2年連続で年間2万品目超えが確定", "2026年の値上げ品目総数は1〜12月までの判明分で20,327品目となり、11月実施分で2年連続の年2万品目超えが確定しました。9〜10月の2カ月間で年内の約4割を占める8,000品目が対象になるなど、秋口に値上げが集中したのが特徴です。12月の水準は小規模になるとみられ、年間では前年（20,609品目）とほぼ同水準で推移する見込みとされています。分野別では加工食品6,968品目が最多で、調味料6,258品目、酒類・飲料3,381品目、菓子1,415品目が続きます。", "https://www.tdb.co.jp/report/economic/20261030-neage26y11/"],
+                 ["値上げ要因", "要因は原材料高91.7%が最多、人件費51.5%は過去最高 — 構造的なコスト増が続く", "値上げ要因では「原材料高」が91.7%を占めて最多でしたが、年間の水準としては要因集計を開始した2023年以降で最も低い割合でした。一方で電気代などの「エネルギー」は63.9%と2年連続で上昇し、賃上げなどを要因とした「人件費」は51.5%で過去最高でした。原材料だけでなく人件費・エネルギーが重なる構造のため、一時的な値上げで終わらず、仕入価格の前提を年単位で見直す必要があることを示す数字です。", "https://www.tdb.co.jp/report/economic/20261030-neage26y11/"],
+                 ["12月の具体例", "12月は味の素の家庭用37品種が12月1日納品分から約5〜15%改定、明治ザバス飲料なども対象", "12月の個別改定の具体例として、味の素の家庭用37品種が2026年12月1日納品分から約5〜15%の価格改定を行うほか、明治のザバス飲料なども改定対象に挙がっています。帝国データバンクの見通しでは12月単月の水準は小規模になる見込みですが、自店で使う調味料・飲料が対象に含まれるかは、メーカー発表と仕入先の案内で個別に確認が必要です。この板では月次総数だけでなく、こうした翌月分の具体例も監視対象にしています。", "https://www.tdb.co.jp/report/economic/20261030-neage26y11/"],
+                 ["読み方の注意", "品目数は「値上げが起きた回数」の集計です — 同じ商品の再値上げは別品目、実質値上げも含みます", "帝国データバンクの集計は各社発表に基づき、年内に複数回値上げした品目は回ごとに別品目として数えています。また、価格据え置きで内容量を減らす「実質値上げ」も対象に含まれ、値上げ率は発表時点の最大値を採用しています。対象は主要食品メーカー195社の家庭用を中心とした飲食料品で、業務用仕入価格そのものではありません。自店への使い方は「メーカー側の改定がどの分野で・どの規模で起きているか」を掴み、仕入先への確認と発注タイミング、売価の見直しを早める材料にすることです。数値は2026年11月17日時点のスナップショットです。", "https://www.tdb.co.jp/report/economic/20261030-neage26y11/"]] },
+        { id: 19, cat: "biz", real: true, detail: "mallfees", title: "モール規約・手数料変更監視板",
+          desc: "楽天市場・Amazon・Yahoo!ショッピングの公式料金と改定情報を実データで監視する板。楽天市場は2026年9月17日のお知らせで、2027年2月1日から基本出店料（月額・税別）を改定すると発表：がんばれ！プラン25,000円→34,000円、スタンダードプラン65,000円→90,000円、メガショッププラン130,000円→181,000円（開設時期による経過措置あり）。現行のシステム利用料はプラン・売上で変動します（がんばれ！プランはPC 3.5〜6.5%など）。Amazonは大口出品 月額4,900円（税抜）、小口は1点100円で、販売手数料はカテゴリ別（服＆ファッション小物は価格帯で5%〜12.4%）。Yahoo!ショッピングは2026年9月に料金刷新し、月額10,000円・売上ロイヤリティ2.5%。金額はすべて税別、確認時点は2026年11月です。実データ表示中：2026年11月17日時点スナップショット。",
+          who: "モール出店者", cadence: "改定告知・料金ページ更新のタイミングで更新（2026年11月に公式料金を確認）",
+          watch: [["楽天市場 公式料金・改定のお知らせ", "基本出店料の改定と経過措置"], ["Amazon 出品サービス 公式料金", "出品プラン料金とカテゴリ別販売手数料"], ["Yahoo!ショッピング 公式料金", "2026年9月刷新後の月額とロイヤリティ"]],
+          qchart: [["楽天市場", "がんばれ！プラン 基本出店料（月額・税別）", "25,000円", "34,000円（2027年2月1日から）", "月額+9,000円。2026年9月17日のお知らせで発表。開設時期による経過措置あり"],
+                   ["楽天市場", "スタンダードプラン 基本出店料（月額・税別）", "65,000円", "90,000円（2027年2月1日から）", "月額+25,000円。開設時期による経過措置あり"],
+                   ["楽天市場", "メガショッププラン 基本出店料（月額・税別）", "130,000円", "181,000円（2027年2月1日から）", "月額+51,000円。開設時期による経過措置あり"],
+                   ["楽天市場", "システム利用料（現行）", "プラン・売上で変動", "今回の改定対象は基本出店料", "がんばれ！プランはPC 3.5〜6.5%・モバイル 4.0〜7.0%、スタンダード／メガショップはPC 2.0〜4.0%・モバイル 2.5〜4.5%（売上規模で料率が変わる）"],
+                   ["Amazon", "出品プラン料金（税抜）", "大口 月額4,900円／小口 1点100円", "現行料金（2026年11月確認）", "大口は販売点数にかかわらず月額固定。小口は売れた1点ごとに100円。いずれも販売手数料が別途かかる"],
+                   ["Amazon", "販売手数料：服＆ファッション小物", "価格帯で5%〜12.4%", "現行料率（2026年11月確認）", "1点の売上合計750円以下は5%、750円超〜2,500円は8.4%、2,500円超〜3,000円は12.4%、3,000円超は3,000円まで12.4%・超えた分8.4%。最低販売手数料30円（メディア以外）"],
+                   ["Yahoo!ショッピング", "月額システム利用料（税抜）", "10,000円", "2026年9月の料金刷新で導入", "刷新前は0円。開店した月は日割り"],
+                   ["Yahoo!ショッピング", "売上ロイヤリティ", "2.5%", "2026年9月の料金刷新で導入", "刷新前は0%。売上が発生した場合のみ。あわせてキャンペーン原資負担1.5%は廃止"]],
+          feed: [["改定告知・楽天市場", "楽天市場は2027年2月1日から基本出店料を改定 — がんばれ！34,000円／スタンダード90,000円／メガショップ181,000円（いずれも月額・税別）", "楽天グループは2026年9月17日のお知らせ「楽天市場の新たな取り組みと基本出店料（月額出店料）改定について」で、2027年2月1日から基本出店料（月額・税別）を改定すると発表しました。がんばれ！プランは25,000円→34,000円（+9,000円）、スタンダードプランは65,000円→90,000円（+25,000円）、メガショッププランは130,000円→181,000円（+51,000円）です。ただし請求がいつから新料金になるかは店舗の開設時期で分かれ、経過措置があります（例：2026年2月1日〜2027年1月31日に開設した店舗は2027年5月31日まで改定前の料金）。自店の開設時期とプランを照らして、2027年の固定費を先に織り込むための告知です。現行のシステム利用料は今回の改定対象ではなく、プランと売上で変動します（がんばれ！プランはPC 3.5〜6.5%など）。", "https://www.rakuten.co.jp/ec/ichiba_notice_202608/"],
+                 ["現行料金・Amazon", "Amazonは大口 月額4,900円（税抜）／小口 1点100円 — 販売手数料はカテゴリ別で、服＆ファッション小物は5%〜12.4%", "Amazon出品サービスの公式料金（2026年11月確認）では、出品プランは大口出品が月額4,900円（税抜・販売点数にかかわらず固定）、小口出品が売れた商品1点ごとに100円（税抜）の2種類です。これとは別に、売れるたびにカテゴリ別の販売手数料がかかります。服＆ファッション小物は1点の売上合計（商品価格・配送料・ギフト包装料を含む税込額）の価格帯で料率が変わり、750円以下は5%、750円超〜2,500円は8.4%、2,500円超〜3,000円は12.4%、3,000円超は3,000円まで12.4%・超えた部分が8.4%です（最低販売手数料はメディア以外30円）。FBAを使う場合は配送代行手数料・保管手数料が別途かかります。", "https://sell.amazon.co.jp/pricing"],
+                 ["料金刷新・Yahoo!ショッピング", "Yahoo!ショッピングは2026年9月に料金刷新 — 月額10,000円（税抜）＋売上ロイヤリティ2.5%が新たに発生", "Yahoo!ショッピングは2026年9月に出店プランを刷新し、それまで0円だった月額システム利用料が10,000円（税抜、開店月は日割り）、売上ロイヤリティが2.5%（売上が発生した場合のみ）になりました。あわせてキャンペーン原資負担1.5%は廃止されています。決済サービス利用料やストアポイント原資（1%必須）、アフィリエイト関連の費用は引き続きかかるため、実質負担は「月額1万円＋売上の2.5%」だけで見積もらず、決済・ポイント分まで含めて計算してください。公式ページには料金が予告なく変更になる可能性も明記されています。", "https://business-ec.yahoo.co.jp/shopping/cost/"],
+                 ["読み方の注意", "金額はすべて税別、確認時点は2026年11月 — 楽天の改定は「2027年2月1日から」で、まだ現行料金の期間です", "この板の金額はすべて税別（Amazonは税抜表記）で、2026年11月に各モールの公式料金ページ・改定告知を確認したスナップショットです。楽天市場の新料金は2027年2月1日適用で、開設時期による経過措置があるため、自店の請求開始時期は楽天市場の案内で個別に確認してください。Amazonの販売手数料はカテゴリごとに料率と価格帯の区切りが違い、ここに載せた服＆ファッション小物以外のカテゴリは公式料金表で確認が必要です。契約・出店の判断の前に、必ず各モールの公式ページで最新の料金を確認してください。", "https://www.rakuten.co.jp/ec/ichiba_notice_202608/"]] },
+        { id: 20, cat: "biz", real: true, title: "補助金・助成金 公募アラート板",
+          desc: "業種と地域で絞った補助金・助成金の公募開始と締切を通知。締切14日前・7日前・3日前に段階的に知らせる。実データ表示中。",
+          who: "中小企業・個人事業主", cadence: "公募サイクル連動",
+          watch: [["国・自治体の公募ページ", "新規公募の開始"], ["申請受付ページ", "締切日の確定・変更"], ["採択結果ページ", "採択率の公表"]],
+          feed: [["公募開始", "新事業進出・ものづくり商業サービス補助金 第2回公募", "発行元は中小機構（中小企業基盤整備機構）。公募要領は2026年11月2日公開。申請受付は11月30日15時開始、締切は12月25日15時厳守（公式サイトで確認済み）。3枠（革新的新製品・サービス／新事業進出／グローバル）で上限は最大9,000万円。受付前に事業計画の骨格作りが必要です。", "https://shinjigyou-monodukuri.smrj.go.jp/"],
+                 ["締切一覧", "年内の主要締切：持続化12/15、デジタル化・AI導入12/1", "小規模事業者持続化補助金は12月15日17時締切予定、デジタル化・AI導入補助金 第7次締切は12月1日17時。中小企業省力化投資補助金（一般型）第9回は12月下旬締切予定です。この締切一覧は中小機構「補助金活用ナビ」のスケジュール（2026年11月12日更新）で確認済みです。申請前に各補助金の公式公募ページでも再確認してください。", "https://seisansei.smrj.go.jp/subsidy_info/schedule.html"]] }
+      ];
+
+      var SPOT = {
+        1:  ["バズの種を早めに先取りする", "#ポッキーの日が日本1位", "6.61億", "今週の総再生数"],
+        2:  ["話題の移り変わりを即チェック", "#魔法使いの夜感想が先頭", "11/20未明", "現在のXトレンド"],
+        3:  ["リールで流行る音源を把握する", "マライアが今週1位", "580万+", "使われたReels数"],
+        4:  ["伸びているShortsの型を盗む", "コントShortsが急伸中", "16.9万", "初速・再生／時"],
+        5:  ["TikTokで使える音源を発見", "くるりが今週1位", "Top10", "TikTok音楽チャート"],
+        6:  ["Spotifyの急上昇曲を追う", "Vaundyが2週連続1位", "294万", "週間再生数"],
+        7:  ["今週のヒット曲をまとめて確認", "Aぇ! groupが初登場1位", "49.7万", "1位曲のCD売上・枚"],
+        8:  ["モールの売れ筋の流れを読む", "訳あり食品と備蓄が中心", "3品", "上位入りした訳あり魚"],
+        9:  ["ポケカの買取相場を追い続ける", "レックウザ初版が急騰", "1,500万円", "レックウザ☆初版・買取"],
+        10: ["限定品の発売・再販を把握する", "ミュウexが発売日から下落", "4,000円", "ミュウex買取・10/22時点"],
+        11: ["バズる商品を先回りして検知", "魚のウロコ取りが反応1位", "1,170万", "1位動画の再生数"],
+        12: ["セールと値下げの時期を逃さない", "Amazonの日程確定・ユニクロ感謝祭が本日開始", "400万点+", "Amazonの対象商品数"],
+        13: ["高単価の副業案件だけを拾う", "AI支援の案件が登場", "15万円", "高単価案件の上限"],
+        14: ["実際のSNS案件をそのまま拾う", "複数担当で月30万〜50万円", "50万円", "月額の上限・継続案件"],
+        15: ["急伸びチャンネルの理由を研究", "Pokémon Kids TVが最速", "+170万人", "30日間の登録者増"],
+        16: ["締切が近い公募をまとめて拾う", "りぼんまんがスクール＋が本日締切", "11/20", "りぼんまんがスクール＋の締切"],
+        17: ["大手チェーンの新作をチェック", "スタバ新作はティーが主役", "9品", "ホリデー新商品"],
+        18: ["食品の値上げの波を把握する", "11月の値上げは約10倍", "1,477品目", "11月に値上げ"],
+        19: ["モール手数料の変更に備える", "楽天の出店料が改定へ", "90,000円", "スタンダード月額・改定後"],
+        20: ["補助金の公募と締切を逃さない", "新事業補助金の公募開始", "9,000万円", "補助上限・最大"]
+      };
+
+      var state = { cat: "all", query: "", sort: "cat", plan: "free" };
+      var favorites = {};
+
+      var grid = document.getElementById("boardGrid");
+      var resultLine = document.getElementById("resultLine");
+      var chipRow = document.getElementById("chipRow");
+
+      function timingLabel(board) {
+        return state.plan === "paid" ? "条件アラート（最速1時間）" : "毎朝のまとめ便";
+      }
+
+      function cardHTML(b) {
+        var badges = '<span class="badge cat-' + b.cat + '">' + CATEGORIES[b.cat].name + '</span>';
+        if (b.real) badges += '<span class="badge real">実データ</span>';
+        var sp = SPOT[b.id] || [b.desc, b.feed[0][1], "—", ""];
+        return '<button type="button" class="card" data-cat="' + b.cat + '" data-open="' + b.id + '" aria-haspopup="dialog">' +
+          '<span class="c-top"><span class="c-num">' + String(b.id).padStart(2, "0") + '</span>' +
+          '<span class="c-badges">' + badges + '</span></span>' +
+          '<h2>' + b.title + '</h2>' +
+          '<span class="c-headline">' + sp[1] + '</span>' +
+          '<span class="c-big"><span class="num">' + sp[2] + '</span><span class="lbl">' + sp[3] + '</span></span>' +
+          '<p class="c-desc">' + sp[0] + '</p>' +
+          '<span class="c-foot"><span class="c-open">板を開く →</span></span>' +
+          '</button>';
+      }
+
+      var AD_HTML = '<div class="adslot grid-ad" aria-label="広告枠">' +
+        '<span><span class="a-lbl">AD</span>　<span class="a-body">スポンサー枠（試作）</span></span>' +
+        '<span class="mono">300×80</span></div>';
+
+      function render() {
+        var list = BOARDS.filter(function (b) {
+          if (state.cat !== "all" && b.cat !== state.cat) return false;
+          if (state.query) {
+            var extra = (b.chart ? b.chart.map(function (r) { return r[1] + " " + r[2]; }).join(" ") : "") + (b.tchart ? " " + b.tchart.map(function (r) { return r[1] + " " + r[2]; }).join(" ") : "") + (b.hchart ? " " + b.hchart.map(function (r) { return r[1] + " " + r[3]; }).join(" ") : "") + (b.xchart ? " " + b.xchart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.ichart ? " " + b.ichart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.ychart ? " " + b.ychart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.yshorts ? " " + b.yshorts.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.schart ? " " + b.schart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.mchart ? " " + b.mchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2]; }).join(" ") : "") + (b.nchart ? " " + b.nchart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.pchart ? " " + b.pchart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.scal ? " " + b.scal.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.kchart ? " " + b.kchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3] + " " + r[4]; }).join(" ") : "") + (b.lchart ? " " + b.lchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3] + " " + r[4]; }).join(" ") : "") + (b.gchart ? " " + b.gchart.map(function (r) { return r[1] + " " + r[2] + " " + r[3] + " " + r[4]; }).join(" ") : "") + (b.rchart ? " " + b.rchart.map(function (r) { return r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.achart ? " " + b.achart.map(function (r) { return r[0] + " " + r[1] + " " + r[2]; }).join(" ") : "") + (b.stchart ? " " + b.stchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.fchart ? " " + b.fchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + (b.qchart ? " " + b.qchart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3] + " " + r[4]; }).join(" ") : "") + (b.ochart ? " " + b.ochart.map(function (r) { return r[0] + " " + r[1] + " " + r[2] + " " + r[3]; }).join(" ") : "") + " " + b.feed.map(function (f) { return f[1] + " " + f[2]; }).join(" ");
+            var hay = (b.title + " " + b.desc + " " + b.who + " " + extra + " " + b.watch.map(function (w) { return w[0] + w[1]; }).join(" ")).toLowerCase();
+            if (hay.indexOf(state.query.toLowerCase()) === -1) return false;
+          }
+          return true;
+        });
+        if (state.sort === "num") list.sort(function (a, b) { return a.id - b.id; });
+        if (state.sort === "name") list.sort(function (a, b) { return a.title.localeCompare(b.title, "ja"); });
+        if (state.sort === "cat") list.sort(function (a, b) {
+          return CATEGORY_ORDER.indexOf(a.cat) - CATEGORY_ORDER.indexOf(b.cat) || a.id - b.id;
+        });
+
+        if (!list.length) {
+          grid.innerHTML = '<div class="empty">条件に合う板がありません。検索語やカテゴリを変えてみてください。</div>';
+        } else if (state.sort === "cat") {
+          var html = "";
+          var shown = 0;
+          CATEGORY_ORDER.forEach(function (key) {
+            var inCat = list.filter(function (b) { return b.cat === key; });
+            if (!inCat.length) return;
+            html += '<section class="cat-section" aria-label="' + CATEGORIES[key].name + '">' +
+              '<div class="cat-head"><span class="cat-dot" style="background:' + CATEGORIES[key].color + '"></span>' +
+              '<h2>' + CATEGORIES[key].name + '</h2>' +
+              '<span class="cat-desc">' + CATEGORIES[key].desc + '</span>' +
+              '<span class="cat-count">' + inCat.length + '板</span></div>' +
+              '<div class="grid">';
+            inCat.forEach(function (b) {
+              html += cardHTML(b);
+              shown++;
+              if (state.plan === "free" && shown === 6) html += AD_HTML;
+            });
+            html += '</div></section>';
+          });
+          grid.innerHTML = html;
+        } else {
+          var flat = '<div class="grid">';
+          list.forEach(function (b, i) {
+            flat += cardHTML(b);
+            if (state.plan === "free" && i === 5) flat += AD_HTML;
+          });
+          flat += '</div>';
+          grid.innerHTML = flat;
+        }
+        resultLine.textContent = "全20板中 " + list.length + "板を表示";
+        grid.querySelectorAll("[data-open]").forEach(function (el) {
+          el.addEventListener("click", function () { openSheet(parseInt(el.getAttribute("data-open"), 10)); });
+        });
+      }
+
+      function renderChips() {
+        var html = '<button type="button" class="chip" data-cat="all" aria-pressed="' + (state.cat === "all") + '">すべて（20）</button>';
+        CATEGORY_ORDER.forEach(function (key) {
+          var n = BOARDS.filter(function (b) { return b.cat === key; }).length;
+          html += '<button type="button" class="chip" data-cat="' + key + '" aria-pressed="' + (state.cat === key) + '">' +
+            '<span class="dot" style="background:' + CATEGORIES[key].color + '"></span>' +
+            CATEGORIES[key].name + '（' + n + '）</button>';
+        });
+        chipRow.innerHTML = html;
+        chipRow.querySelectorAll(".chip").forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            state.cat = chip.getAttribute("data-cat");
+            renderChips(); render();
+          });
+        });
+      }
+
+      /* ---------- Detail sheet ---------- */
+      var overlay = document.getElementById("overlay");
+      var sheet = document.getElementById("sheet");
+      var lastFocus = null;
+
+      function openSheet(id) {
+        var b = BOARDS.filter(function (x) { return x.id === id; })[0];
+        if (!b) return;
+        lastFocus = document.activeElement;
+        var feedDate = b.real ? "実データ・" + (b.feedDate || "2026年11月17日") + "取得" : (state.plan === "paid" ? "条件アラート対象（最速1時間以内）" : "毎朝のまとめ便");
+        var feed = b.feed.map(function (f) {
+          var link = f[3]
+            ? '<a class="f-link" href="' + f[3] + '" target="_blank" rel="noopener">元のページを見る →</a>'
+            : '<a class="f-link" href="#" onclick="return false;">元のページを見る →</a>';
+          return '<li><div class="f-top"><span class="f-kind">' + f[0] + '</span><span>' + feedDate + '</span></div>' +
+            '<div class="f-title">' + f[1] + '</div><div class="f-body">' + f[2] + '</div>' + link + '</li>';
+        }).join("");
+        var chartHTML = "";
+        if (b.chart) {
+          var rows = b.chart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td class="move">' + r[3] + '</td><td>' + r[4] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>Billboard JAPAN Hot 100 — Top10（2026年11月11日公開）</h3>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>曲名 / アーティスト</th><th>前週</th><th>メモ</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報・発行元】Billboard JAPAN Hot 100 公式チャート（2026年11月11日公開・集計期間 2026年11月2日〜11月8日）／ <a href="https://www.billboard-japan.com/charts/detail?a=hot100&year=2026&month=11&day=16" target="_blank" rel="noopener">Billboard JAPAN Hot 100 公式チャート</a>、<a href="https://charts.spotify.com" target="_blank" rel="noopener">Spotify公式 Charts</a>。順位・前週順位・総合ポイントは公式チャートページで再確認済み。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "tiktok" && b.tchart) {
+          var trows = b.tchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td colspan="2">' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>オリコン週間 TikTok音楽チャート — Top10（2026年11月13日付）</h3>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>曲名 / アーティスト</th><th colspan="2">メモ</th></tr></thead><tbody>' + trows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報・チャート発行元】オリコン週間TikTok音楽チャート 2026年11月13日付（集計期間 2026年11月5日〜11月11日、提供：TikTok。TikTok日本国内の動画作成数・動画再生数・エンゲージメントをもとに週間ランキング化）／ <a href="https://www.oricon.co.jp/rank/tt/w/2026-11-13/" target="_blank" rel="noopener">オリコン TikTok音楽チャート</a>。取得日：2026年11月18日。</p>';
+        }
+        if (b.detail === "trend" && b.hchart) {
+          var hrows = b.hchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>TikTok日本 トレンドハッシュタグ — 再生数Top10（2026年11月9日〜15日週）</h3>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>ハッシュタグ</th><th>投稿数 / 再生数</th><th>メモ</th></tr></thead><tbody>' + hrows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】TokConnect「TikTok Trends in Japan This Week (9–15 November 2026)」（TikTok公式トレンドハッシュタグリスト由来）／ <a href="https://tokconnect.com/trends/japan/" target="_blank" rel="noopener">TokConnect — TikTok Trends in Japan</a>、<a href="https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=JP&period=7" target="_blank" rel="noopener">TikTok Creative Center ハッシュタグ（日本）</a>。順位は7日間の再生数順。TikTok公式の並び順では #ポッキーの日が1位です。25タグ合計 660.9M再生・73,672投稿。取得日：2026年11月18日時点スナップショット。</p>' +
+            '<h3>いま押さえるミームとコトバ</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">ミーム「あのね・うんうん それでね・うんうん」 — 相づち動画の型</div><div class="j-meta">元ネタ：ボカロP・るの「トイレイキタイ」（2026年3月28日公開、重音テト・音街ウナ）の会話パートの切り抜き音源。9月中ごろからTikTokで拡散。マイナビティーンズラボ コトバ部門5位。</div><a class="j-link" href="https://www.haradaeigo.com/slang/column/2026-11-12" target="_blank" rel="noopener">ミーム解説（原田英語 スラング考現学）を見る →</a> <a class="j-link" href="https://fomo-fomo.com/sns/trend/anone-unun-toireikitai-meme/" target="_blank" rel="noopener">元ネタ解説（FOMO²）を見る →</a></li>' +
+            '<li><div class="j-title">コトバ部門1位「ドパガキ」（45.6％）</div><div class="j-meta">「ドーパミン中毒のガキ」の略。TikTokなどのショート動画・SNS・ゲームの強い刺激に慣れ、集中力が続かない若年層を指す言葉。「自分もドパガキかも」という共感ワードとして定着。</div><a class="j-link" href="https://gakumado.mynavi.jp/teens/articles/92936" target="_blank" rel="noopener">10代女子トレンドランキング（マイナビティーンズ）を見る →</a></li>' +
+            '<li><div class="j-title">コトバ部門2位「ばりきまずい」（16.7％）／ 3位「ワホー」（16.2％）</div><div class="j-meta">「ばりきまずい」はSNSのショート動画発で、失敗や沈黙を笑いに変える言葉としてミーム化。「ワホー」はYouTuberセイキンが約12年前のミンティア一気食い動画で発したフレーズがTikTokで再発掘されてブレイク。</div><a class="j-link" href="https://realsound.jp/tech/2026/11/post-2580271.html" target="_blank" rel="noopener">ランキング解説（Real Sound）を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">ミーム・コトバ出典：【一次情報・調査発表元】マイナビティーンズラボ「2026年10代女子が選ぶトレンドランキング」（対象：15〜19歳女性586名、調査期間 2026年9月24日〜30日、2026年11月11日発表）／ <a href="https://gakumado.mynavi.jp/teens/articles/92936" target="_blank" rel="noopener">マイナビティーンズ</a>、<a href="https://www.haradaeigo.com/slang/column/2026-11-12" target="_blank" rel="noopener">原田英語 スラング考現学（2026年11月12日）</a>。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "xtrend" && b.xchart) {
+          var xrows = b.xchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>Xトレンド（日本）— 現在のトレンド（2026年11月20日 05:58 JST時点）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">Xのトレンドは数時間で入れ替わります。下表は<strong>2026年11月20日 05:58 JST時点のスナップショット</strong>（Rattibha）です。<strong>順位番号・投稿数（ポスト数）は出典ページで一部しか取得できないため、並びはページの掲載順で、厳密な順位ではありません。</strong>投稿数が確認できたのは 平和宣言（19.1K tweets）と アンソロピック（22.5K tweets）のみです。X公式はトレンド順位の一覧を外部に公開していないため、この板は集計サイトのスナップショットを使っています。</p>' +
+            '<table class="chart-table"><thead><tr><th>掲載順</th><th>トレンド</th><th>区分</th><th>メモ</th></tr></thead><tbody>' + xrows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】Rattibha「Twitter Trends in Japan」（Xトレンド由来）／ <a href="https://en.rattibha.com/trends/japan" target="_blank" rel="noopener">Rattibha — Twitter Trends in Japan</a>。2026年11月20日 05:58 JST時点のクロールで確認。順位番号・投稿数は一部しか取得できないため、並びは掲載順です。</p>' +
+            '<h3>前日（11月19日）の上位 — 時刻で顔ぶれが変わる</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">Rattibha 11月19日 08:34 JST 時点 — 先頭 #旅の合間のてりやきマック</div><div class="j-meta">続いて #ブラッサム、#めざましディズニー、#Jリーグサポーター選出の80選手登場、#HAPPYRUKIDAY、#Jクラ、#佐久間宣行ANN0。11/20未明の上位からは前日先頭の #旅の合間のてりやきマック が外れ、#魔法使いの夜感想 が先頭に交代しました。</div><a class="j-link" href="https://en.rattibha.com/trends/japan" target="_blank" rel="noopener">Rattibha — Twitter Trends in Japanを見る →</a></li>' +
+            '<li><div class="j-title">AgentFlare 11月18日 日次Top5 — 1位 #てりやきマックバーガー召し上がれ</div><div class="j-meta">2位 #カスタードでほっとひといき、3位 雪見だいふく、4位 #ホリデーマックフルーリー召し上がれ、5位 キャラメルマキアート。</div><a class="j-link" href="https://agent.agentflare.org/social/regions/japan-2026-11-18.html" target="_blank" rel="noopener">AgentFlare 日本Xトレンド 2026年11月18日を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">前日出典：Rattibha「Twitter Trends in Japan」（2026年11月19日 08:34 JST時点）／ AgentFlare「Trending on X in Japan — Wed, Nov 18, 2026」。取得日：2026年11月20日時点スナップショット。</p>';
+        }
+        if (b.detail === "insta" && b.ichart) {
+          var irows = b.ichart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td colspan="2">' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>CreatorDB Trending Instagram Audio — 2026年11月11日週</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>Instagram公式チャートではありません。</strong>Instagramは公式のトレンドチャートを公開していないため、CreatorDBの<strong>Heatスコア（0〜100）</strong>は、7本の独立した週次トレンドレポートと公表Reels数に、Spotify US・Apple Music・YouTube Trendingのチャート勢いと前週比を合成した指標です。Reels数は発行時点の概数で、ライブ数ではありません。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>曲名 / アーティスト</th><th colspan="2">Heat / Reels数 / メモ</th></tr></thead><tbody>' + irows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】CreatorDB「Trending Instagram Audio This Week (November 11, 2026)」／ <a href="https://creatordb.app/free-tools/trending-instagram-audio/" target="_blank" rel="noopener">CreatorDB Trending Instagram Audio</a>。照合：<a href="https://buffer.com/resources/trending-audio-instagram/?ref=buffer.com" target="_blank" rel="noopener">Buffer「13 Trending Sounds on Instagram in November 2026」</a>、<a href="https://later.com/blog/instagram-reels-trends/?utm_source=Beauty%20by%20Earth%20Team&utm_medium=email&utm_campaign=Affiliate%20Newsletter%20-%20Send%201%20-%20August%205%20%2801H72Z5K7DSZF0BXWX60TPDH0T%29&_kx=" target="_blank" rel="noopener">Later「Top Instagram Reels Trends」</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>Laterで確認できる今週の型</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">「I just wanna」— Housewife（Tate McRae）を使った暮らしの裏側見せ</div><div class="j-meta">Later 2026年11月6日付。憧れのライフスタイルのB-rollに「Housewife」を重ねる型。CreatorDB 2位（Heat 97）と一致します。</div><a class="j-link" href="https://later.com/blog/instagram-reels-trends/?utm_source=Beauty%20by%20Earth%20Team&utm_medium=email&utm_campaign=Affiliate%20Newsletter%20-%20Send%201%20-%20August%205%20%2801H72Z5K7DSZF0BXWX60TPDH0T%29&_kx=" target="_blank" rel="noopener">Laterのトレンド一覧を見る →</a></li>' +
+            '<li><div class="j-title">「Not every angel」— Angel of My Dreams（JADE）</div><div class="j-meta">Later 2026年11月6日付。CreatorDBでは12位（Heat 40・211K+ reels）に入っており、ドリーミーな見せ場の型として両方に載っています。</div><a class="j-link" href="https://creatordb.app/free-tools/trending-instagram-audio/" target="_blank" rel="noopener">CreatorDBの全14曲を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">型の出典：Later「Top Instagram Reels Trends to Try in 2026」（2026年11月6日・13日更新分）。ビジネスアカウントでは使えない音源もあるため、投稿前にInstagramの音源ピッカーで確認してください。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "youtube" && b.ychart) {
+          var ysrows = (b.yshorts || []).map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td colspan="2">' + r[3] + '</td></tr>';
+          }).join("");
+          var yrows = b.ychart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td colspan="2">' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>AI BunCho — YouTube Shorts 急上昇・再生速度（2026年11月17日06:25 JST更新）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">YouTube Data API v3で集計した<strong>国内急上昇プール372本</strong>から、65秒以内の日本語Shortsを対象にしたランキングです。累計再生数ではなく<strong>公開後1時間あたりの平均再生速度（初速）</strong>で見るため、公開直後の勢いが分かります。下表の数値は<strong>2026年11月17日06:25 JST時点のスナップショット</strong>で、出典ページは毎日自動更新されるため開いた時点では順位・数値が変わっています。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>タイトル / チャンネル</th><th colspan="2">初速 / 累計 / メモ</th></tr></thead><tbody>' + ysrows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】AI BunCho「今伸びているYouTubeショート急上昇トレンド」（YouTube Data API v3集計、2026年11月17日06:25 JST更新、国内急上昇プール372本）／ <a href="https://bun-cho.work/shorts-ranking/trending" target="_blank" rel="noopener">AI BunCho — Shorts急上昇ランキング</a>、週間総合：<a href="https://bun-cho.work/shorts-ranking" target="_blank" rel="noopener">AI BunCho — Shorts週間ランキング</a>。取得日：2026年11月17日時点スナップショット（06:25 JST版）。</p>' +
+            '<h3>オリコン YouTubeチャート — 週間TOP10（集計2026年10月30日〜11月5日）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">こちらはShortsではなく<strong>音楽動画（MV等）の週間視聴回数</strong>ランキングです。TOP100の週間総視聴回数は前週比ほぼ横ばい（-0.04%）、初登場は18作でした。Shortsの初速と合わせて読むことで、「短尺で跳ねているもの」と「長尺で回っている曲」の両方が見えます。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>曲名 / アーティスト</th><th colspan="2">週間視聴回数 / メモ</th></tr></thead><tbody>' + yrows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報・チャート発行元】オリコンYouTubeチャート週間TOP（集計期間 2026年10月30日〜11月5日、2026年11月11日発表）／ <a href="https://www.oricon.co.jp/news/2491972/full/" target="_blank" rel="noopener">ORICON NEWS「M!LK『ザッツ!超常』が初の首位」</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>Shortsで使える今週の型</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">最多ジャンルは「お笑い・コント」 — セリフ先出し型が冒頭の本命</div><div class="j-meta">週間総合の対象50本でお笑い・コントが最多。冒頭の型は「セリフ先出し型」（一番強いセリフをタイトルと1カット目に置き、状況は後から見せる）が最多級で、「答えを伏せる型」（「唯一の方法」「理由」などで答えを最後まで伏せる）も上位に並びます。</div><a class="j-link" href="https://bun-cho.work/shorts-ranking" target="_blank" rel="noopener">AI BunCho 週間ランキングで型を確認する →</a></li>' +
+            '<li><div class="j-title">初速で見る — 累計が小さくても速度が高ければ伸びしろあり</div><div class="j-meta">AI BunChoは前回からの増加数・公開後平均速度・登録者数比を併記しています。登録者数比2,000%超のような「チャンネル規模を超えた再生」は、企画そのものが跳ねたサインとして読めます。</div><a class="j-link" href="https://bun-cho.work/shorts-ranking/trending" target="_blank" rel="noopener">AI BunCho 急上昇ランキングを見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">型の出典：AI BunCho Shortsランキング（急上昇・週間総合、2026年11月17日06:25 JST更新分）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "spotify" && b.schart) {
+          var srows = b.schart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">「' + r[1] + '」</span><br>' + r[2] + '</td><td colspan="2">' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>Spotify日本 週間Top200 — 注目順位（集計2026年10月30日〜11月5日）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>Spotify公式Viral 50は2026年に終了しています。</strong>この板はViral 50の代替として、Spotify日本週間Top Songs（Top200）の順位・週間再生数と、順位が大きく動いた<strong>急上昇ムーバー</strong>で構成しています。下表はTop10からの抜粋（1・2・3・4・7・8・10位）に、急上昇の12位・33位・69位を加えたものです。全200曲の表ではありません。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>曲名 / アーティスト</th><th colspan="2">週間再生数 / メモ</th></tr></thead><tbody>' + srows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】Spotify公式チャート 日本週間Top200（集計期間 2026年10月30日〜11月5日）／ <a href="https://charts.spotify.com" target="_blank" rel="noopener">Spotify公式 Charts（日次・参考）</a>。日次参考：2026年11月15日デイリー1位もVaundy「しわあわせ」466,332再生。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>急上昇ムーバー — 今週の読みどころ</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">100ランクアップ — ILLIT「You\'re Under Arrest」112位→12位（135.4万再生）</div><div class="j-meta">今週最大のジャンプアップ。YouTube週間でも5位と、プラットフォームをまたいで伸びています。SNS発の拡散がストリーミングに波及した典型として追跡対象です。</div><a class="j-link" href="https://charts.spotify.com" target="_blank" rel="noopener">Spotify公式 Chartsを見る →</a></li>' +
+            '<li><div class="j-title">初登場33位 — HANA「Slidin」（102.4万再生）／ +17ランク — M!LK「ザッツ！超常」7位（152.7万再生）</div><div class="j-meta">「Slidin」はYouTube週間68位→4位の急伸と一致。「ザッツ！超常」はYouTube週間首位とSpotify 7位が連動しており、動画→ストリーミングの流れが見えます。</div><a class="j-link" href="https://charts.spotify.com" target="_blank" rel="noopener">Spotify公式 Chartsを見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">急上昇の出典：同週間Top200の前週順位との比較（Spotify公式チャート）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "buzzshop" && b.nchart && b.pchart) {
+          var nrows = b.nchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          var prows = b.pchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>Nolyn — TikTokで流行っている商品 Top4（いいね順・2026年11月版）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">Nolyn月次レポート2026年11月版（<strong>2026年11月9日収集</strong>）より。対象は<strong>2026年10月10日〜11月8日</strong>にTikTok日本で投稿された商品紹介動画<strong>91本</strong>をいいね順に集計したものです。<strong>いいね・再生は投稿への反応であり、販売数ではありません。</strong>上位10本中6本がセリア・ダイソー商品でした。下表は上位4本です。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>商品／動画</th><th>いいね / 再生</th><th>メモ</th></tr></thead><tbody>' + nrows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】Nolyn「TikTokで流行っている商品 2026年11月：日本の91本ランキング」（月次レポート2026年11月版、2026年11月9日収集）／ <a href="https://www.nolyn.ai/ja/case-studies/tiktok-hayari-shouhin" target="_blank" rel="noopener">Nolyn 月次レポートを見る</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>TokConnect — TikTok Shop Japan 急上昇商品 Top3（7日間・推定）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">TokConnect Shop Analyticsによる<strong>TikTok Shop Japanの急上昇商品</strong>です。対象は<strong>11月4日までの7日間</strong>で、前週比の伸びが大きい商品を推定売上順に並べています。<strong>売上はTikTok Shopの販売カウンターと表示価格から推定した値で、公式の確定売上ではありません。</strong></p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>商品</th><th>推定売上（7日間）</th><th>前週比 / メモ</th></tr></thead><tbody>' + prows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】TokConnect「Rising TikTok Shop Products Japan: This Week」（データは11月4日までの7日間、2026年11月13日更新、TokConnect Shop Analyticsの推定）／ <a href="https://tokconnect.com/trends/tiktok-shop/rising-products-japan/" target="_blank" rel="noopener">TokConnect TikTok Shop 急上昇商品（日本）を見る</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>2系統の読み分け — 仕入れ・企画での使い方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">反応が大きい ≠ 売れている — まずNolynで「見られているか」を確認</div><div class="j-meta">Nolynの順位はいいね・再生ベースです。魚のウロコ取り（139,157いいね・11,699,683再生）のような実演型は拡散力の指標として読み、販売数と混同しないでください。</div><a class="j-link" href="https://www.nolyn.ai/ja/case-studies/tiktok-hayari-shouhin" target="_blank" rel="noopener">Nolynレポートで91本の全順位を見る →</a></li>' +
+            '<li><div class="j-title">売れ行きの勢いはTokConnectで確認 — ただし推定値として扱う</div><div class="j-meta">TokConnectの金額は推定です。前週比10倍以上・+468%・+188%のような伸び率は「勢い」の指標として使い、金額そのものを確定売上として見積もらないでください。</div><a class="j-link" href="https://tokconnect.com/trends/tiktok-shop/rising-products-japan/" target="_blank" rel="noopener">TokConnectで急上昇の全リストを見る →</a></li>' +
+            '<li><div class="j-title">100均の強さ — 上位10本中6本がセリア・ダイソー</div><div class="j-meta">Nolynの上位は100均商品が過半数です。低価格・まとめ紹介・新色紹介の型がTikTokでは伸びやすく、自店の価格帯と照らして企画を立てる材料になります。</div><a class="j-link" href="https://www.nolyn.ai/ja/case-studies/tiktok-hayari-shouhin" target="_blank" rel="noopener">Nolynレポートで100均の内訳を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：Nolyn月次レポート2026年11月版の注記（いいね・再生は販売数ではない）／ TokConnectの推定方法の注記（売上は販売カウンターと表示価格からの推定）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "sale" && b.scal) {
+          var scrows = b.scal.map(function (r) {
+            return '<tr><td class="move" style="white-space:normal;">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>2026年 ブラックフライデー・セールカレンダー（2026年11月20日時点）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">状態欄が<strong>「確定」</strong>の行はすべて公式発表済みの情報です。Amazonの詳細日程は<strong>2026年11月19日に公式発表</strong>され、未発表の記載と予想日程は確定情報に差し替えました。ユニクロ感謝祭2026冬（11/20〜11/26）を新規に追加しています。</p>' +
+            '<table class="chart-table"><thead><tr><th>日程</th><th>セール</th><th>状態</th><th>内容 / メモ</th></tr></thead><tbody>' + scrows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】ギャップジャパン株式会社の公式プレスリリース（PR TIMES配信、2026年11月16日付、開催期間 2026年11月19日〜11月30日）／ <a href="https://prtimes.jp/main/html/rd/p/000000861.000011503.html" target="_blank" rel="noopener">Gap ブラックフライデー2026 公式プレスリリース（PR TIMES）</a>、<a href="https://www.gap.co.jp/news/post/?news_id=1882" target="_blank" rel="noopener">Gap公式ニュース</a>、【一次情報】株式会社高島屋の公式発表（PR TIMES配信、開催期間 2026年11月18日10:00〜11月28日10:00）／ <a href="https://news.livedoor.com/pr_article/detail/32774617/" target="_blank" rel="noopener">高島屋 公式発表（PR TIMES配信）</a>、<a href="https://www.takashimaya.co.jp/shopping/special/blackfriday/" target="_blank" rel="noopener">高島屋オンラインストア ブラックフライデー公式ページ</a>、【まとめ】イトーヨーカドー ブラックフライデー2026（公式発表済み・2026年10月30日発表、開催期間 2026年11月18日〜29日。各社公式ページで日程を確認したまとめで、公式ページそのものではありません）／ <a href="https://mottoku.app/koramu/black-friday-2026-matome" target="_blank" rel="noopener">ブラックフライデー2026まとめ</a>、<a href="https://value-advance.com/pages/articles/black-friday-2026" target="_blank" rel="noopener">ブラックフライデー2026 開催日まとめ</a>、【一次情報】楽天市場「ブラックフライデー」公式ページ（2026年11月17日確認。ポイントアップ期間 2026年11月19日20:00〜11月25日1:59、エントリー期間 11月12日10:00〜11月25日1:59）／ <a href="https://event.rakuten.co.jp/campaign/point-up/blackfriday/" target="_blank" rel="noopener">楽天市場 ブラックフライデー公式ページ</a>、【一次情報】イオン公式発表「イオン ブラックフライデー 参加して楽しむ“体験型消費”を強化」（2026年10月27日付、開催期間 2026年11月20日〜30日）／ <a href="https://prtimes.jp/main/html/rd/p/000006158.000007505.html" target="_blank" rel="noopener">イオン公式発表（PR TIMES）</a>、【一次情報】アマゾンジャパン公式発表「Amazon ブラックフライデー2026」（2026年11月19日発表。先行セール 11月27日0:00〜11月29日23:59、本セール 11月30日0:00〜12月7日23:59、対象商品400万点以上、ポイントアップキャンペーンのエントリー期間 11月19日10:00〜12月7日23:59）／ <a href="https://press.aboutamazon.com/jp/2026/11/black-friday-2026" target="_blank" rel="noopener">About Amazon Press Center — Amazon ブラックフライデー2026</a>、【一次情報】ユニクロ公式の感謝祭2026冬の発表（開催期間 2026年11月20日〜26日。ORICON NEWS 2026年11月19日報道で確認）／ <a href="https://www.oricon.co.jp/news/2493929/full/" target="_blank" rel="noopener">ORICON NEWS「ユニクロ『感謝祭』、“特別価格”となる主な商品」</a>。取得日：2026年11月20日時点スナップショット。</p>' +
+            '<h3>確定情報の読み方 — 買い物の計画の立て方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">Gapは本日11/19開始 — 40%OFFに加えて「Black Friday Card」が付く</div><div class="j-meta">Gapストアと公式オンラインストアは対象商品40%OFF、Gap Outletストアは50%OFF（一部対象外あり）。期間中の購入者全員に、12/1〜12/25のお買い物が50%OFFになる「Black Friday Card」が付くため、12月に買い足す予定がある人はこの期間の購入が効いてきます。</div><a class="j-link" href="https://www.gap.co.jp/news/post/?news_id=1882" target="_blank" rel="noopener">Gap公式ニュースで詳細を見る →</a></li>' +
+            '<li><div class="j-title">高島屋・イトーヨーカドーは11/18開始・開催中 — 早めのチェックが有効</div><div class="j-meta">高島屋オンラインストアは11/28（土）10:00までで、送料無料クーポンの第1弾は11/23 9:59まで。イトーヨーカドーは企画が期間で切り替わり、前半の「レッドプライスデー」は11/20まで、後半の「96（クロ）プライス」は11/25〜27です。どちらも数量限定品があるため、初動で目当ての商品を確認するのが実務的です。</div><a class="j-link" href="https://www.takashimaya.co.jp/shopping/special/blackfriday/" target="_blank" rel="noopener">高島屋オンラインストア公式ページを見る →</a></li>' +
+            '<li><div class="j-title">楽天は「もう動ける」— エントリーとクーポン確保が先</div><div class="j-meta">日程・倍率・クーポンまで公式に出ているため、11/19 20:00の開始前にエントリーと開始2時間限定クーポンの獲得を済ませるのが実務的な動きです。終了は11/25（水）1:59で、25日の夜ではなく24日の夜が実質の最終日です。</div><a class="j-link" href="https://event.rakuten.co.jp/campaign/point-up/blackfriday/" target="_blank" rel="noopener">楽天市場公式ページでエントリーする →</a></li>' +
+            '<li><div class="j-title">イオンは店舗ごとに差がある — 行く店の期間を確認</div><div class="j-meta">全体の期間は11/20〜11/30ですが、公式発表にも地域（運営企業）によって期間・内容が異なると明記されています。対象商品の実施日も品ごとに違うため、目当ての店舗のチラシ・特設ページで最終確認してください。</div><a class="j-link" href="https://prtimes.jp/main/html/rd/p/000006158.000007505.html" target="_blank" rel="noopener">イオン公式発表の詳細を見る →</a></li>' +
+            '<li><div class="j-title">Amazonは日程確定 — ポイントアップのエントリーは受付中</div><div class="j-meta">先行セール11/27（金）0:00〜11/29（日）23:59、本セール11/30（月）0:00〜12/7（月）23:59。ポイントアップキャンペーンのエントリーは12/7 23:59まで受け付けており、お買い物対象期間は11/27 0:00からです。対象は過去最大の400万点以上なので、欲しい商品の通常価格を先に控えておくと値下げ幅が判断できます。</div><a class="j-link" href="https://press.aboutamazon.com/jp/2026/11/black-friday-2026" target="_blank" rel="noopener">Amazon公式発表で日程を確認する →</a></li>' +
+            '<li><div class="j-title">ユニクロ感謝祭は本日11/20開始 — 初日だけの「UNIQLOあんぱん」は先着</div><div class="j-meta">期間は11/26（木）までの7日間。木村屋總本店「UNIQLOあんぱん」のプレゼントは初日11/20のみ・実施店舗のみで先着順のため、狙うなら初日の早い時間が前提です。パッカブルビッグトートバッグは11/20〜23に税込1万円以上の購入が条件で、店舗は毎日先着、通販は毎日抽選です。</div><a class="j-link" href="https://www.oricon.co.jp/news/2493929/full/" target="_blank" rel="noopener">ユニクロ感謝祭の対象商品・特典を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：ギャップジャパン株式会社の公式プレスリリース（割引率とBlack Friday Cardの条件、2026年11月16日付）／ 高島屋の公式発表（送料無料クーポンの利用期間）／ イトーヨーカドーの公式発表済み日程（2026年10月30日発表、まとめ記事経由で確認）／ 楽天市場公式ページのキャンペーン詳細（エントリー条件・上限）／ イオン公式発表の注記（地域により期間・内容が異なる場合あり）／ アマゾンジャパン公式発表（About Amazon Press Center、2026年11月19日発表の日程とポイントアップ条件）／ ユニクロ公式の感謝祭発表（ORICON NEWS 2026年11月19日報道で確認）。取得日：2026年11月20日。</p>';
+        }
+        if (b.detail === "pokemarket" && b.kchart) {
+          var krows = b.kchart.map(function (r) {
+            return '<tr><td><span class="song">' + r[0] + '</span><br>' + r[1] + '</td><td class="move">' + r[2] + '</td><td class="move">' + r[3] + '</td><td>' + r[4] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>ポケカ ☆カード初版 — 買取価格の3時点比較（2026年9月23日／10月19日／11月4日）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">すべて<strong>買取価格・買取目安</strong>です。<strong>販売価格や成約価格ではありません。</strong>時点A・Bは大手買取店の買取価格を集計した専門メディア経由の買取価格（参考）、時点CはPRICE BASEの買取目安（2026年11月4日時点）で、出どころが異なるため時点Cとの差は参考程度に読んでください。この表は相場の記録であり、<strong>投資助言ではありません</strong>。</p>' +
+            '<table class="chart-table"><thead><tr><th>カード / 型番</th><th>9/23 買取価格</th><th>10/19 買取価格</th><th>11/4 買取目安</th></tr></thead><tbody>' + krows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計メディア】eternis「ポケカの高騰カードと今後の予想【2026年11月】」（2026年11月4日更新。9月23日・10月19日の買取価格比較にPRICE BASE買取目安2026年11月4日時点を加えたまとめ）／ <a href="https://eternis.jp/blogs/news/pokeca-koutou-card" target="_blank" rel="noopener">eternis ポケカ高騰まとめ</a>、横断確認：<a href="https://eternis.jp/blogs/news/toreca-koutou-ranking" target="_blank" rel="noopener">eternis トレカ高騰ランキング（PRICE BASE買取目安・2026年11月4日時点）</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>急騰と横ばいの読み分け</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">急騰は9月下旬〜10月中旬に起きた — 上がったのは流通の少ない2000年代☆初版が中心</div><div class="j-meta">新弾の当たりカードが軒並み上がったわけではありません。上がった理由は出典で確認できていないため、この板では理由の推測は載せていません。公式発表などで別途確認してください。</div><a class="j-link" href="https://eternis.jp/blogs/news/pokeca-koutou-card" target="_blank" rel="noopener">eternisで6枚すべての推移を見る →</a></li>' +
+            '<li><div class="j-title">11月4日時点は全て横ばい — 「上がり続けている」ではない</div><div class="j-meta">10月19日から11月4日の約2週間は6枚すべて同額でした。時点を重ねて見ることで、上昇が続いているのか止まったのかを読み違えにくくなります。次の更新で下がれば「急騰の反動」として記録します。</div><a class="j-link" href="https://eternis.jp/blogs/news/toreca-koutou-ranking" target="_blank" rel="noopener">PRICE BASE買取目安の横断ランキングを見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：eternis同記事の注意点（価格の種類と時点を分けて読むこと、急に上がった価格は早く下がることもあるという集計メディアの注意）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "pokelimited" && b.lchart) {
+          var lrows = b.lchart.map(function (r) {
+            return '<tr><td><span class="song">' + r[0] + '</span><br>' + r[1] + '</td><td class="move">' + r[2] + '</td><td class="move">' + r[3] + '</td><td>' + r[4] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>30th CELEBRATION 当たりカード — 買取価格（参考）の発売日→10月22日</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">2026年9月16日発売の拡張パック「30th CELEBRATION」の当たりカードです。数字は相場情報サイトの価格表をもとにした<strong>買取価格（参考）</strong>で、<strong>販売価格や成約価格ではありません</strong>。表の7枚すべてが発売日より下がっており、新弾は<strong>発売直後がピーク</strong>になる例として記録しています。この表は<strong>投資助言ではありません</strong>。</p>' +
+            '<table class="chart-table"><thead><tr><th>カード / 型番</th><th>9/16 発売日</th><th>10/22</th><th>メモ</th></tr></thead><tbody>' + lrows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計メディア】eternis「ポケカの高騰カードと今後の予想【2026年11月】」（30th CELEBRATIONの発売日と10月22日の買取価格（参考）の比較）／ <a href="https://eternis.jp/blogs/news/pokeca-koutou-card" target="_blank" rel="noopener">eternis ポケカ高騰まとめ</a>、現在の買取目安の照合：<a href="https://price-base.com/useful/30thcelebration-hit" target="_blank" rel="noopener">PRICE BASE情報局「30th CELEBRATION当たりカード買取価格ランキング」</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>次弾と再販の予定 — 発売前に押さえる日付</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">2026年11月27日（金）— MEGA拡張パック「ハドウシーカー」（M7）発売予定</div><div class="j-meta">1パック200円（税込）・5枚入り、1BOX 6,000円（税込）。注目はメガルカリオZex・メガガブリアスZex・メガアブソルZex。公開済みは20種でSARなど上位レアリティは未発表（11月17日時点）。発売直後は価格が動きやすいため、初日の数字だけで判断しないでください。</div><a class="j-link" href="https://www.pokemon-card.com/ex/m7/" target="_blank" rel="noopener">ポケモンカード公式「ハドウシーカー」商品ページ（一次情報）を見る →</a> <a class="j-link" href="https://tradecard.jp/articles/hadouseeker-yoyaku" target="_blank" rel="noopener">予約・抽選情報を見る →</a></li>' +
+            '<li><div class="j-title">2026年12月頃 — 30th CELEBRATION関連3商品の追加抽選（予定）</div><div class="j-meta">対象は拡張パックBOX、プレミアムデッキセット エーフィ・ブラッキー、FUTURISTIC BOX。ポケモンセンターオンラインで予定、日程・数量は未発表です。供給増は相場を落ち着かせる方向に働くため、抽選の実施有無が次のチェックポイントです。</div><a class="j-link" href="https://eternis.jp/blogs/news/pokeca-koutou-card" target="_blank" rel="noopener">eternisで今後の予定を確認する →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">予定の出典：ポケモンカードゲーム公式発表ベース（ハドウシーカー発売日・価格は公式商品情報、追加抽選はポケモンセンターオンライン2026年9月29日のお知らせ経由でeternisが整理）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "snsjobs") {
+          chartHTML = '<h3>いま応募できる実際のSNS案件（クラウドワークス）</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">SNSディレクター募集｜人材紹介専任（株式会社ビーヘルシー）— Instagram／TikTok 週2投稿 月75,000円・週3投稿 月95,000円／YouTube 週1 約85,000円・週2 約160,000円・週3 約210,000円</div><div class="j-meta">案件ID 13586637 ／ 掲載：2026年11月6日 ／ 応募期限：11月20日（本日締切） ／ 応募1人・契約0人・募集1人 ／ 固定報酬はワーカーと相談・月額目安75,000円〜 ／ 複数案件担当で月合計30万〜50万円が目安</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13586637" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">【初心者歓迎】SNS運用サポート・画像編集・リール動画制作補助スタッフ募集 — 固定報酬5,000円〜10,000円</div><div class="j-meta">案件ID 13595250 ／ 掲載：2026年11月16日 ／ 応募期限：11月20日（本日締切） ／ 応募5人・契約0人・募集15人 ／ Instagram運用サポート・画像編集・リール動画制作補助 ／ 初心者歓迎・継続の可能性あり</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13595250" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">おうちカフェ＆簡単おしゃレシピSNSの投稿画像作成スタッフ募集 — 固定報酬30,000円〜50,000円</div><div class="j-meta">案件ID 13613844 ／ 掲載：2026年11月20日 ／ 応募期限：11月25日（あと5日） ／ 応募0人・募集3人 ／ Instagramの投稿用画像（おうちカフェ・簡単おしゃレシピ）作成・週2〜3本程度 ／ 初回テスト作成300円・継続時は月額3,000円〜 ／ 未経験歓迎・Canva使用</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13613844" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">SNS運用代行者募集・継続案件 — 月額15,000円〜500,000円（アカウント数・投稿数による）</div><div class="j-meta">案件ID 13402137 ／ 週3〜5投稿 ／ 継続案件</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13402137" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">SNS運用代行ディレクター — 固定報酬50,000〜100,000円</div><div class="j-meta">クラウドワークス SNS運用カテゴリ一覧で確認（2026年11月17日）／ 応募38人</div></li>' +
+            '<li><div class="j-title">単発90分のInstagram／TikTok運用アドバイス — 10,000〜30,000円</div><div class="j-meta">クラウドワークス SNS運用カテゴリ一覧で確認（2026年11月17日）／ 応募15人 ／ 単発相談</div></li>' +
+            '<li><div class="j-title">美容系SNS運用代行 — 100,000〜150,000円</div><div class="j-meta">クラウドワークス SNS運用カテゴリ一覧で確認（2026年11月17日）</div></li>' +
+            '<li><div class="j-title">TikTok動画編集 — 1本800〜2,000円</div><div class="j-meta">クラウドワークス SNS運用カテゴリ一覧で確認（2026年11月17日）／ 単価制</div></li>' +
+            '<li><div class="j-title">企業チャンネル運用 — 100,000〜150,000円</div><div class="j-meta">クラウドワークス SNS運用カテゴリ一覧で確認（2026年11月17日）／ 11月20日締切</div></li>' +
+            '</ul>' +
+            '<p class="source-line">出典：【一次情報】クラウドワークス公式の公開案件ページ／カテゴリ一覧（取得日：2026年11月20日時点スナップショット）。報酬・応募数・締切は取得時点の表示です。応募前に各案件ページで最新条件を確認してください。</p>';
+        }
+        if (b.detail === "growth" && b.gchart) {
+          var grows = b.gchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="rank">' + r[2] + '</td><td>' + r[3] + ' — ' + r[4] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>TrendReport — 日本の急伸YouTubeチャンネル（直近30日間・2026年11月16日更新）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">登録者10万人以上の<strong>312チャンネル</strong>をTrendReportが毎日計測し、直近30日間の登録者増加で並べたランキングからの抜粋です。<strong>YouTubeの登録者数は概数</strong>のため、増加は段階的（ステップ状）に現れます。また、登録者数が<strong>凍結・再集計されたチャンネルは除外</strong>されています。1位のPokémon Kids TV以外は増加数が万単位で接近しているため、順位は「増加数の大きい順の抜粋」として読んでください。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>チャンネル</th><th>30日間の増加</th><th>増加率 / 登録者数・メモ</th></tr></thead><tbody>' + grows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト】TrendReport「Fastest Growing YouTube Channels in Japan (Last 30 Days)」（2026年11月16日更新、登録者10万人以上の312チャンネルを毎日計測）／ <a href="https://trendreport.com/channels/fastest-growing/in-japan/" target="_blank" rel="noopener">TrendReport — Fastest Growing YouTube Channels in Japan</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>絶対数と増加率の読み分け</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">絶対数で見る — Pokémon Kids TVの+170万人は別格、Fischer\'sの+4万人は「大手の平常運転」</div><div class="j-meta">登録者920万人のFischer\'s-フィッシャーズ-でも30日で+4万人動きます。絶対数はチャンネルの規模とIPの強さを見る物差しで、自分のチャンネルと直接比べる数字ではありません。</div><a class="j-link" href="https://trendreport.com/channels/fastest-growing/in-japan/" target="_blank" rel="noopener">TrendReportで全312チャンネルの順位を見る →</a></li>' +
+            '<li><div class="j-title">増加率で見る — 御子神琴音【にじさんじ】+17.2%のような中規模の急伸が企画のヒント</div><div class="j-meta">登録者25.9万人で+3.8万人（+17.2%）は、規模の近いチャンネル同士で比べられる伸びです。自ジャンルで2桁%のチャンネルが出たら、その月の企画・コラボ・切り抜き拡散を調べる価値があります。</div><a class="j-link" href="https://trendreport.com/channels/fastest-growing/in-japan/" target="_blank" rel="noopener">TrendReportで増加率の高いチャンネルを探す →</a></li>' +
+            '<li><div class="j-title">概数の注意 — 1日単位で追わず、30日単位で読む</div><div class="j-meta">YouTubeの登録者数は概数表示で、大きなチャンネルほど増減が階段状にまとめて現れます。日々の小さな変動は誤差として扱い、この板のように30日間の増加で判断するのがTrendReportの集計方法に沿った読み方です。</div><a class="j-link" href="https://trendreport.com/channels/fastest-growing/in-japan/" target="_blank" rel="noopener">TrendReportの集計方法（How we count）を確認する →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：TrendReport同ページの集計注記（登録者数はYouTubeの概数表示のため増加は段階的、凍結・再集計されたチャンネルは除外、毎日計測）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "ecmall" && b.rchart && b.achart) {
+          var rrows = b.rchart.map(function (r) {
+            return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          var arows = b.achart.map(function (r) {
+            return '<tr><td class="move">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td colspan="2">' + r[2] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>楽天市場 デイリーランキング — 気になった上位（2026年11月8日集計・11月9日更新）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>個別店舗の監視データではありません。</strong>この表は楽天市場全体の<strong>公開デイリーランキング</strong>から、市場の中心テーマである「訳あり食品」と「備蓄」が分かる順位を抜き出したものです。全順位の転載ではなく抜粋です。<strong>価格はすべて2026年11月8日集計時点のもの</strong>で、現在の価格・クーポン・在庫とは異なる場合があります。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>商品</th><th>価格（集計時点）</th><th>メモ</th></tr></thead><tbody>' + rrows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】楽天市場 公式ランキング（デイリーランキング、2026年11月8日集計・11月9日更新）／ <a href="https://ranking.rakuten.co.jp/" target="_blank" rel="noopener">楽天市場 — 売れ筋人気ランキング（公式）</a>。表の順位・価格は2026年11月8日集計時点の記録で、リンク先では現在のランキングが表示されます。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>Amazon 週間売れ筋 — ジャンル別の上位（2026年11月14日時点）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>Amazonで過去1週間によく売れた商品</strong>をファッション・ビューティー・家電・食品・ゲーム・本などの<strong>ジャンル別</strong>に抜き出したものです。2026年11月14日時点では「先週と同じ商品が多く、ジャンル内で順位が入れ替わった」週でした。Amazon公式の売上確定値ではなく、売れ筋の顔ぶれとして読んでください。現在の順位はリンク先のAmazon公式ベストセラーで確認できます。</p>' +
+            '<table class="chart-table"><thead><tr><th>ジャンル</th><th>商品</th><th colspan="2">メモ</th></tr></thead><tbody>' + arows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】Amazon.co.jp 公式ベストセラー（売れ筋ランキング）／ <a href="https://www.amazon.co.jp/gp/bestsellers" target="_blank" rel="noopener">Amazon.co.jp — ベストセラー（公式）</a>。表の顔ぶれは2026年11月14日時点の記録で、リンク先では現在のランキングが表示されます。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>モール全体で読む — この板の使い方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">競合店ではなく「市場の向き」を見る — 訳あり・備蓄・ケース買いが今のキーワード</div><div class="j-meta">楽天では訳あり魚と備蓄、Amazonの食品でも水・お茶のケース買いが中心と、2つのモールで「まとめ買い・ストック」の動きが重なっています。個別店の値下げ合戦を追うのではなく、品揃えやセット構成を考える材料として使うのがこの板の前提です。</div><a class="j-link" href="https://ranking.rakuten.co.jp/" target="_blank" rel="noopener">楽天市場 公式ランキングで全体像を見る →</a></li>' +
+            '<li><div class="j-title">価格は集計時点 — 買う前・仕入れる前に販売ページで再確認</div><div class="j-meta">楽天の価格は2026年11月8日集計時点、Amazonの顔ぶれは11月14日時点です。クーポンの有無で実質価格が大きく変わる商品（骨取りさばの半額クーポンなど）もあるため、表の価格を現在の価格として扱わないでください。</div><a class="j-link" href="https://www.amazon.co.jp/gp/bestsellers" target="_blank" rel="noopener">Amazon公式ベストセラーで現在の顔ぶれを見る →</a></li>' +
+            '<li><div class="j-title">季節ものは先行して動く — おせち福袋2位と、Amazonでも先週と同じ顔ぶれの継続</div><div class="j-meta">楽天では11月上旬すでにおせち福袋が2位に入り、年末需要が先行しています。Amazonは顔ぶれの継続が目立つ週で、新規の動きはU-Makesのランニングリュックの上昇など一部です。「新規入り」と「継続」を分けて読むと、仕掛けるタイミングを誤りにくくなります。</div><a class="j-link" href="https://ranking.rakuten.co.jp/" target="_blank" rel="noopener">楽天市場 公式ランキングで現在の順位を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：楽天市場 公式ランキングの集計注記（売上高・売上個数などをもとに楽天市場ランキングチームが順位を作成、価格は集計時点のもの）／ Amazonの顔ぶれの週次メモ（先週と同じ商品が多く順位が入れ替わった）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "starbucks" && b.stchart) {
+          var strows = b.stchart.map(function (r) {
+            return '<tr><td class="move">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>スターバックス ジャパン 2026年ホリデー — 新作・復活メニュー一覧（2026年11月17日時点）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>個別の近隣店の監視データではありません。</strong>この表は大手チェーンであるスターバックス コーヒー ジャパンの<strong>全国向け公開新メニュー情報</strong>をまとめたものです。テーマは「Let\'s par-TEA!」で、2026年11月2日（月）から全国のスターバックス店舗（一部店舗を除く）で順次発売。<strong>価格はすべて発売時点の税込価格（2026年11月17日時点スナップショット）</strong>で、店舗によって取り扱いがない場合や、一時的な欠品・早期に販売終了する場合があります。ビバレッジ新作3種はTallサイズのみです。</p>' +
+            '<table class="chart-table"><thead><tr><th>区分</th><th>商品</th><th>価格（税込）</th><th>メモ</th></tr></thead><tbody>' + strows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】スターバックス コーヒー ジャパン公式プレスリリース（2026年10月26日、ホリデービバレッジ3種とフード3品の発表）／ <a href="https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/" target="_blank" rel="noopener">公式発表を見る（ホリデー第1弾）</a>、公式プレスリリース（2026年11月9日、ポテト スープチーノ®の発表）／ <a href="https://stories.starbucks.co.jp/press/2026/pr-2026-1109/" target="_blank" rel="noopener">公式発表を見る（ポテト スープチーノ®）</a>。価格・発売日は公式発表で確認済み。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>大手チェーンの打ち方 — 自店への活かし方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">テーマを1語で言える — 「Let\'s par-TEA!」でティーに全振り</div><div class="j-meta">新作ビバレッジ3種もフード3品もすべてティーが主役です。自店でも「今季は○○」と1語で言えるテーマに寄せると、SNS告知の写真とキャプションが揃いやすくなります。</div><a class="j-link" href="https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/" target="_blank" rel="noopener">公式発表でテーマと3種の詳細を見る →</a></li>' +
+            '<li><div class="j-title">新作と復活を同日に出す — 定番の安心感で新規を試させる</div><div class="j-meta">11月2日は新作3種に加えて、毎年恒例のジンジャーブレッド ラテとジョイフルメドレー ティー ラテが復活しました。「いつもの味がある」ことが、新作を試すハードルを下げています。</div><a class="j-link" href="https://stories.starbucks.co.jp/press/2026/pr-2026-1026-1/" target="_blank" rel="noopener">公式発表でフード3品の組み合わせを見る →</a></li>' +
+            '<li><div class="j-title">第2弾をずらす — 11月13日のポテト スープチーノで話題をつなぐ</div><div class="j-meta">ホリデー開始から約10日後に、温かいスープ系の新作を追加発売しています。シーズン初日に出し切らず、追加発売で来店理由とSNS投稿のネタをもう一度作る二段構えです。</div><a class="j-link" href="https://stories.starbucks.co.jp/press/2026/pr-2026-1109/" target="_blank" rel="noopener">公式発表で追加発売の詳細を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：スターバックス公式プレスリリース（2026年10月26日：テーマ・発売日・価格／ 2026年11月9日：11月13日追加発売と価格）。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "foodprice" && b.fchart) {
+          var fprows = b.fchart.map(function (r) {
+            return '<tr><td><span class="song">' + r[0] + '</span></td><td class="rank">' + r[1] + '</td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>帝国データバンク — 2026年 飲食料品値上げ 分野別品目数（通年・判明分）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;"><strong>個別仕入先の在庫・価格の監視データではありません。</strong>この表は帝国データバンク「食品主要195社」価格改定動向調査（2026年10月30日公表）が、主要食品メーカー195社の発表をもとに集計した<strong>2026年通年（1〜12月までの判明分）の分野別値上げ品目数</strong>です。合計は<strong>20,327品目</strong>で、2年連続の年間2万品目超えです。品目数は値上げが起きた回数の集計で、同じ商品が年内に複数回値上げされれば回ごとに別品目として数え、内容量減による実質値上げも含みます。</p>' +
+            '<table class="chart-table"><thead><tr><th>分野</th><th>2026年通年</th><th>順位</th><th>メモ</th></tr></thead><tbody>' + fprows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報・調査発行元】帝国データバンク「『食品主要195社』価格改定動向調査 ― 2026年11月」（2026年10月30日公表）／ <a href="https://www.tdb.co.jp/report/economic/20261030-neage26y11/" target="_blank" rel="noopener">帝国データバンク — 価格改定動向調査（2026年11月）</a>。取得日：2026年11月17日時点スナップショット。</p>' +
+            '<h3>2026年11月単月と値上げ要因 — 自店の仕入への読み方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">11月単月は1,477品目 — 調味料644品目が最多、平均値上げ率は1回あたり17%</div><div class="j-meta">11月単月の内訳は調味料644品目、酒類・飲料417品目、加工食品275品目が中心です。前年同月150品目の約10倍で、11月としては2022年以降で2番目に多い水準でした。自店の仕入で調味料・飲料の割合が大きい場合は、メーカー改定が仕入価格に反映される前に発注条件を確認する価値があります。</div><a class="j-link" href="https://www.tdb.co.jp/report/economic/20261030-neage26y11/" target="_blank" rel="noopener">帝国データバンクで11月の内訳を見る →</a></li>' +
+            '<li><div class="j-title">要因は原材料高91.7%・人件費51.5%（過去最高） — 一過性ではない前提で見る</div><div class="j-meta">原材料高は要因集計開始（2023年）以降で最も低い割合とはいえ91.7%と依然最多で、エネルギー63.9%、人件費51.5%（過去最高）が重なっています。帝国データバンクは2027年について「値上げは続くもののペースは緩やかになる可能性」としつつ、パン類などでは既に改定の動きがあるとしています。</div><a class="j-link" href="https://www.tdb.co.jp/report/economic/20261030-neage26y11/" target="_blank" rel="noopener">帝国データバンクで要因と2027年見通しを見る →</a></li>' +
+            '<li><div class="j-title">12月の具体例 — 味の素の家庭用37品種が12月1日納品分から約5〜15%、明治ザバス飲料など</div><div class="j-meta">12月単月の水準は小規模になる見込みですが、個別には味の素の家庭用37品種（12月1日納品分から約5〜15%）や明治のザバス飲料などの改定が挙がっています。自店で扱う品目が含まれるかは、メーカー発表と仕入先の案内で個別確認してください。</div><a class="j-link" href="https://www.tdb.co.jp/report/economic/20261030-neage26y11/" target="_blank" rel="noopener">帝国データバンクで今後の動向を見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：帝国データバンク同調査の集計注記（品目数・値上げは各社発表に基づく、複数回値上げは回ごとに別品目としてカウント、値上げ率は発表時点の最大値、実質値上げも対象に含む）と2027年の見通し。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "mallfees" && b.qchart) {
+          var qrows = b.qchart.map(function (r) {
+            return '<tr><td><span class="song">' + r[0] + '</span></td><td>' + r[1] + '</td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>主要モールの公式料金・改定情報 — 一覧（2026年11月確認・金額は税別）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">金額はすべて<strong>税別</strong>（Amazonは税抜表記）で、<strong>確認時点は2026年11月</strong>です。楽天市場の基本出店料の改定は<strong>2027年2月1日適用</strong>で、店舗の<strong>開設時期による経過措置</strong>があります（例：2026年2月1日〜2027年1月31日に開設した店舗は2027年5月31日まで改定前の料金）。表の「改定後／状態」欄が将来日付のものは、まだ現行料金の期間である点に注意してください。</p>' +
+            '<table class="chart-table"><thead><tr><th>モール</th><th>項目</th><th>現行</th><th>改定後 / 状態・メモ</th></tr></thead><tbody>' + qrows + '</tbody></table>' +
+            '<p class="source-line">出典：【一次情報】楽天市場 公式お知らせ「楽天市場の新たな取り組みと基本出店料（月額出店料）改定について」（2026年9月17日発表、改定額は公式ページで照合済み）／ <a href="https://www.rakuten.co.jp/ec/ichiba_notice_202608/" target="_blank" rel="noopener">楽天市場 公式お知らせ — 基本出店料改定について</a>、Amazon出品サービス 公式料金「出品にかかる費用」（出品プラン料金とカテゴリ別販売手数料）／ <a href="https://sell.amazon.co.jp/pricing" target="_blank" rel="noopener">Amazon出品サービス — 料金（公式）</a>、Yahoo!ショッピング 公式「料金・費用」（2026年9月の出店プラン刷新）／ <a href="https://business-ec.yahoo.co.jp/shopping/cost/" target="_blank" rel="noopener">Yahoo!ショッピング — 料金・費用（公式）</a>。取得日：2026年11月17日時点スナップショット（確認時点：2026年11月）。</p>' +
+            '<h3>モール別の読みどころ — 自店の固定費・変動費への効き方</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">楽天市場 — 上がるのは固定費。プランごとに月+9,000円／+25,000円／+51,000円</div><div class="j-meta">2027年2月1日から基本出店料だけが上がり、システム利用料の料率は変わりません。年額ではがんばれ！+108,000円、スタンダード+300,000円、メガショップ+612,000円の固定費増です。経過措置で自店の適用開始が遅れる場合があるため、開設時期を先に確認してください。</div><a class="j-link" href="https://www.rakuten.co.jp/ec/ichiba_notice_202608/" target="_blank" rel="noopener">楽天市場の改定と経過措置を確認する →</a></li>' +
+            '<li><div class="j-title">Amazon — 月49点が大口・小口の分かれ目。手数料は価格帯で段が変わる</div><div class="j-meta">小口は1点100円なので、月49点で大口の月額4,900円と並びます。服＆ファッション小物は2,500円を超えると料率が8.4%から12.4%に上がる区切りがあり、価格設定のときに効いてきます。FBAを使う場合は配送代行・保管の費用が別途必要です。</div><a class="j-link" href="https://sell.amazon.co.jp/pricing" target="_blank" rel="noopener">Amazonのカテゴリ別手数料を確認する →</a></li>' +
+            '<li><div class="j-title">Yahoo!ショッピング — 「無料」から有料化。実質負担は決済・ポイント分まで含めて見る</div><div class="j-meta">2026年9月の刷新で月額10,000円＋売上ロイヤリティ2.5%が新設され、キャンペーン原資負担1.5%は廃止されました。決済サービス利用料（クレジットカード3.24%など）とストアポイント原資1%（必須）は継続するため、合計の売上連動率はロイヤリティだけでは測れません。</div><a class="j-link" href="https://business-ec.yahoo.co.jp/shopping/cost/" target="_blank" rel="noopener">Yahoo!ショッピングの費用内訳を確認する →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：楽天市場の改定告知（改定対象は基本出店料のみ、開設時期による経過措置あり）／ Amazon公式料金表のプラン料金と価格帯別の料率表／ Yahoo!ショッピング公式料金ページとストア運用ガイドライン（2026年9月15日改定）の費用内訳。取得日：2026年11月17日。</p>';
+        }
+        if (b.detail === "contest" && b.ochart) {
+          var orows = b.ochart.map(function (r) {
+            return '<tr><td class="move">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+          }).join("");
+          chartHTML = '<h3>募集中の公募 — 締切順（2026年11月20日時点）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">公募情報サイトKouboとコボナビの新着・締切間近リスト、小説公募の締切カレンダーで確認した、<strong>2026年11月20日時点で募集中</strong>の公募を締切順に並べたものです。動画・イラスト・写真・小説・漫画・音楽と、SNS発信と相性のいいジャンルに絞っています。<strong>締切・賞・応募資格は変更や延長があり得るため、応募前に各主催者の公式募集要項で最終確認</strong>してください（実際にCamsComsフォトコンテスト「小さな秋」とGA文庫大賞は締切が延長されています）。</p>' +
+            '<table class="chart-table"><thead><tr><th>締切</th><th>コンテスト / 公募</th><th>ジャンル / 対象</th><th>賞 / メモ</th></tr></thead><tbody>' + orows + '</tbody></table>' +
+            '<p class="source-line">出典：【集計サイト経由】Koubo「りぼんまんがスクール＋」（集英社）／ <a href="https://koubo.jp/contest/397816" target="_blank" rel="noopener">Koubo — りぼんまんがスクール＋</a>、Koubo「Mコン Vol.2 - Christmas Original Song Contest 2026」（Mレコ／Music Hearts）／ <a href="https://koubo.jp/contest/396467" target="_blank" rel="noopener">Koubo — Mコン Vol.2</a>、主催者公式「Mコン Vol.2」／ <a href="https://www.music-hearts.com/mcon-vol2-christmas-2026" target="_blank" rel="noopener">Music Hearts — Mコン Vol.2 公式</a>、Koubo「CamsComs フォトコンテスト 食欲の秋！おいしい一枚」（CamsComs運営、2026年10月30日掲載）／ <a href="https://koubo.jp/contest/397026" target="_blank" rel="noopener">Koubo — CamsComs「食欲の秋！おいしい一枚」</a>、コボナビ「CamsComsフォトコンテスト『食欲の秋！おいしい一枚』」／ <a href="https://kobonabi.com/camscoms-2026-shokuyokunoaki/" target="_blank" rel="noopener">コボナビ — CamsComs「食欲の秋！おいしい一枚」</a>、Koubo「AGRI VISION 2036」（Metagri研究所、2026年11月2日掲載）／ <a href="https://koubo.jp/contest/399109" target="_blank" rel="noopener">Koubo — AGRI VISION 2036</a>、Koubo「Lumion学生コンペティション2026」（有限会社リビングCG、2026年11月9日掲載）／ <a href="https://koubo.jp/contest/402040" target="_blank" rel="noopener">Koubo — Lumion学生コンペティション2026</a>、コンペ・公募 OPEN CALL「令和8年度 八王子学生CMコンテスト」（主催者の公式募集要項をもとに編集部が2026年10月29日時点でまとめたもの）／ <a href="https://euphoric-arts.com/opencall/hachioji-student-cm-contest/" target="_blank" rel="noopener">OPEN CALL — 八王子学生CMコンテスト</a>、コボナビ「新着公募まとめ（2026年11月2日-11月6日）」（エディコイラストコンテスト、CamsComsフォトコンテスト「小さな秋」の締切・賞）／ <a href="https://kobonabi.com/matome-20261108/" target="_blank" rel="noopener">コボナビ — 新着公募まとめ</a>、片沼ほとり「GA文庫大賞 締切・応募要項」（公式サイトはメンテナンスのため停止中で、停止前の公式ページと2026年10月30日の公式お知らせをもとにした情報。GA文庫大賞の延長後の締切・賞金）／ <a href="https://katanumahotori.com/blog/ga-bunko-taisho" target="_blank" rel="noopener">片沼ほとり — GA文庫大賞</a>、TypeTak「小説の新人賞・公募 締切カレンダー 2026–2027」（2026年10月24日時点の内容、GA文庫大賞でも同じ延長を記載）／ <a href="https://www.typetak.com/ja/blog/writing_contests" target="_blank" rel="noopener">TypeTak — 小説公募 締切カレンダー</a>。取得日：2026年11月20日時点スナップショット。</p>' +
+            '<h3>締切の並びの読み方 — 最速は11月20日、GA文庫大賞は年明けへ</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">最速は11月20日 — りぼんまんがスクール＋（本日締切）</div><div class="j-meta">集英社の漫画公募で、賞金50万円に10万円相当の画材、Wacom One 液晶ペンタブレット13、CLIP STUDIO PAINT PROが付きます。応募期間は10月21日からで締切は本日23:59のため、出せる原稿がある人向けです。次に近いのは新たに追加したMコン Vol.2で11月21日締切（あと1日）、その次が八王子学生CMコンテスト11月23日締切（あと3日）で、30秒CM・スマホ撮影可ですが資格は八王子関連の学生のみです。</div><a class="j-link" href="https://koubo.jp/contest/397816" target="_blank" rel="noopener">りぼんまんがスクール＋の要項を見る →</a></li>' +
+            '<li><div class="j-title">新規・11月21日締切 — Mコン Vol.2「クリスマス／冬」のオリジナル楽曲（あと1日）</div><div class="j-meta">Mレコ（Music Hearts）主催の未発表オリジナル楽曲コンテストで、ジャンル・歌唱の有無・曲の長さは不問です。特賞（1名）はiZotope Ozone 12 Elements、副賞（5名）は次回Mコンのリミックス審査権・題材曲制作コンペ参加権。審査通過曲は公式コンピレーションEPとして12月9日に配信予定で、結果発表は11月29日です。</div><a class="j-link" href="https://koubo.jp/contest/396467" target="_blank" rel="noopener">Mコン Vol.2の要項を見る →</a></li>' +
+            '<li><div class="j-title">11月30日は2件 — イラストと写真で「22歳以下／誰でも」が分かれる</div><div class="j-meta">エディコイラストコンテストは国内在住22歳以下、CamsComsフォトコンテスト「小さな秋」は誰でも応募可能です。以前は同じ11月30日締切だったGA文庫大賞は、2026年10月30日の公式お知らせで2027年2月28日に延長され、この集中からは外れました。</div><a class="j-link" href="https://kobonabi.com/matome-20261108/" target="_blank" rel="noopener">コボナビで11月30日締切の2件を確認する →</a></li>' +
+            '<li><div class="j-title">12月は3件 — AIショート動画（12/13）、CamsComs新テーマ（12/15）、学生CGコンペ（12/21）</div><div class="j-meta">AGRI VISION 2036は生成AIの利用申告が必須で、賞はお米10kgとユニークです。CamsComsの新テーマ「食欲の秋！おいしい一枚」は最優秀賞がAmazonギフトカード10,000円分で、結果発表は12月21日です。Lumion学生コンペはXに作品を投稿して応募でき、参加者全員にAmazonギフト券1,000円分があるため、学生なら参加賞だけでも狙う価値があります。</div><a class="j-link" href="https://koubo.jp/contest/397026" target="_blank" rel="noopener">CamsComs新テーマの応募方法を見る →</a></li>' +
+            '<li><div class="j-title">GA文庫大賞は2027年2月28日へ延長 — 長編の準備期間が約3か月延びた</div><div class="j-meta">大賞300万円＋3巻刊行確約、金賞100万円、銀賞20万円で賞金に変更はありません。公式サイトはメンテナンスのため停止中なので、延長情報は停止前の公式ページと10月30日の公式お知らせをもとにした解説ページで確認しています。応募前に最新の公式告知を再確認してください。</div><a class="j-link" href="https://katanumahotori.com/blog/ga-bunko-taisho" target="_blank" rel="noopener">GA文庫大賞の延長情報を確認する →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">読み方の出典：各公募の作品規定・応募資格・賞の内訳（Koubo掲載の主催者情報、OPEN CALLの募集概要、コボナビの締切間近リスト、片沼ほとり「GA文庫大賞」解説ページ）。取得日：2026年11月20日。</p>';
+        }
+        if (b.detail === "jobs") {
+          chartHTML = '<h3>いま応募できる実在の案件（クラウドワークス）</h3>' +
+            '<ul class="job-list">' +
+            '<li><div class="j-title">【初心者歓迎】スキマ時間でできる記事ライティング — 固定報酬3,300円（1記事3,000円程度）</div><div class="j-meta">掲載：2026年11月8日 ／ 応募期限：11月22日（あと2日） ／ 応募86人・募集5人 ／ 固定報酬制・未経験OK・継続歓迎・Webメディア掲載記事の執筆</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13589747" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">【在宅ワーク】60分程度のインタビュー動画の文字起こし — 1本8,000円（税込）</div><div class="j-meta">掲載：2026年11月20日 ／ 応募期限：11月21日（あと1日） ／ 応募42人・募集3人 ／ 固定報酬制・約60分／1本・ExcelまたはGoogleスプレッドシートへ入力・納期は依頼日から5日以内・継続依頼あり</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13613461" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">Threads投稿・運用サポート — 月額30,000円</div><div class="j-meta">掲載：2026年11月6日 ／ 応募期限：11月20日（本日締切） ／ 応募21人・募集8人 ／ マニュアル完備・在宅可</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13586579" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">英語ライター・翻訳募集 — 1本3,000円〜（翻訳は2,000円〜）</div><div class="j-meta">掲載：2026年11月9日 ／ 応募期限：11月23日 ／ 応募51人・募集5人 ／ 継続・長期あり</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13591321" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '<li><div class="j-title">AI導入支援員募集 — 1案件10〜15万円・約30時間</div><div class="j-meta">掲載：2026年11月12日 ／ 応募期限：11月25日 ／ 応募127人・募集5人 ／ 固定報酬制</div><a class="j-link" href="https://crowdworks.jp/public/jobs/13597260" target="_blank" rel="noopener">案件ページを見る →</a></li>' +
+            '</ul>' +
+            '<p class="source-line">出典：【一次情報】クラウドワークス公式の公開案件ページ（取得日：2026年11月20日）。報酬・応募数は取得時点の表示です。応募前に各案件ページで最新条件を確認してください。</p>';
+        }
+        var watch = b.watch.map(function (w) {
+          return '<li><span class="w-name">' + w[0] + '</span><span class="w-cond">' + w[1] + ' を監視</span></li>';
+        }).join("");
+        var fav = favorites[b.id];
+        sheet.innerHTML =
+          '<button type="button" class="s-close" id="sheetClose" aria-label="閉じる">×</button>' +
+          '<span class="s-num">BOARD ' + String(b.id).padStart(2, "0") + ' ／ ' + CATEGORIES[b.cat].name + '</span>' +
+          '<h2 id="sheetTitle">' + b.title + '</h2>' +
+          '<p class="s-desc">' + b.desc + '</p>' +
+          '<p class="s-desc">向いている人：<strong>' + b.who + '</strong>　・　巡回ペース：<strong>' + b.cadence + '</strong></p>' +
+          '<h3>' + (b.real ? '変化フィード（実データ）' : '変化フィード') + '</h3>' +
+          '<ul class="feed">' + feed + '</ul>' +
+          (b.real
+            ? '<p class="sample-note">※ この板のフィードは' + (b.feedDate || "2026年11月17日") + '取得の実データ・スナップショットです。各項目のリンクから出典を確認できます。</p>'
+            : '<p class="sample-note">※ この板のフィードは表示イメージです。実データ表示中の板には「実データ」バッジが付いています。</p>') +
+          chartHTML +
+          (state.plan === "free" ?
+            '<div class="adslot" style="margin-top:14px;"><span><span class="a-lbl">AD</span>　<span class="a-body">スポンサー枠（試作）</span></span><span class="mono">AD</span></div>' : '') +
+          '<h3>監視対象リスト</h3>' +
+          '<ul class="watchlist">' + watch + '</ul>' +
+          '<h3>この板のプランの違い</h3>' +
+          '<div class="plan-compare">' +
+            '<div class="pc"><div class="pc-name">無料</div><ul><li>全板の閲覧</li><li>毎朝のまとめ便</li><li>キーワード3件まで</li><li>広告あり</li></ul></div>' +
+            '<div class="pc paid"><div class="pc-name">有料（月480〜980円）</div><ul><li>広告なし</li><li>条件アラート付き</li><li>1時間ごとに確認</li><li>個別監視も可能</li><li>履歴データも見られる</li></ul></div>' +
+          '</div>' +
+          '<h3>過去ログ</h3>' +
+          '<p class="s-desc">過去の変化は日付ごとに残ります。</p>' +
+          '<div class="s-actions">' +
+            '<button type="button" class="btn primary" id="favBtn" aria-pressed="' + !!fav + '">' + (fav ? "★ 気になる板に登録済み" : "☆ この板を気になる登録") + '</button>' +
+            '<button type="button" class="btn" id="sheetBack">一覧に戻る</button>' +
+          '</div>';
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("sheetClose").addEventListener("click", closeSheet);
+        document.getElementById("sheetBack").addEventListener("click", closeSheet);
+        document.getElementById("favBtn").addEventListener("click", function () {
+          favorites[b.id] = !favorites[b.id];
+          openSheet(b.id);
+        });
+        document.getElementById("sheetClose").focus();
+      }
+
+      /* ---------- Legal sheet ---------- */
+      function openLegal(focusId) {
+        lastFocus = document.activeElement;
+        sheet.innerHTML =
+          '<button type="button" class="s-close" id="sheetClose" aria-label="閉じる">×</button>' +
+          '<span class="s-num">TERMS</span>' +
+          '<h2 id="sheetTitle">利用規約・免責事項</h2>' +
+          '<p class="legal-meta">制定日：2026年11月17日　／　運営者：本サービス運営者</p>' +
+          '<p class="s-desc">本ページは、本サービス（公開情報を集約して提供する20テーマの監視板）のご利用条件と免責事項を定めるものです。本サービスをご利用いただくことで、本規約に同意いただいたものとみなします。</p>' +
+
+          '<div class="legal-sec"><h3>利用規約</h3><ol class="legal-list">' +
+          '<li><span class="art">第1条（サービスの内容）</span>本サービスは、インターネット上で公開されている情報を集約し、時点情報として整理して提供する情報サービスです。各テーマの「板」は、変化の把握を助けるための要約であり、情報の提供のみを目的とします。</li>' +
+          '<li><span class="art">第2条（掲載情報について）</span>掲載情報は、各出典（公式発表・公式チャート・案件ページ・調査の発行元など）に基づく取得時点のスナップショットです。運営者は、掲載情報の正確性・完全性・最新性を保証するものではありません。出典の種別（一次情報／集計サイト等）は各板に明記しています。</li>' +
+          '<li><span class="art">第3条（利用者の責任）</span>価格・相場・順位・締切などに関する判断は、利用者ご自身の責任で行ってください。購入・応募・契約などを行う際は、必ずリンク先の公式情報で最終確認をお願いします。本サービスは、投資・購入・応募その他の意思決定に関する助言を行うものではありません。</li>' +
+          '<li><span class="art">第4条（禁止事項）</span>次の行為を禁止します。（1）掲載情報の無断転載・再配布・商用利用（2）本サービスの運営を妨げる行為、不正アクセスその他これに準ずる行為（3）法令または公序良俗に反する行為。出典元の文章・画像等の権利は各権利者に帰属します。</li>' +
+          '<li><span class="art">第5条（サービスの変更・中断・終了）</span>本サービスの内容は、予告なく変更・中断・終了する場合があります。出典側の仕様変更や公開終了などにより、一部の板の更新が止まる場合もあります。</li>' +
+          '<li><span class="art">第6条（有料プランについて）</span>有料プランは現在準備中であり、提供していません。現時点では会員登録や課金の仕組みはなく、本サービスの利用により料金が発生することはありません。有料プランの内容・料金は、提供開始時にあらためて本ページ等でお知らせします。</li>' +
+          '</ol></div>' +
+
+          '<div class="legal-sec" id="legalDisclaimer"><h3>免責事項</h3><ol class="legal-list">' +
+          '<li><span class="art">第1条（損害について）</span>掲載情報の利用、または利用できなかったことにより生じた損害について、運営者は責任を負いかねます。重要な判断の前には、必ず公式情報をご確認ください。</li>' +
+          '<li><span class="art">第2条（外部リンクについて）</span>本サービスからリンクしている外部サイト（出典・案件ページなど）の内容、そこで提供される商品・サービス・取引については、各サイトの運営者の責任によるものであり、本サービスは関与しません。</li>' +
+          '<li><span class="art">第3条（情報の時点について）</span>掲載情報は更新・取得時点のものであり、現況と異なる場合があります。順位・価格・在庫・募集状況・締切などは変動するため、最新の状態は各出典でご確認ください。</li>' +
+          '</ol></div>' +
+
+          '<div class="legal-sec" id="legalPrivacy"><h3>プライバシーについて</h3><ol class="legal-list">' +
+          '<li><span class="art">第1条（個人情報の収集について）</span>現時点では、本サービスは会員登録を受け付けておらず、氏名・メールアドレス等の個人情報を収集していません。ページ内の「気になる登録」などの操作は、お使いの端末上での表示のためのもので、運営者へ送信されることはありません。</li>' +
+          '<li><span class="art">第2条（将来の変更について）</span>将来、会員機能や通知機能などの追加に伴い個人情報を収集する場合は、収集する項目と利用目的を本ページを改定して事前にお知らせします。</li>' +
+          '</ol></div>' +
+
+          '<div class="legal-sec" id="legalContact"><h3>お問い合わせ</h3>' +
+          '<p>本サービスに関するお問い合わせは、運営者（本サービス運営者）までお願いします。</p>' +
+          '<div class="legal-note"><strong>問い合わせ先：</strong>X（旧Twitter）公式アカウントのDM（開設準備中）<br>アカウント開設後、本ページにアカウント名を掲載します。現在は受付窓口の準備中のため、返信までお時間をいただく場合があります。</div>' +
+          '</div>' +
+
+          '<p class="legal-meta" style="margin-top:24px;">制定日：2026年11月17日</p>' +
+          '<div class="s-actions">' +
+            '<button type="button" class="btn" id="sheetBack">一覧に戻る</button>' +
+          '</div>';
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("sheetClose").addEventListener("click", closeSheet);
+        document.getElementById("sheetBack").addEventListener("click", closeSheet);
+        document.getElementById("sheetClose").focus();
+        if (focusId) {
+          var target = document.getElementById(focusId);
+          if (target) target.scrollIntoView({ block: "start" });
+        }
+      }
+
+      function closeSheet() {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+        if (lastFocus) lastFocus.focus();
+      }
+      overlay.addEventListener("click", function (e) { if (e.target === overlay) closeSheet(); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.classList.contains("open")) closeSheet();
+      });
+
+      /* ---------- Footer / legal wiring ---------- */
+      document.getElementById("termsLink").addEventListener("click", function () { openLegal(); });
+      document.getElementById("privacyLink").addEventListener("click", function () { openLegal("legalPrivacy"); });
+      document.getElementById("contactLink").addEventListener("click", function () { openLegal("legalContact"); });
+
+      /* ---------- Controls wiring ---------- */
+      document.getElementById("searchInput").addEventListener("input", function (e) {
+        state.query = e.target.value.trim(); render();
+      });
+      document.getElementById("sortSelect").addEventListener("change", function (e) {
+        state.sort = e.target.value; render();
+      });
+
+      var segFree = document.getElementById("segFree");
+      var segPaid = document.getElementById("segPaid");
+      var previewNote = document.getElementById("previewNote");
+      function setPlan(plan) {
+        state.plan = plan;
+        document.body.setAttribute("data-plan", plan);
+        segFree.setAttribute("aria-pressed", plan === "free");
+        segPaid.setAttribute("aria-pressed", plan === "paid");
+        previewNote.textContent = plan === "paid"
+          ? "有料プレビュー中 — 広告なし・条件アラート"
+          : "無料プレビュー中 — 広告あり・朝のまとめ便のみ";
+        render();
+      }
+      segFree.addEventListener("click", function () { setPlan("free"); });
+      segPaid.addEventListener("click", function () { setPlan("paid"); });
+
+      renderChips();
+      render();
+    </script>
+  </body>
+</html>
