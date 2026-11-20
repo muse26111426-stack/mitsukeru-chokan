@@ -383,7 +383,7 @@
         <p class="lead">公開ページの<strong>変化だけ</strong>を抜き出す、テーマ別の監視板です。<br />気になる板を開くと、ランキングと出典が見られます。</p>
         <div class="snapshot-bar" role="note">
           <span class="snap-dot" aria-hidden="true"></span>
-          <span><strong>Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日時点、速報系の他2板は2026年11月19日時点、チャート系13板は2026年11月17日時点の実データ</strong> — 全20板にスナップショットを表示中。チャート系は週次更新で、次回更新は11月23日です。出典は各板の中にあり、一次情報か集計サイトかを明記しています。</span>
+          <span><strong>TikTokトレンド板・Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日時点、速報系の残りは2026年11月19日時点、チャート系13板は2026年11月17日時点の実データ</strong> — 全20板にスナップショットを表示中。チャート系は週次更新で、次回更新は11月23日です。出典は各板の中にあり、一次情報か集計サイトかを明記しています。</span>
         </div>
         <div class="stats">
           <div class="stat"><span class="num">20</span><span class="lbl">テーマの板</span></div>
@@ -451,7 +451,7 @@
       <main id="boardGrid"></main>
 
       <footer>
-        <p style="margin:0;">実データ・スナップショット取得日：Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日、速報系の他2板は2026年11月19日、チャート系13板は2026年11月17日（週次更新・次回11月23日）。出典の扱い：一次情報（公式チャート・公式発表・調査の発行元）を優先し、一次情報が公開されていないテーマでは集計サイトである旨を明記しています。順位・価格・締切などの事実のみを自前の短い言葉で要約して載せており、出典記事の文章や画像の転載はしていません。数値はすべて取得時点のものです。</p>
+        <p style="margin:0;">実データ・スナップショット取得日：TikTokトレンド板・Xトレンド板・セール板・副業案件板・SNS案件板・コンテスト板は2026年11月20日、速報系の残りは2026年11月19日、チャート系13板は2026年11月17日（週次更新・次回11月23日）。出典の扱い：一次情報（公式チャート・公式発表・調査の発行元）を優先し、一次情報が公開されていないテーマでは集計サイトである旨を明記しています。順位・価格・締切などの事実のみを自前の短い言葉で要約して載せており、出典記事の文章や画像の転載はしていません。数値はすべて取得時点のものです。</p>
         <nav class="footer-links" aria-label="規約・お問い合わせ">
           <button type="button" class="footer-link" id="termsLink">利用規約・免責事項</button>
           <button type="button" class="footer-link" id="privacyLink">プライバシーについて</button>
@@ -477,21 +477,14 @@
 
       var BOARDS = [
         { id: 1, cat: "sns", real: true, detail: "trend", title: "TikTokトレンド監視板",
-          desc: "TikTok日本のトレンドハッシュタグ（2026年11月9日〜15日週）、話題のミーム音源、10代女子トレンドのコトバを実データで監視。伸び切る前に気づいて自分の投稿に乗せるための板。実データ表示中：2026年11月18日時点スナップショット。",
-          who: "TikTok発信者・SNS運用者", cadence: "週1更新（ハッシュタグ週次）", feedDate: "2026年11月18日",
-          watch: [["TikTok公式トレンドハッシュタグ（日本）", "投稿数・再生数の急増"], ["ミーム音源・流行フォーマット", "元ネタと拡散の型"], ["10代女子トレンド（コトバ）", "新語・ミーム化の動き"]],
-          hchart: [["1", "#エンタメダブルcrpキャンペーン", "6,667投稿 ・ 210.3M再生", "再生数1位。25タグ中で突出。キャンペーン系で大量視聴、11月13日ピーク"],
-                   ["2", "#クリスマス", "14,191投稿 ・ 111.5M再生", "投稿数も最多。11月15日がピークでまだ上昇中"],
-                   ["3", "#紅白歌合戦", "3,065投稿 ・ 41.9M再生", "TikTok公式順位2位。日本のみトレンド入り、11月13日ピーク"],
-                   ["4", "#ブラックフライデー", "5,199投稿 ・ 36.1M再生", "TikTok公式順位5位。セール連動、11月14日ピーク"],
-                   ["5", "#ballibotmogis", "1,403投稿 ・ 34.7M再生", "日本のみトレンド入り。11月9日ピーク"],
-                   ["6", "#ベストヒット歌謡祭", "993投稿 ・ 32.3M再生", "テレビ連動。11月11日ピーク"],
-                   ["7", "#イルミネーション", "3,691投稿 ・ 28.5M再生", "季節スポット系。11月15日がピークでまだ上昇中"],
-                   ["8", "#ポッキーの日", "10,213投稿 ・ 27.7M再生", "TikTok公式順位でローカル1位。日本のみトレンド入り、11月11日ピーク"],
-                   ["9", "#侍ジャパン", "1,886投稿 ・ 23.1M再生", "TikTok公式順位4位。野球日本代表関連、11月15日がピークでまだ上昇中"],
-                   ["10", "#prank", "1,106投稿 ・ 21.4M再生", "ドッキリ系フォーマット。日本のみトレンド入り、11月10日ピーク"]],
-          feed: [["ローカル1位", "#ポッキーの日がTikTok公式順位で日本1位 — 10,213投稿・27.7M再生", "TokConnect／TikTok公式トレンドハッシュタグリスト（日本、2026年11月9日〜15日週）で、#ポッキーの日がローカル（日本のみ）トレンドのトップを維持。TikTok公式順位のTop5は1位 #ポッキーの日、2位 #紅白歌合戦、3位 #ポッキー、4位 #侍ジャパン、5位 #ブラックフライデーです。関連の #ポッキー（1,904投稿・7.2M再生）と #11月11日（958投稿・4.3M再生）も11月11日にピークを迎え、11月11日に集中した季節イベント型のバズです。25タグ合計で660.9M再生・73,672投稿、うち21タグは日本のみでトレンド入りしています。", "https://tokconnect.com/trends/japan/"],
-                 ["再生数最大", "#エンタメダブルcrpキャンペーン 210.3M再生、#クリスマス 111.5M再生", "再生数で見ると順位は逆転します。#エンタメダブルcrpキャンペーン（6,667投稿）が210.3M再生で断トツ、次いで #クリスマス（14,191投稿・111.5M再生）。#クリスマスは11月15日がピークでまだ上昇中（Still climbing）で、#クリスマスディズニー（1,029投稿・13.3M再生）、#イルミネーション（3,691投稿・28.5M再生、11月15日ピークで上昇中）と合わせて季節系が先行して伸びています。投稿に乗せるならクリスマス系が今週の本命です。", "https://tokconnect.com/trends/japan/"],
+          desc: "TikTok公式 Creative Center のハッシュタグトレンド（地域：Japan、期間：直近7日（公式ページの表示））を実データで監視。2026年11月20日確認では1位 #nature（11.4K Posts／15M Views）、2位 #紅白歌合戦（3.4K Posts／53.8M Views）。公式は上位3件まで公開（ログインなしの場合）。話題のミーム音源、10代女子トレンドのコトバも合わせて監視。実データ表示中：2026年11月20日時点スナップショット。",
+          who: "TikTok発信者・SNS運用者", cadence: "週1更新（直近7日・公式ページの表示）", feedDate: "2026年11月20日",
+          watch: [["TikTok Creative Center ハッシュタグ（日本・直近7日）", "上位3件の投稿数・再生数"], ["ミーム音源・流行フォーマット", "元ネタと拡散の型"], ["10代女子トレンド（コトバ）", "新語・ミーム化の動き"]],
+          hchart: [["1", "#nature", "11.4K Posts ・ 15M Views", "カテゴリ：News & Entertainment、Travel。投稿数は上位3件で最多"],
+                   ["2", "#紅白歌合戦", "3.4K Posts ・ 53.8M Views", "カテゴリ：News & Entertainment。再生数53.8Mは上位3件で最大"],
+                   ["3", "#tohji", "2.2K Posts ・ 8.8M Views", "カテゴリ：Travel、News & Entertainment"]],
+          feed: [["公式1位・直近7日", "#nature が1位 — 11.4K Posts／15M Views", "TikTok公式 Creative Center のハッシュタグトレンド（地域：Japan、期間：Last 7 days／直近7日（公式ページの表示）、2026年11月20日確認）で1位は #nature です。投稿数11.4K、再生数15M。カテゴリは News & Entertainment、Travel。公式ページはログインなしだと上位3件までしか見れません（4位以降はログインが必要）。そのためこの板では、確認できた上位3件のみを載せています。", "https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=JP&period=7"],
+                 ["公式2位・再生数最大", "#紅白歌合戦 が2位 — 53.8M Viewsで再生数は上位3件中トップ", "同じく公式 Creative Center（Japan／直近7日）で2位は #紅白歌合戦（3.4K Posts／53.8M Views、カテゴリ：News & Entertainment）。投稿数では #nature に次ぎますが、再生数53.8Mは上位3件の中で最大です。3位は #tohji（2.2K Posts／8.8M Views、カテゴリ：Travel、News & Entertainment）。", "https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=JP&period=7"],
                  ["ミーム音源", "「あのね・うんうん」ミーム — 元はボカロ曲「トイレイキタイ」の切り抜き音源", "話す役の「あのね」「それでね」に、聞く役が「うんうん」と相づちを打つだけの掛け合い動画がTikTokで急増。元ネタはボカロP・るのさんが2026年3月28日に公開した「トイレイキタイ」（歌唱：重音テト・音街ウナ）の会話パートで、9月中ごろから切り抜き音源として拡散しました。マイナビティーンズラボ「2026年10代女子が選ぶトレンドランキング」ではコトバ部門5位に入っています。", "https://www.haradaeigo.com/slang/column/2026-11-12"],
                  ["コトバ・10代女子", "コトバ部門Top3：1位ドパガキ、2位ばりきまずい、3位ワホー", "マイナビティーンズラボ「2026年10代女子が選ぶトレンドランキング」（15〜19歳女性586名、調査2026年9月24日〜30日、11月11日発表）のコトバ部門。1位「ドパガキ」（45.6％）は「ドーパミン中毒のガキ」の略で、ショート動画やSNSの強い刺激に慣れた若年層を指す自虐・共感ワード。2位「ばりきまずい」（16.7％）はTikTok発で、失敗や気まずい沈黙を笑いに変える言葉としてミーム化。3位「ワホー」（16.2％）はYouTuberセイキンが約12年前のミンティア企画動画で発したフレーズがTikTokで再発掘されてブレイクしたもの。キャプションやセリフに混ぜると同世代への刺さりが変わります。", "https://gakumado.mynavi.jp/teens/articles/92936"]] },
         { id: 2, cat: "sns", real: true, detail: "xtrend", title: "Xトレンド・バズワード板",
@@ -796,7 +789,7 @@
       ];
 
       var SPOT = {
-        1:  ["バズの種を早めに先取りする", "#ポッキーの日が日本1位", "6.61億", "今週の総再生数"],
+        1:  ["バズの種を早めに先取りする", "#nature が1位", "53.8M", "#紅白歌合戦（2位）の再生数"],
         2:  ["話題の移り変わりを即チェック", "#魔法使いの夜感想が先頭", "11/20未明", "現在のXトレンド"],
         3:  ["リールで流行る音源を把握する", "マライアが今週1位", "580万+", "使われたReels数"],
         4:  ["伸びているShortsの型を盗む", "コントShortsが急伸中", "16.9万", "初速・再生／時"],
@@ -956,9 +949,10 @@
           var hrows = b.hchart.map(function (r) {
             return '<tr><td class="rank">' + r[0] + '</td><td><span class="song">' + r[1] + '</span></td><td class="move">' + r[2] + '</td><td>' + r[3] + '</td></tr>';
           }).join("");
-          chartHTML = '<h3>TikTok日本 トレンドハッシュタグ — 再生数Top10（2026年11月9日〜15日週）</h3>' +
-            '<table class="chart-table"><thead><tr><th>順位</th><th>ハッシュタグ</th><th>投稿数 / 再生数</th><th>メモ</th></tr></thead><tbody>' + hrows + '</tbody></table>' +
-            '<p class="source-line">出典：【集計サイト】TokConnect「TikTok Trends in Japan This Week (9–15 November 2026)」（TikTok公式トレンドハッシュタグリスト由来）／ <a href="https://tokconnect.com/trends/japan/" target="_blank" rel="noopener">TokConnect — TikTok Trends in Japan</a>、<a href="https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=JP&period=7" target="_blank" rel="noopener">TikTok Creative Center ハッシュタグ（日本）</a>。順位は7日間の再生数順。TikTok公式の並び順では #ポッキーの日が1位です。25タグ合計 660.9M再生・73,672投稿。取得日：2026年11月18日時点スナップショット。</p>' +
+          chartHTML = '<h3>TikTok公式 Creative Center — ハッシュタグトレンド Top3（日本・直近7日）</h3>' +
+            '<p class="s-desc" style="margin-bottom:10px;">TikTok公式 Creative Center のハッシュタグトレンドです。地域は<strong>Japan</strong>、期間は<strong>直近7日（公式ページの表示：Last 7 days）</strong>。<strong>公式は上位3件まで公開</strong>（ログインなしの場合。4位以降はログインが必要）ため、2026年11月20日に確認できた上位3件のみを載せています。</p>' +
+            '<table class="chart-table"><thead><tr><th>順位</th><th>ハッシュタグ</th><th>投稿数 / 再生数</th><th>カテゴリ・メモ</th></tr></thead><tbody>' + hrows + '</tbody></table>' +
+            '<p class="source-line">出典：公式（TikTok Creative Center）ハッシュタグトレンド（地域：Japan、期間：Last 7 days／直近7日）／ <a href="https://ads.tiktok.com/creative/creativeCenter/trends/hashtag?region=JP&period=7" target="_blank" rel="noopener">TikTok Creative Center — ハッシュタグトレンド（日本・直近7日）</a>。取得日：2026年11月20日時点スナップショット。</p>' +
             '<h3>いま押さえるミームとコトバ</h3>' +
             '<ul class="job-list">' +
             '<li><div class="j-title">ミーム「あのね・うんうん それでね・うんうん」 — 相づち動画の型</div><div class="j-meta">元ネタ：ボカロP・るの「トイレイキタイ」（2026年3月28日公開、重音テト・音街ウナ）の会話パートの切り抜き音源。9月中ごろからTikTokで拡散。マイナビティーンズラボ コトバ部門5位。</div><a class="j-link" href="https://www.haradaeigo.com/slang/column/2026-11-12" target="_blank" rel="noopener">ミーム解説（原田英語 スラング考現学）を見る →</a> <a class="j-link" href="https://fomo-fomo.com/sns/trend/anone-unun-toireikitai-meme/" target="_blank" rel="noopener">元ネタ解説（FOMO²）を見る →</a></li>' +
